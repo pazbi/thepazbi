@@ -1,0 +1,114 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../lib/site';
+
+const facts = [
+  ['15', 'years in digital marketing'],
+  ['300+', 'companies worked with'],
+  ['6', 'countries spoken in'],
+  ['1', 'promise: I tell you the truth'],
+];
+
+const milestones = [
+  ['1991', 'Born in Athens, Greece'],
+  ['1996', 'Moved to London'],
+  ['2003', 'Beat leukaemia, and learnt to walk again'],
+  ['2012', 'Graduated Computer Games, University of Westminster'],
+  ['2014', 'Started my first business'],
+  ['2016', 'Joined BNI'],
+  ['2021', 'Diagnosed with ADHD-C'],
+  ['2023', 'Married Tavian, and reached the Entrepreneur of the Year final'],
+  ['2024', 'Founded Kickass Online and Neuroinclusive Standards'],
+];
+---
+<Base title="About" description="Pazbi Zavatzki: founder of Kickass Online and Neuroinclusive Standards, keynote speaker and AI advisor.">
+  <PageHero
+    eyebrow="▸ WHO"
+    title="Hi, I'm Pazbi."
+    lede="Panagiotis Zmpigknief Zavatzki, if we're being formal. Builder, speaker, and the person teams call when digital and AI need to work."
+  >
+    <div class="phead-actions"><a href={site.bookingUrl} class="btn">Work with me<span class="arrow">→</span></a></div>
+  </PageHero>
+
+  <section class="section">
+    <div class="container about">
+      <div class="about__col reveal">
+        <p>
+          I was born in Athens in 1991 and moved to London with my family in 1996: Greek by
+          birth, Polish by heritage, a Londoner by everything since.
+        </p>
+        <p>
+          At eight I was diagnosed with leukaemia. The chemotherapy ran until I was twelve, and
+          the complications took my ability to walk. I learnt to walk again, one stubborn step
+          at a time. That stretch taught me what I still build on: progress is a series of small,
+          deliberate moves, and you keep making them.
+        </p>
+        <p>
+          I studied Computer Games at the <strong>University of Westminster</strong> and graduated
+          in 2012. Two years later I started my first business. The fifteen years since have been
+          digital marketing in every form: websites, search, automation, and the AI that now sits
+          on top of it all.
+        </p>
+        <p>
+          Westminster stayed part of my life. I've mentored students there for the past eight years
+          and sit on the employability advisory board for the School of Media and Communication. The
+          university recognised me for long service in volunteering, and in 2023 I was a finalist for
+          Entrepreneur of the Year. I've been part of <strong>BNI</strong> since 2016.
+        </p>
+        <p>
+          At thirty I was diagnosed with ADHD-C, which explained a lot and gave my work a second
+          purpose. In 2024 I founded <strong>Kickass Online</strong> and <strong>Neuroinclusive
+          Standards</strong>, two sides of one belief: systems should fit the people who use them.
+          I married my childhood friend <strong>Tavian</strong> in September 2023. The throughline
+          across all of it stays the same. Make the work fit the humans in the room.
+        </p>
+      </div>
+      <aside class="about__facts reveal">
+        {facts.map(([n, l]) => (
+          <div class="fact"><span class="fact__n">{n}</span><span class="fact__l">{l}</span></div>
+        ))}
+      </aside>
+    </div>
+  </section>
+
+  <section class="section milestones-sec on-light">
+    <div class="container">
+      <p class="hud">▸ THE STORY SO FAR</p>
+      <div class="timeline reveal">
+        {milestones.map(([y, t]) => (
+          <div class="tl"><span class="tl__year">{y}</span><span class="tl__text">{t}</span></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section on-petrol">
+    <div class="container">
+      <p class="hud hud--no-dot">THE PRINCIPLE</p>
+      <p class="bigquote reveal">"Systems should fit the people who use them."</p>
+    </div>
+  </section>
+  <style>
+    .phead-actions { margin-top: 2rem; }
+    .about { display: grid; grid-template-columns: 1.4fr 0.6fr; gap: clamp(2rem,5vw,4rem); align-items: start; }
+    .about__col { display: grid; gap: 1.3rem; font-size: var(--step-1); line-height: 1.55; }
+    .about__col p { color: var(--graphite); }
+    .about__col strong { color: var(--clay-deep); font-weight: 600; }
+    .about__facts { display: grid; gap: 1rem; }
+    .fact { border-left: 2px solid var(--canary); padding-left: 1.2rem; }
+    .fact__n { display: block; font-family: var(--font-display); font-size: var(--step-3); color: var(--ink); letter-spacing: -0.02em; }
+    .fact__l { font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); letter-spacing: 0.03em; }
+
+    .milestones-sec .hud { margin-bottom: 1.8rem; }
+    .timeline { max-width: 680px; }
+    .tl { display: grid; grid-template-columns: 5rem 1fr; gap: 1.5rem; padding: 0.95rem 0; border-top: 1px solid var(--line-light); align-items: baseline; }
+    .tl:first-child { border-top: 0; }
+    .tl__year { font-family: var(--font-mono); font-weight: 700; font-size: 0.95rem; color: var(--canary-deep); letter-spacing: 0.02em; }
+    .tl__text { color: var(--ink); font-size: var(--step-0); }
+
+    .bigquote { font-family: var(--font-display); font-weight: 700; font-size: var(--step-3); color: var(--bone); letter-spacing: -0.02em; max-width: 20ch; margin-top: 1rem; }
+    @media (max-width: 820px) { .about { grid-template-columns: 1fr; } .about__facts { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .tl { grid-template-columns: 3.5rem 1fr; gap: 1rem; } }
+  </style>
+</Base>

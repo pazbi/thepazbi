@@ -1,0 +1,88 @@
+---
+import { site, socialLinks } from '../lib/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container container-wide">
+    <div class="footer__cta">
+      <p class="hud">▸ BOOKING · OPEN</p>
+      <h2 class="footer__head">Let's make your<br /><span class="hl">people irreplaceable.</span></h2>
+      <a href={site.bookingUrl} class="btn footer__btn">{site.bookingLabel}<span class="arrow">→</span></a>
+    </div>
+
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <span class="footer__mark">{site.brand}</span>
+        <p class="footer__tag">{site.tagline}</p>
+      </div>
+
+      <nav class="footer__nav" aria-label="Footer">
+        {site.nav.map((item) => <a href={item.href}>{item.label}</a>)}
+      </nav>
+
+      <div class="footer__connect">
+        {socialLinks.map((s) => (
+          <a href={s.href} rel="me noopener" target="_blank">{s.label} ↗</a>
+        ))}
+        <a href={`mailto:${site.email}`}>{site.email}</a>
+      </div>
+    </div>
+
+    <div class="footer__base">
+      <span class="footer__sys">© {year} Pazbi Zavatzki</span>
+      <span class="footer__sys">{site.slogan}</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--ink-2);
+    color: var(--bone);
+    border-top: 1px solid var(--ink-3);
+    padding-block: clamp(3.5rem, 2rem + 6vw, 6rem) 2rem;
+    /* local muted tone for this dark surface */
+    --muted: rgba(244, 238, 224, 0.6);
+  }
+  .footer__cta { border-bottom: 1px solid var(--line-dark); padding-bottom: clamp(2.5rem, 5vw, 4rem); margin-bottom: 3rem; }
+  .footer__head {
+    font-size: var(--step-4);
+    margin: 1rem 0 2rem;
+    line-height: 0.95;
+  }
+  .hl { color: var(--canary); }
+  .footer__btn { font-size: var(--step-0); padding: 1em 1.8em; }
+
+  .footer__grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 2rem;
+    padding-bottom: 3rem;
+  }
+  .footer__mark { font-family: var(--font-display); font-weight: 700; font-size: 1.6rem; letter-spacing: 0.04em; }
+  .footer__tag { color: var(--muted); margin-top: 0.5rem; max-width: 30ch; }
+
+  .footer__nav, .footer__connect { display: flex; flex-direction: column; gap: 0.7rem; }
+  .footer__nav a, .footer__connect a {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    width: fit-content;
+  }
+  .footer__nav a:hover, .footer__connect a:hover { color: var(--canary); }
+
+  .footer__base {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid var(--line-dark);
+    padding-top: 1.5rem;
+  }
+  .footer__sys { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.14em; color: rgba(244, 238, 224, 0.5); }
+
+  @media (max-width: 720px) {
+    .footer__grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .footer__base { flex-direction: column; gap: 0.5rem; }
+  }
+</style>

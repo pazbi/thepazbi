@@ -1,0 +1,63 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../lib/site';
+
+const phases = [
+  { n: '01', t: 'Map', d: 'We map how your business runs today: your tools, your goals, your pain points and where AI and automation move your numbers. Tied to your model rather than a generic maturity grid.' },
+  { n: '02', t: 'Build', d: 'We build what the problem calls for: automations, a training program, new workflows. We prove the highest-leverage ones fast, with real users and quick signal.' },
+  { n: '03', t: 'Scale', d: 'We scale what works through your team, with owners, playbooks and training, so the growth holds and compounds after I leave.' },
+];
+---
+<Base title="Consultancy" description="Embedded AI and digital-transformation advisory that turns experiments into revenue and margin.">
+  <PageHero
+    eyebrow="▸ CONSULTANCY & ADVISORY"
+    title="From pilot to P&L."
+    lede="Embedded advisory for leaders who are done with AI theatre. We turn experiments into systems, and systems into results you can see in the numbers."
+  >
+    <div class="phead-actions"><a href={site.bookingUrl} class="btn">Book a call<span class="arrow">→</span></a></div>
+  </PageHero>
+
+  <section class="section">
+    <div class="container">
+      <p class="hud">▸ THE METHOD · MAP · BUILD · SCALE</p>
+      <div class="phases">
+        {phases.map((p) => (
+          <article class="phase reveal">
+            <span class="phase__n">{p.n}</span>
+            <h2 class="phase__t">{p.t}</h2>
+            <p class="muted">{p.d}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section on-light">
+    <div class="container who">
+      <div class="reveal">
+        <p class="hud" style="color:var(--graphite)">▸ WHO IT'S FOR</p>
+        <h2 class="who__title">Built for owner-led and mid-sized businesses.</h2>
+      </div>
+      <ul class="who__list reveal">
+        <li>You've tried a few tools and want a strategy instead of more subscriptions</li>
+        <li>You need a translator between the tech and the rest of the business</li>
+        <li>You want someone who'll be honest about what won't work</li>
+        <li>You'd rather build internal capability than depend on an agency forever</li>
+      </ul>
+    </div>
+  </section>
+  <style>
+    .phead-actions { margin-top: 2rem; }
+    .phases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 2rem; }
+    .phase { padding: 2rem; background: var(--bone); border: 1px solid var(--line-light); border-top: 3px solid var(--canary); border-radius: var(--radius-lg); }
+    .phase__n { font-family: var(--font-mono); font-size: 0.85rem; color: var(--canary-deep); letter-spacing: 0.1em; }
+    .phase__t { font-size: var(--step-2); margin: 0.8rem 0 0.8rem; color: var(--ink); }
+    .who { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem,5vw,4rem); align-items: center; }
+    .who__title { font-size: var(--step-3); color: var(--ink); }
+    .who__list { list-style: none; padding: 0; display: grid; gap: 1rem; }
+    .who__list li { padding-left: 1.6rem; position: relative; color: var(--ink); font-size: var(--step-1); }
+    .who__list li::before { content: '▸'; position: absolute; left: 0; color: var(--canary-deep); }
+    @media (max-width: 820px) { .phases, .who { grid-template-columns: 1fr; } }
+  </style>
+</Base>

@@ -1,0 +1,41 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+const fmt = (d: Date) => d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+---
+<Base title="Writing" description="Essays on AI, automation and staying irreplaceable, by Pazbi Zavatzki.">
+  <PageHero eyebrow="▸ WRITING" title="Notes from the noise." lede="Short, opinionated pieces on AI, automation and the human edge. No hype, no homework." />
+  <section class="section on-light">
+    <div class="container">
+      <ul class="posts">
+        {posts.map((post) => (
+          <li class="post reveal">
+            <a href={`/writing/${post.id}`} class="post__link">
+              <span class="post__date">{fmt(post.data.pubDate)}</span>
+              <span class="post__body">
+                <h2 class="post__title">{post.data.title}</h2>
+                <p class="muted">{post.data.description}</p>
+              </span>
+              <span class="post__arrow arrow">→</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+  <style>
+    .posts { list-style: none; padding: 0; margin: 0; }
+    .post__link { display: grid; grid-template-columns: 140px 1fr auto; gap: 1.5rem; align-items: center; padding: 1.8rem 0; border-top: 1px solid var(--line-light); transition: padding 0.25s var(--ease); }
+    .post:first-child .post__link { border-top: 0; }
+    .post__link:hover { padding-left: 0.5rem; }
+    .post__date { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.08em; color: var(--canary-deep); text-transform: uppercase; }
+    .post__title { font-size: var(--step-2); color: var(--ink); margin-bottom: 0.4rem; line-height: 1.05; }
+    .post__arrow { color: var(--graphite); font-size: 1.4rem; }
+    .post__link:hover .post__arrow { color: var(--canary-deep); }
+    @media (max-width: 720px) { .post__link { grid-template-columns: 1fr; gap: 0.6rem; } .post__arrow { display: none; } }
+  </style>
+</Base>

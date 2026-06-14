@@ -1,0 +1,466 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, pillars } from '../lib/site';
+import { getCollection } from 'astro:content';
+
+// — Pull live, git-driven content —
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0, 3);
+
+const now = new Date();
+const upcoming = (await getCollection('events', ({ data }) => data.date >= now))
+  .sort((a, b) => a.data.date.getTime() - b.data.date.getTime())
+  .slice(0, 3);
+
+const fmtDate = (d: Date) =>
+  d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+
+// Real client logos (sourced from thepazbi.com). Rendered uniform-white on a dark band.
+const clients = [
+  { name: 'University of Westminster', src: '/images/logos/university-of-westminster-onlight.png' },
+  { name: 'Institute of Directors', src: '/images/logos/iod-onlight.png' },
+  { name: 'CILIP', src: '/images/logos/CILIP.png' },
+  { name: 'BNI', src: '/images/logos/bni.png' },
+  { name: 'Eric Lofholm', src: '/images/logos/eric-lofholm.png' },
+  { name: 'Trevor G Blake', src: '/images/logos/trevor-g-blake.png' },
+  { name: 'Super Star Sport', src: '/images/logos/super-star-sport.webp' },
+  { name: 'Two Fresh', src: '/images/logos/two-fresh.png' },
+  { name: 'CMS', src: '/images/logos/cms.webp' },
+  { name: 'Evolute Agency', src: '/images/logos/evolute-agency-onlight.png' },
+  { name: 'Warner Bros. Games', src: '/images/logos/warner-bros-games.webp' },
+  { name: 'Cupaz', src: '/images/logos/cupaz.png' },
+];
+---
+
+<Base>
+  {/* ============ HERO ============ */}
+  <section class="hero">
+    <div class="container container-wide hero__grid">
+      <div class="hero__copy">
+        <p class="hero__hi">Hey, I'm Pazbi <span class="wave" aria-hidden="true">👋</span></p>
+        <h1 class="hero__head">
+          Stay <span class="swipe">irreplaceable</span><br />
+          in an AI world.
+        </h1>
+        <p class="hero__sub">
+          I help leaders and their teams turn AI noise into systems, skills and revenue.
+          Fifteen years in the trenches of digital marketing. No jargon, no doom. I tell you
+          what you <em>need</em> to hear.
+        </p>
+        <div class="hero__actions">
+          <a href={site.bookingUrl} class="btn">{site.bookingLabel} to speak<span class="arrow">→</span></a>
+          <a href="/workshops" class="btn btn--ghost">Run a workshop</a>
+        </div>
+        <ul class="hero__meta">
+          <li><span class="hero__metaNum">15</span> years in digital marketing</li>
+          <li><span class="hero__metaNum">300+</span> companies worked with</li>
+          <li><span class="hero__metaNum">6</span> countries spoken in</li>
+        </ul>
+      </div>
+
+      <figure class="portrait">
+        <div class="portrait__frame" style="background-image:url('/images/pazbi-hero.jpg')"></div>
+        <span class="sticker portrait__sticker">AI, minus the hype</span>
+        <svg class="badge" viewBox="0 0 120 120" role="img" aria-label="Map. Build. Scale.">
+          <defs>
+            <path id="badgeArc" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0" />
+          </defs>
+          <circle cx="60" cy="60" r="59" class="badge__disc" />
+          <text class="badge__ring">
+            <textPath href="#badgeArc" startOffset="0" textLength="271" lengthAdjust="spacing">MAP · BUILD · SCALE ·</textPath>
+          </text>
+          <text x="60" y="70" text-anchor="middle" class="badge__star">✦</text>
+        </svg>
+      </figure>
+    </div>
+
+  </section>
+
+  {/* ============ CLIENT LOGOS ============ */}
+  <section class="logos">
+    <div class="container">
+      <p class="logos__label">Strategies deployed for</p>
+    </div>
+    <div class="logos__marquee" aria-hidden="true">
+      <div class="logos__track">
+        {[...clients, ...clients].map((c) => (
+          <img class="logos__logo" src={c.src} alt={c.name} loading="lazy" decoding="async" />
+        ))}
+      </div>
+    </div>
+    <ul class="sr-only">{clients.map((c) => <li>{c.name}</li>)}</ul>
+  </section>
+
+  {/* ============ THE METHOD: MAP · BUILD · SCALE ============ */}
+  <section class="section spine on-light">
+    <div class="container">
+      <header class="spine__head reveal">
+        <p class="hud">▸ THE METHOD</p>
+        <h2 class="spine__title">Map. Build. Scale.</h2>
+        <p class="lead muted">
+          The method I run with every business I work with. We map how you operate today,
+          build what you need, then scale it through your team so the growth sticks.
+        </p>
+      </header>
+
+      <div class="spine__grid">
+        {pillars.map((p, i) => (
+          <article class="pillar reveal" style={`transition-delay:${i * 90}ms`}>
+            <div class="pillar__top">
+              <span class="idx">0{i + 1}</span>
+              <span class="pillar__code">{p.code}</span>
+            </div>
+            <h3 class="pillar__word">{p.word}.</h3>
+            <p class="pillar__offer">{p.sub}</p>
+            <p class="pillar__line">{p.line}</p>
+          </article>
+        ))}
+      </div>
+
+      <div class="spine__cta reveal">
+        <a href={site.bookingUrl} class="btn">Map your business<span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ SIGNATURE KEYNOTE ============ */}
+  <section class="section keynote on-petrol">
+    <div class="container container-wide keynote__grid">
+      <div class="keynote__label reveal">
+        <p class="hud hud--no-dot">SIGNATURE KEYNOTE</p>
+        <span class="keynote__dur">45–60 min · adaptable</span>
+      </div>
+      <div class="keynote__body reveal">
+        <h2 class="keynote__title">How to Be Irreplaceable in an AI World</h2>
+        <p class="keynote__lede">
+          The talk that's filling rooms from London to Malta. A clear-eyed, funny, practical
+          look at what AI changes, what it doesn't, and the moves that keep your people and
+          your business at the centre of it.
+        </p>
+        <ul class="keynote__take">
+          <li>Why "AI will replace you" is the wrong question, and the one to ask instead</li>
+          <li>The three skills that compound when everything else is automated</li>
+          <li>A test for what to automate, augment, or leave alone</li>
+        </ul>
+        <a href="/speaking" class="btn btn--ghost">See all talks<span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ PROOF ============ */}
+  <section class="section proof on-light">
+    <div class="container">
+      <p class="hud proof__eyebrow reveal">▸ WHAT PEOPLE SAY</p>
+      <div class="proof__grid">
+        <blockquote class="quote reveal">
+          <p>
+            "Pazbi doesn't sell you the future, he hands you the controls. Our team left the
+            room with working automations and the confidence to keep going."
+          </p>
+          <cite>— Operations Director, professional services <span>(swap for your real testimonials)</span></cite>
+        </blockquote>
+        <blockquote class="quote reveal">
+          <p>
+            "He won't tell you what you want to hear. He'll tell you what you need to hear,
+            then he follows through."
+          </p>
+          <cite>— Recommendation, LinkedIn</cite>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ WORKSHOPS TEASER ============ */}
+  <section class="section ws">
+    <div class="container container-wide ws__grid">
+      <div class="ws__copy reveal">
+        <p class="hud">▸ AI DAY</p>
+        <h2 class="ws__title">Don't only hear about AI.<br /><span class="swipe swipe--clay">Build with it.</span></h2>
+        <p class="lead">
+          A hands-on day where your team ships working automations against your real
+          workflows, then leaves with a shared language and a plan you can run on Monday.
+        </p>
+        <a href="/workshops" class="btn">Explore workshops<span class="arrow">→</span></a>
+      </div>
+      <div class="ws__list reveal">
+        {[
+          ['Discovery', 'Map the workflows eating your week.'],
+          ['Build', 'Wire up live automations with the tools you already pay for.'],
+          ['Embed', 'Leave with playbooks, owners and a 90-day plan.'],
+        ].map(([t, d], i) => (
+          <div class="ws__row">
+            <span class="idx">0{i + 1}</span>
+            <div><h3 class="ws__rowTitle">{t}</h3><p class="muted">{d}</p></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ============ WRITING ============ */}
+  {posts.length > 0 && (
+    <section class="section writing on-light">
+      <div class="container">
+        <header class="rowhead reveal">
+          <h2 class="rowhead__title">Writing</h2>
+          <a href="/writing" class="rowhead__all">All posts <span class="arrow">→</span></a>
+        </header>
+        <div class="cards">
+          {posts.map((post, i) => (
+            <a href={`/writing/${post.id}`} class="card reveal" style={`transition-delay:${i * 80}ms`}>
+              <p class="card__date">{fmtDate(post.data.pubDate)}</p>
+              <h3 class="card__title">{post.data.title}</h3>
+              <p class="card__desc muted">{post.data.description}</p>
+              <div class="card__tags">{post.data.tags.slice(0, 2).map((t) => <span>{t}</span>)}</div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {/* ============ EVENTS ============ */}
+  {upcoming.length > 0 && (
+    <section class="section events">
+      <div class="container">
+        <header class="rowhead reveal">
+          <h2 class="rowhead__title">Upcoming</h2>
+          <a href="/events" class="rowhead__all">All events <span class="arrow">→</span></a>
+        </header>
+        <ul class="evlist">
+          {upcoming.map((ev) => (
+            <li class="ev reveal">
+              <span class="ev__date">{fmtDate(ev.data.date)}</span>
+              <span class="ev__type">{ev.data.type}</span>
+              <span class="ev__title">{ev.data.title}</span>
+              <span class="ev__loc muted">{ev.data.location}</span>
+              {ev.data.url && <a class="ev__link" href={ev.data.url} target="_blank" rel="noopener">Details ↗</a>}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {/* ============ ABOUT ============ */}
+  <section class="section about on-light">
+    <div class="container about__grid">
+      <div class="reveal">
+        <p class="hud">▸ WHO</p>
+        <h2 class="about__title">Greek-Polish kid. Fifteen years in digital marketing.<br />Now translating AI for the rooms that matter.</h2>
+      </div>
+      <div class="about__body reveal">
+        <p>
+          I'm Pazbi, founder of Kickass Online, and for over a decade the person SMEs call
+          when the web, SEO and automation need to <em>work</em> together.
+        </p>
+        <p>
+          I speak, run workshops and advise because the same thing keeps happening: good
+          teams frozen by AI hype. My job is to thaw it and make it concrete, human and
+          worth the money.
+        </p>
+        <a href="/about" class="btn btn--ghost">More about me<span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ---------- HERO ---------- */
+  .hero { padding-top: clamp(2.5rem, 2rem + 4vw, 5rem); position: relative; overflow: hidden; }
+  .hero__grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: center;
+    padding-bottom: clamp(3rem, 5vw, 5rem);
+  }
+  .hero__hi {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.04em;
+    color: var(--graphite);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+  }
+  .wave { display: inline-block; transform-origin: 70% 70%; animation: wave 2.6s var(--ease) infinite; }
+  @keyframes wave { 0%,60%,100% { transform: rotate(0deg); } 70% { transform: rotate(16deg); } 80% { transform: rotate(-8deg); } 90% { transform: rotate(12deg); } }
+  @media (prefers-reduced-motion: reduce) { .wave { animation: none; } }
+  .hero__head {
+    font-size: var(--step-5);
+    margin: 1rem 0 1.6rem;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+  .hero__sub { font-size: var(--step-1); line-height: 1.45; max-width: 42ch; color: var(--ink); }
+  .hero__sub em { color: var(--clay-deep); font-style: normal; font-weight: 600; }
+  .hero__actions { display: flex; flex-wrap: wrap; gap: 1rem; margin: 2.2rem 0 2.6rem; }
+  .hero__meta {
+    list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 2.2rem;
+    border-top: 1px solid var(--line-light); padding-top: 1.6rem;
+  }
+  .hero__meta li { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.04em; color: var(--graphite); }
+  .hero__metaNum { display: block; font-family: var(--font-display); font-size: 2rem; color: var(--ink); letter-spacing: -0.02em; }
+
+  /* portrait */
+  .portrait { margin: 0; position: relative; }
+  .portrait__frame {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    background: linear-gradient(160deg, var(--petrol), var(--ink-2));
+    background-size: cover;
+    background-position: center 18%;
+    border: 1px solid var(--line-light);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 30px 60px -28px rgba(28, 24, 21, 0.45);
+  }
+  .portrait__sticker { position: absolute; top: -0.8rem; left: -0.8rem; z-index: 3; box-shadow: 0 8px 20px -10px rgba(200,78,46,0.7); }
+
+  /* signature rotating badge */
+  .badge {
+    position: absolute;
+    right: -1.6rem;
+    bottom: -1.6rem;
+    width: clamp(96px, 11vw, 132px);
+    height: clamp(96px, 11vw, 132px);
+    z-index: 3;
+  }
+  .badge__disc { fill: var(--ink); }
+  .badge__ring {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    fill: var(--cream);
+    transform-origin: 60px 60px;
+    animation: spin 22s linear infinite;
+  }
+  .badge__star { fill: var(--canary); font-size: 22px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .badge__ring { animation: none; } }
+
+  /* client logos */
+  .logos {
+    padding-block: clamp(2.5rem, 2rem + 3vw, 4rem);
+    overflow: hidden;
+    background: #fff;
+    border-block: 1px solid var(--line-light);
+  }
+  .logos__label {
+    font-family: var(--font-mono); font-size: var(--step--1);
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--graphite); text-align: center; margin-bottom: 1.8rem;
+  }
+  .logos__marquee {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  }
+  .logos__track { display: flex; align-items: center; gap: clamp(2.8rem, 6vw, 6rem); width: max-content; animation: marquee 45s linear infinite; }
+  .logos__logo {
+    height: clamp(26px, 2.6vw, 42px); width: auto; flex: none;
+    opacity: 0.85; transition: opacity 0.25s var(--ease);   /* original brand colours on white */
+  }
+  .logos__logo:hover { opacity: 1; }
+  @keyframes marquee { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) {
+    .logos__track { animation: none; flex-wrap: wrap; justify-content: center; }
+    .logos__marquee { -webkit-mask-image: none; mask-image: none; }
+  }
+
+  /* ---------- SPINE ---------- */
+  .spine__head { max-width: 60ch; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+  .spine__title { font-size: var(--step-4); margin: 1rem 0 1.2rem; }
+  .spine__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  .pillar {
+    display: flex; flex-direction: column;
+    background: var(--bone-2);
+    border: 1px solid var(--line-light);
+    border-radius: var(--radius-lg);
+    padding: 1.8rem;
+    border-top: 3px solid var(--canary);
+  }
+  .pillar__top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+  .pillar__code { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.16em; color: var(--graphite); }
+  .pillar__word { font-size: var(--step-3); color: var(--ink); }
+  .pillar__offer { font-family: var(--font-mono); font-size: 0.85rem; letter-spacing: 0.05em; color: var(--ink); margin: 0.5rem 0 1rem; }
+  .pillar__line { color: var(--graphite); flex: 1; }
+  .spine__cta { margin-top: clamp(2rem, 4vw, 3rem); }
+
+  /* ---------- KEYNOTE ---------- */
+  .keynote__grid { display: grid; grid-template-columns: 0.4fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+  .keynote__dur { display: block; margin-top: 0.8rem; font-family: var(--font-mono); font-size: 0.78rem; color: rgba(243,240,232,0.6); letter-spacing: 0.05em; }
+  .keynote__title { font-size: var(--step-3); color: var(--bone); }
+  .keynote__lede { font-size: var(--step-1); line-height: 1.45; margin: 1.4rem 0 1.8rem; max-width: 52ch; color: rgba(243,240,232,0.92); }
+  .keynote__take { list-style: none; padding: 0; margin: 0 0 2rem; display: grid; gap: 0.8rem; }
+  .keynote__take li { padding-left: 1.6rem; position: relative; color: rgba(243,240,232,0.85); }
+  .keynote__take li::before { content: '▸'; position: absolute; left: 0; color: var(--canary); }
+
+  /* ---------- PROOF ---------- */
+  .proof__eyebrow { margin-bottom: 2rem; }
+  .proof__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .quote { margin: 0; padding: 2rem; background: var(--bone-2); border-left: 3px solid var(--canary); border-radius: var(--radius); }
+  .quote p { font-family: var(--font-display); font-weight: 600; font-size: var(--step-1); line-height: 1.25; color: var(--ink); letter-spacing: -0.01em; }
+  .quote cite { display: block; margin-top: 1.2rem; font-family: var(--font-mono); font-size: 0.78rem; font-style: normal; color: var(--graphite); letter-spacing: 0.04em; }
+  .quote cite span { color: var(--canary-deep); }
+
+  /* ---------- WORKSHOPS ---------- */
+  .ws__grid { display: grid; grid-template-columns: 1fr 0.8fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+  .ws__title { font-size: var(--step-3); margin: 1rem 0 1.4rem; }
+  .ws__list { display: grid; gap: 0.5rem; }
+  .ws__row { display: grid; grid-template-columns: auto 1fr; gap: 1.2rem; padding: 1.4rem 0; border-top: 1px solid var(--line-light); align-items: start; }
+  .ws__rowTitle { font-size: var(--step-1); color: var(--ink); margin-bottom: 0.3rem; }
+
+  /* ---------- ROW HEADERS / CARDS ---------- */
+  .rowhead { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2.5rem; border-bottom: 1px solid var(--line-light); padding-bottom: 1.2rem; }
+  .events .rowhead, .writing .rowhead { /* contextual */ }
+  .rowhead__title { font-size: var(--step-3); }
+  .rowhead__all { font-family: var(--font-mono); font-size: 0.82rem; letter-spacing: 0.06em; text-transform: uppercase; }
+  .rowhead__all:hover { color: var(--canary-deep); }
+
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  .card { display: flex; flex-direction: column; padding: 1.6rem; background: var(--bone-2); border: 1px solid var(--line-light); border-radius: var(--radius-lg); transition: transform 0.3s var(--ease), background 0.3s var(--ease); }
+  .card:hover { transform: translateY(-5px); background: #fff; }
+  .card__date { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.1em; color: var(--graphite); text-transform: uppercase; }
+  .card__title { font-size: var(--step-1); color: var(--ink); margin: 0.8rem 0; line-height: 1.1; }
+  .card__desc { flex: 1; font-size: var(--step--1); }
+  .card__tags { display: flex; gap: 0.5rem; margin-top: 1.2rem; }
+  .card__tags span { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.06em; color: var(--graphite); border: 1px solid var(--line-light); padding: 0.2em 0.6em; border-radius: 999px; }
+
+  /* ---------- EVENTS ---------- */
+  .evlist { list-style: none; padding: 0; margin: 0; }
+  .ev {
+    display: grid;
+    grid-template-columns: 130px 110px 1fr auto auto;
+    gap: 1.5rem; align-items: center;
+    padding: 1.3rem 0; border-top: 1px solid var(--line-light);
+  }
+  .ev:last-child { border-bottom: 1px solid var(--line-light); }
+  .ev__date { font-family: var(--font-mono); font-size: 0.82rem; color: var(--canary-deep); letter-spacing: 0.04em; }
+  .ev__type { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line-light); padding: 0.25em 0.6em; border-radius: 999px; width: fit-content; }
+  .ev__title { font-family: var(--font-display); font-weight: 600; font-size: var(--step-1); color: var(--ink); }
+  .ev__link { font-family: var(--font-mono); font-size: 0.78rem; color: var(--canary-deep); }
+
+  /* ---------- ABOUT ---------- */
+  .about__grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+  .about__title { font-size: var(--step-2); color: var(--ink); line-height: 1.05; }
+  .about__body { display: flex; flex-direction: column; gap: 1.2rem; }
+  .about__body p { color: var(--graphite); }
+  .about__body em { color: var(--ink); font-style: normal; font-weight: 600; }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 980px) {
+    .hero__grid { grid-template-columns: 1fr; }
+    .portrait { max-width: 420px; order: -1; }
+    .spine__grid, .cards { grid-template-columns: 1fr; }
+    .keynote__grid, .ws__grid, .about__grid, .proof__grid { grid-template-columns: 1fr; }
+    .ev { grid-template-columns: 1fr 1fr; gap: 0.5rem 1rem; }
+    .ev__title { grid-column: 1 / -1; }
+  }
+  @media (max-width: 560px) {
+    .hero__meta { gap: 1.4rem; }
+  }
+</style>

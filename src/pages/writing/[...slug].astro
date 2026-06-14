@@ -1,0 +1,43 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const fmt = (d: Date) => d.toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
+---
+<Base title={post.data.title} description={post.data.description}>
+  <article class="article">
+    <div class="container article__head">
+      <a href="/writing" class="back">← Writing</a>
+      <p class="hud">{post.data.tags.join(' · ') || 'ESSAY'}</p>
+      <h1 class="article__title">{post.data.title}</h1>
+      <p class="article__meta">
+        <span>{post.data.author}</span><span>·</span><span>{fmt(post.data.pubDate)}</span>
+      </p>
+    </div>
+    <div class="container container--prose">
+      <div class="prose"><Content /></div>
+    </div>
+  </article>
+  <style>
+    .article { padding-top: clamp(2.5rem, 2rem + 4vw, 5rem); }
+    .article__head { padding-bottom: 2.5rem; border-bottom: 1px solid var(--line-light); }
+    .back { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.06em; color: var(--muted); }
+    .back:hover { color: var(--canary); }
+    .article__title { font-size: var(--step-4); margin: 1.2rem 0 1.2rem; }
+    .article__meta { display: flex; gap: 0.6rem; font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); letter-spacing: 0.04em; }
+    .container--prose { max-width: 720px; }
+    .prose { padding-block: clamp(2.5rem, 5vw, 4rem); font-size: var(--step-1); line-height: 1.65; }
+    .prose :global(h2) { font-size: var(--step-2); margin: 2.4rem 0 1rem; color: var(--ink); }
+    .prose :global(p) { margin-bottom: 1.4rem; color: rgba(28,24,21,0.85); }
+    .prose :global(strong) { color: var(--clay-deep); font-weight: 600; }
+    .prose :global(ol), .prose :global(ul) { margin: 0 0 1.4rem 1.2rem; display: grid; gap: 0.7rem; color: rgba(28,24,21,0.85); }
+    .prose :global(a) { color: var(--canary-deep); text-decoration: underline; text-underline-offset: 3px; }
+  </style>
+</Base>
