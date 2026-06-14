@@ -1,30 +1,32 @@
-# THE PAZBI — thepazbi.com
+# thepazbi.com
 
-A fast, git-driven personal site for Pazbi Zavatzki: **keynote speaking, workshops, and AI/digital-transformation consultancy.**
+The personal site of **Pazbi Zavatzki** — keynote speaking, workshops, and AI / digital-transformation consultancy, built around the **Map · Build · Scale** method.
 
-Built with [Astro](https://astro.build). Everything — blog posts, events, workshops — is content-as-files. **You (or an agent) add a post, a talk, or a workshop by committing one markdown file.** No CMS, no dashboard.
+Built with [Astro](https://astro.build) as a fast static site. Content (blog posts, events, workshops, media) lives as files in the repo — add one by committing a Markdown or data entry. No CMS, no database.
 
----
+## Tech
 
-## Run it locally
+- **[Astro](https://astro.build)** — static output, zero client JS by default
+- Type-safe content collections validated at build time
+- Hosted on **Netlify** (auto-deploys on push to `main`); contact form via **Netlify Forms**
+- DNS / email forwarding via **Cloudflare**
+
+## Develop locally
 
 ```bash
 npm install
 npm run dev      # http://localhost:4321
 npm run build    # static output → ./dist
-npm run preview  # preview the build
+npm run preview  # preview the production build
 ```
 
-Node 18.20+, 20.3+ or 22+ required.
+Requires Node 20.3+ or 22+.
 
----
+## Adding content
 
-## The agentic / git-driven workflow
+All content lives in `src/content/`. Each file is validated against a schema (`src/content.config.ts`) at build time, so a malformed entry fails the build instead of breaking the live site.
 
-All content lives in `src/content/`. Each file is validated against a schema at build time (`src/content.config.ts`), so a malformed entry **fails the build loudly** instead of silently breaking the live site. That's exactly what you want when an agent is committing on your behalf.
-
-### Add a blog post
-Create `src/content/blog/my-post.md`:
+**Blog post** — `src/content/blog/my-post.md`:
 
 ```markdown
 ---
@@ -38,8 +40,7 @@ tags: ["AI", "Strategy"]
 Your markdown body here.
 ```
 
-### Add an event
-Create `src/content/events/my-event.md`:
+**Event** — `src/content/events/my-event.md`:
 
 ```markdown
 ---
@@ -57,42 +58,41 @@ featured: false
 
 Past events move to the "Past" list automatically once the date passes.
 
-### Add a workshop
-Create `src/content/workshops/my-workshop.md` (see `ai-day.md` for the full shape). Required: `title`, `tagline`, `duration`, `audience`, `outcomes` (list), `summary`. `order` controls position.
+**Workshop** — `src/content/workshops/my-workshop.md` (see `ai-day.md` for the full shape). Required: `title`, `tagline`, `duration`, `audience`, `outcomes` (list), `summary`; `order` controls position and `price` is optional.
 
----
+**Media appearance** — add an entry to the `media` array in `src/lib/media.ts` (podcast, talk, TV, award, etc.).
 
 ## Editing the essentials
 
-- **Booking link, nav, social, positioning** → `src/lib/site.ts` (single source of truth).
-- **The Map · Build · Scale spine** → `pillars` in `src/lib/site.ts`.
-- **Colours, fonts, spacing** → CSS variables at the top of `src/styles/global.css`.
-- **Hero portrait** → drop the generated image at `public/images/pazbi-hero.jpg` (4:5 portrait). The frame is styled to look intentional even before the image lands.
-- **Social share image** → `public/og/default.png` (1200×630).
-
----
-
-## Deploy (git push = live)
-
-Connect this repo to any of these — all auto-deploy on push to `main`:
-
-- **Vercel / Netlify / Cloudflare Pages** — zero config, detects Astro. Build command `npm run build`, output `dist`.
-- **GitHub Pages** — add the official Astro GitHub Action.
-
-Point the `thepazbi.com` DNS at the host once the first deploy is green.
-
----
+- **Name, nav, booking CTA, socials, the Map · Build · Scale method** → `src/lib/site.ts`
+- **Client logos** → `public/images/logos/` + the `clients` list in `src/pages/index.astro`
+- **Colours, fonts, spacing** → CSS variables at the top of `src/styles/global.css`
+- **Hero portrait** → `public/images/pazbi-hero.jpg` (4:5 portrait)
+- **Social share image** → `public/og/default.png` (1200×630)
+- **Old-URL redirects** → `public/_redirects`
 
 ## Structure
 
 ```
 src/
-  content/            ← the git-driven content (blog, events, workshops)
-  content.config.ts   ← schemas that validate every content file
-  lib/site.ts         ← nav, links, booking CTA, the T/B/G spine
-  layouts/Base.astro  ← shell, SEO meta, JSON-LD, scroll reveal
-  components/          ← Nav, Footer, PageHero
-  pages/              ← routes (index, speaking, workshops, consultancy, writing, events, about, contact)
-  styles/global.css   ← design system
-public/               ← images, og, favicon, robots
+  content/            content files (blog, events, workshops)
+  content.config.ts   schemas that validate every content file
+  lib/
+    site.ts           name, nav, links, socials, the Map · Build · Scale method
+    media.ts          press / media appearances
+  layouts/Base.astro  shell, SEO meta, JSON-LD
+  components/         Nav, Footer, PageHero
+  pages/              routes (home, speaking, workshops, consultancy,
+                      writing, events, media, about, contact, success, 404)
+  styles/global.css   design system
+public/               images, og, favicon, robots, _redirects
+netlify.toml          build settings
 ```
+
+## Deploy
+
+Pushing to `main` triggers a Netlify build (`npm run build` → `dist`). Old WordPress URLs are 301-redirected to their new paths via `public/_redirects`.
+
+---
+
+© Pazbi Zavatzki. All rights reserved.
