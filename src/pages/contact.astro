@@ -13,11 +13,12 @@ import { site, socialLinks } from '../lib/site';
   <section class="section">
     <div class="container contact">
       <div class="contact__form-wrap reveal">
-        <!--
-          Wire `action` to your form handler (Formspree, Web3Forms, Netlify Forms, etc.).
-          Until then this falls back to opening an email. Replace FORM_ENDPOINT below.
-        -->
-        <form class="cform" action="https://formspree.io/f/FORM_ENDPOINT" method="POST">
+        <!-- Handled by Netlify Forms. Submissions appear in the Netlify dashboard (Forms tab). -->
+        <form class="cform" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/success">
+          <input type="hidden" name="form-name" value="contact" />
+          <p class="cfield--hp" hidden>
+            <label>Leave this empty: <input name="bot-field" /></label>
+          </p>
           <div class="cfield">
             <label for="name">Name</label>
             <input id="name" name="name" type="text" required autocomplete="name" />
