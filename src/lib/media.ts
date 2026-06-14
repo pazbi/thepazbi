@@ -53,7 +53,7 @@ export const media = [
   {
     group: 'Talks & TV', type: 'Talk',
     title: 'Brain Gain: Neurodiversity for an Inclusive Work Culture', outlet: 'Magnify Conference',
-    href: 'https://www.magnifyconference.com/programme/pazbi-zavatzki', thumb: '/images/media/download.jpeg',
+    href: 'https://www.claudiahopkins.com/magnify', thumb: '/images/media/download.jpeg',
   },
   {
     group: 'Talks & TV', type: 'Webinar',
