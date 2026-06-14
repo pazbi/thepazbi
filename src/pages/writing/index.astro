@@ -8,7 +8,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 const fmt = (d: Date) => d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
 ---
 <Base title="Writing" description="Essays on AI, automation and staying irreplaceable, by Pazbi Zavatzki.">
-  <PageHero eyebrow="▸ WRITING" title="Notes from the noise." lede="Short, opinionated pieces on AI, automation and the human edge. No hype, no homework." />
+  <PageHero eyebrow="▸ WRITING" title="Notes from the noise." lede="Short, opinionated pieces on AI, automation and the human edge." />
   <section class="section on-light">
     <div class="container">
       <ul class="posts">

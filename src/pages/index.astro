@@ -155,17 +155,29 @@ const clients = [
       <div class="proof__grid">
         <blockquote class="quote reveal">
           <p>
-            "Pazbi doesn't sell you the future, he hands you the controls. Our team left the
-            room with working automations and the confidence to keep going."
+            "Anytime I've interacted with Pazbi, his kindness and integrity have stood out.
+            He isn't just about building websites — he's about building businesses. His
+            holistic strategic approach to digital marketing ensures that every decision
+            drives real, measurable growth."
           </p>
-          <cite>— Operations Director, professional services <span>(swap for your real testimonials)</span></cite>
+          <cite>— Anna Rooney, PhD Researcher in AI and Critical Thinking</cite>
         </blockquote>
         <blockquote class="quote reveal">
           <p>
-            "He won't tell you what you want to hear. He'll tell you what you need to hear,
-            then he follows through."
+            "After working with Pazbi for a short time I honestly don't know how I managed
+            without him. Continuously impressed with his knowledge on all things digital —
+            from SEO to content creation, he's the first person I turn to to check it's the
+            best solution for my website."
           </p>
-          <cite>— Recommendation, LinkedIn</cite>
+          <cite>— Sarah Sessions, Event and Brand Content Photographer</cite>
+        </blockquote>
+        <blockquote class="quote reveal">
+          <p>
+            "He is generous with his time and knowledge to clients and colleagues — a rare
+            breed of professional who does it because he knows he can add real value, instead
+            of seeing an angle where it benefits him."
+          </p>
+          <cite>— David Clark-Waugh, Director of Clark &amp; Waugh</cite>
         </blockquote>
       </div>
     </div>
@@ -373,7 +385,7 @@ const clients = [
 
   /* ---------- SPINE ---------- */
   .spine__head { max-width: 60ch; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
-  .spine__title { font-size: var(--step-4); margin: 1rem 0 1.2rem; }
+  .spine__title { font-size: var(--step-4); margin: 1rem 0 1.2rem; white-space: nowrap; }
   .spine__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
   .pillar {
     display: flex; flex-direction: column;
@@ -401,7 +413,7 @@ const clients = [
 
   /* ---------- PROOF ---------- */
   .proof__eyebrow { margin-bottom: 2rem; }
-  .proof__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .proof__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
   .quote { margin: 0; padding: 2rem; background: var(--bone-2); border-left: 3px solid var(--canary); border-radius: var(--radius); }
   .quote p { font-family: var(--font-display); font-weight: 600; font-size: var(--step-1); line-height: 1.25; color: var(--ink); letter-spacing: -0.01em; }
   .quote cite { display: block; margin-top: 1.2rem; font-family: var(--font-mono); font-size: 0.78rem; font-style: normal; color: var(--graphite); letter-spacing: 0.04em; }

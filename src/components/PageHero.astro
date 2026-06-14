@@ -6,7 +6,7 @@ const { eyebrow, title, lede } = Astro.props;
   <div class="container">
     <p class="hud">{eyebrow}</p>
     <h1 class="phead__title"><slot name="title">{title}</slot></h1>
-    {lede && <p class="phead__lede lead">{lede}</p>}
+    {lede && <p class="phead__lede lead" set:html={lede} />}
     <slot />
   </div>
 </header>
