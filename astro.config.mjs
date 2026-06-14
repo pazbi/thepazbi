@@ -10,7 +10,7 @@ export default defineConfig({
   redirects: {
     '/insights': '/writing',
     '/pazbiz-events': '/events',
-    '/press': '/',
+    '/press': '/media',
     '/will-ai-replace-jobs-in-the-uk': '/writing/will-ai-replace-jobs-in-the-uk',
     '/how-to-get-better-ai-responses-for-your-business': '/writing/how-to-get-better-ai-responses-for-your-business',
     '/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images': '/writing/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images',

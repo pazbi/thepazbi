@@ -1,0 +1,83 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../lib/site';
+import { media } from '../lib/media';
+
+const groups = ['Podcasts & interviews', 'Talks & TV', 'Awards & recognition'];
+---
+<Base title="Media" description="Podcasts, interviews, talks, TV appearances and awards featuring Pazbi Zavatzki.">
+  <PageHero
+    eyebrow="▸ MEDIA"
+    title="Talks, podcasts & press."
+    lede="A selection of the interviews, talks, TV spots and awards from along the way."
+  >
+    <div class="phead-actions"><a href={site.bookingUrl} class="btn">Invite me on<span class="arrow">→</span></a></div>
+  </PageHero>
+
+  {groups.map((g) => {
+    const items = media.filter((m) => m.group === g);
+    if (!items.length) return null;
+    return (
+      <section class="section on-light mgroup">
+        <div class="container">
+          <p class="hud">▸ {g.toUpperCase()}</p>
+          <div class="mgrid">
+            {items.map((m) => {
+              const Tag = m.href ? 'a' : 'div';
+              const props = m.href ? { href: m.href, target: '_blank', rel: 'noopener' } : {};
+              return (
+                <Tag class:list={['mcard', { 'mcard--static': !m.href }]} {...props}>
+                  <div class="mcard__thumb" style={`background-image:url('${m.thumb}')`}>
+                    <span class="mcard__type">{m.type}</span>
+                    {m.video && <span class="mcard__play" aria-hidden="true">▶</span>}
+                  </div>
+                  <div class="mcard__body">
+                    <h3 class="mcard__title">{m.title}</h3>
+                    {m.outlet && <p class="mcard__outlet">{m.outlet}</p>}
+                  </div>
+                </Tag>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+    );
+  })}
+
+  <style>
+    .phead-actions { margin-top: 2rem; }
+    .mgroup + .mgroup { padding-top: 0; }
+    .mgroup .hud { margin-bottom: 1.8rem; }
+    .mgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .mcard {
+      display: flex; flex-direction: column;
+      background: #fff; border: 1px solid var(--line-light); border-radius: var(--radius-lg);
+      overflow: hidden; transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+    }
+    a.mcard:hover { transform: translateY(-5px); box-shadow: 0 18px 40px -22px rgba(28,24,21,0.5); }
+    .mcard--static { cursor: default; }
+    .mcard__thumb {
+      position: relative; aspect-ratio: 16 / 9; background-size: cover; background-position: center;
+      background-color: var(--bone-2);
+    }
+    .mcard__type {
+      position: absolute; top: 0.7rem; left: 0.7rem;
+      font-family: var(--font-mono); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--ink); background: var(--canary);
+      padding: 0.3em 0.6em; border-radius: var(--radius-pill);
+    }
+    .mcard__play {
+      position: absolute; inset: 0; margin: auto; width: 3rem; height: 3rem;
+      display: grid; place-items: center; color: #fff; font-size: 0.9rem;
+      background: rgba(28,24,21,0.55); border-radius: 50%; backdrop-filter: blur(2px);
+      padding-left: 0.15em; transition: background 0.25s var(--ease), transform 0.25s var(--ease);
+    }
+    a.mcard:hover .mcard__play { background: var(--clay); transform: scale(1.08); }
+    .mcard__body { padding: 1.2rem 1.3rem 1.4rem; display: flex; flex-direction: column; gap: 0.3rem; flex: 1; }
+    .mcard__title { font-size: var(--step-0); line-height: 1.2; color: var(--ink); }
+    .mcard__outlet { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.04em; color: var(--graphite); }
+    @media (max-width: 900px) { .mgrid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .mgrid { grid-template-columns: 1fr; } }
+  </style>
+</Base>

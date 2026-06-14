@@ -27,6 +27,7 @@ export const site = {
     { label: 'Consultancy', href: '/consultancy' },
     { label: 'Writing', href: '/writing' },
     { label: 'Events', href: '/events' },
+    { label: 'Media', href: '/media' },
     { label: 'About', href: '/about' },
   ],
 };
