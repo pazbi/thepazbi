@@ -36,6 +36,11 @@ export const media = [
 
   // ---- Talks & TV ----
   {
+    group: 'Talks & TV', type: 'Talk', video: true,
+    title: 'What It Takes to Be Irreplaceable in an AI World', outlet: 'University of Westminster',
+    href: 'https://www.youtube.com/watch?v=mDNHR5RiqwY', thumb: '/images/media/yt-mDNHR5RiqwY.jpg',
+  },
+  {
     group: 'Talks & TV', type: 'TV', video: true,
     title: 'Greek Stories with Avgoustinos, Episode 33', outlet: 'Hellenic TV',
     href: 'https://www.youtube.com/watch?v=2kbInhncyYE', thumb: '/images/media/yt-2kbInhncyYE.jpg',
