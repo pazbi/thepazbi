@@ -16,9 +16,8 @@
   --ink-3: #3a332b;        /* hairlines on dark */
   --petrol: #11423f;       /* deep teal-petrol, dark accent anchor */
   --petrol-2: #0d3633;
-  --cream: #fbf7ee;        /* warm paper, primary LIGHT base */
-  --bone: #f4eddd;         /* warm paper, alt sections */
-  --bone-2: #ece2cf;       /* paper, slightly deeper (cards) */
+  --cream: #fbf7ee;        /* warm paper, light base */
+  --bone: #ece2cf;         /* deeper warm paper — cards & raised surfaces */
   --canary: #ffd400;       /* THE signature accent — golden yellow */
   --canary-deep: #d8a800;  /* darker canary for text/links on light */
   --clay: #e7613e;         /* playful warm coral/terracotta secondary */
@@ -181,13 +180,13 @@ h1, h2, h3, h4 {
 }
 .btn--ghost:hover { background: transparent; border-color: var(--ink); color: var(--ink); box-shadow: none; }
 
-.on-petrol .btn--ghost, .on-dark .btn--ghost { --btn-fg: var(--bone); border-color: var(--line-dark); }
+.on-petrol .btn--ghost, .on-dark .btn--ghost { --btn-fg: var(--cream); border-color: var(--line-dark); }
 .on-petrol .btn--ghost:hover, .on-dark .btn--ghost:hover { border-color: var(--canary); color: var(--canary); }
 
 /* Section contexts */
-.on-light { background: var(--bone); color: var(--ink); }   /* warm alt shade vs. cream base */
+.on-light { background: var(--cream); color: var(--ink); }   /* light paper base */
 .on-light .hud { color: var(--graphite); }
-.on-petrol, .on-dark { color: var(--bone); }
+.on-petrol, .on-dark { color: var(--cream); }
 .on-petrol { background: var(--petrol); }
 .on-dark { background: var(--ink-2); }
 .on-petrol .hud, .on-dark .hud { color: rgba(244, 238, 224, 0.7); }
