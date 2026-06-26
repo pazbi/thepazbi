@@ -1,0 +1,41 @@
+# Pazbi Zavatzki
+
+> Pazbi Zavatzki (often searched as "Pazbi" or "Panagiotis Zavatzki") is a keynote speaker, workshop leader and AI advisor. He helps leaders and their teams stay irreplaceable in an AI world — turning AI hype into systems, skills and revenue. Greek-born, London-based, with fifteen years in digital marketing and 300+ companies worked with. Founder of Kickass Online and Neuroinclusive Standards.
+
+## About
+
+- Signature method: **Map · Build · Scale** — map how a business runs today, build the fix (workshop, training, automation), then scale it through the team so growth holds.
+- Signature keynote: **How to Be Irreplaceable in an AI World** (45–60 min, adaptable) — what AI changes, what it doesn't, and the moves that keep people and businesses at the centre.
+- Topics he speaks and advises on: Artificial Intelligence, Generative AI, Digital Transformation, Business Automation, Business Strategy, and Neurodiversity in the workplace.
+- Based in the United Kingdom; speaks internationally (has spoken in 6 countries).
+- Contact / booking: hello@thepazbi.com
+
+## Key pages
+
+- [Home](https://thepazbi.com/): Overview, the Map · Build · Scale method, and signature keynote.
+- [Speaking](https://thepazbi.com/speaking): Keynotes and talks available for booking.
+- [Workshops](https://thepazbi.com/workshops): Hands-on AI and automation workshops for teams.
+- [Consultancy](https://thepazbi.com/consultancy): AI and digital transformation advisory.
+- [About](https://thepazbi.com/about): Full biography and story.
+- [Events](https://thepazbi.com/events): Upcoming and past appearances.
+- [Media](https://thepazbi.com/media): Podcasts, interviews, talks, TV and awards.
+- [Writing](https://thepazbi.com/writing): Articles on AI, automation and business.
+- [Contact](https://thepazbi.com/contact): Booking and enquiries.
+- [For AI agents](https://thepazbi.com/ai): A structured profile written for AI assistants.
+
+## Writing
+
+- [How to Be Irreplaceable: AI Won't Take Your Job](https://thepazbi.com/writing/ai-wont-take-your-job)
+- [How to Get Better AI Responses for Your Business](https://thepazbi.com/writing/how-to-get-better-ai-responses-for-your-business)
+- [Three AI Use Cases](https://thepazbi.com/writing/three-ai-usecases)
+- [Why AI Is the Ultimate Game-Changer for SMEs](https://thepazbi.com/writing/why-ai-is-the-ultimate-game-changer-for-smes)
+- [Will AI Replace Jobs in the UK?](https://thepazbi.com/writing/will-ai-replace-jobs-in-the-uk)
+- [Stop Buying Tools](https://thepazbi.com/writing/stop-buying-tools)
+- [How to Train a LoRA on Replicate for Personalised AI Images](https://thepazbi.com/writing/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images)
+
+## Optional
+
+- [RSS feed](https://thepazbi.com/rss.xml): Latest writing.
+- [Sitemap](https://thepazbi.com/sitemap-index.xml): Full list of pages.
+- [LinkedIn](https://www.linkedin.com/in/pazbi)
+- [YouTube](https://www.youtube.com/@PazbiZavatzki)

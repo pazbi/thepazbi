@@ -10,8 +10,26 @@ const talks = [
   { code: 'SME', title: 'Small Business, Big Leverage', len: '30 min', desc: 'The handful of AI moves that punch above their weight for owner-led businesses.' },
 ];
 const formats = ['Conference keynotes', 'Leadership offsites', 'Award evenings', 'Panels & firesides', 'Virtual events'];
+
+// Keynote speaking as a bookable service, with the signature talks as a catalogue.
+const speakingSchema = {
+  '@type': 'Service',
+  name: 'Keynote speaking',
+  serviceType: 'Keynote speaker',
+  description: 'Keynotes and talks on AI, digital transformation and staying irreplaceable, tailored to your audience and theme.',
+  provider: { '@id': `${site.url}/#person` },
+  areaServed: { '@type': 'Place', name: 'Worldwide' },
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Talks',
+    itemListElement: talks.map((t) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name: t.title, description: t.desc },
+    })),
+  },
+};
 ---
-<Base title="Speaking" description="Book Pazbi Zavatzki to speak: keynotes on AI, digital transformation and staying irreplaceable.">
+<Base title="Speaking" description="Book Pazbi Zavatzki to speak: keynotes on AI, digital transformation and staying irreplaceable." schema={speakingSchema}>
   <PageHero
     eyebrow="▸ KEYNOTES & TALKS"
     title="Talks that send people back to work different."

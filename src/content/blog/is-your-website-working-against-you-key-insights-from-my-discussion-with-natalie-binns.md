@@ -7,7 +7,7 @@ tags: ["Web","Marketing"]
 
 As the founder of [KICKASS ONLINE](https://kickassonline.com), I recently had the pleasure of joining [Natalie Binns](https://www.linkedin.com/in/natalie-binns-1690491/), co-founder and Fractional CMO Growth Advisor at [HeyGabbi](https://www.heygabbi.com/), for an insightful discussion about website strategy and the evolving digital world. These are the key takeaways from our conversation about making your website work for your business.
 
-[![](/images/blog/is-your-website-working-against-you-key-insights-from-my-discussion-with-natalie-binns/is-your-website-working-against-you-2-1024x575.jpg)](https://www.zoom.us/clips/share/QP6K2qESQQi2pBIrKwtZSQ)
+[![Pazbi Zavatzki and Natalie Binns on the "Is Your Website Working Against You?" webinar — click to watch the recording](/images/blog/is-your-website-working-against-you-key-insights-from-my-discussion-with-natalie-binns/is-your-website-working-against-you-2-1024x575.jpg)](https://www.zoom.us/clips/share/QP6K2qESQQi2pBIrKwtZSQ)
 
 [You can click the image to listen to the webinar](https://www.zoom.us/clips/share/QP6K2qESQQi2pBIrKwtZSQ)
 

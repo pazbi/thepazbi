@@ -2,14 +2,38 @@
 import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
 import { getCollection } from 'astro:content';
+import { site } from '../../lib/site';
 
 const all = await getCollection('events');
 const now = new Date();
 const upcoming = all.filter((e) => e.data.date >= now).sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
 const past = all.filter((e) => e.data.date < now).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 const fmt = (d: Date) => d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+
+// Event structured data — one node per listed appearance.
+const eventSchema = all.map((ev) => ({
+  '@type': 'Event',
+  name: ev.data.title,
+  startDate: ev.data.date.toISOString(),
+  ...(ev.data.endDate ? { endDate: ev.data.endDate.toISOString() } : {}),
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  eventStatus: 'https://schema.org/EventScheduled',
+  description: ev.data.description,
+  ...(ev.data.url ? { url: ev.data.url } : {}),
+  location: {
+    '@type': 'Place',
+    name: ev.data.location,
+    address: {
+      '@type': 'PostalAddress',
+      ...(ev.data.city ? { addressLocality: ev.data.city } : {}),
+      ...(ev.data.country ? { addressCountry: ev.data.country } : {}),
+    },
+  },
+  performer: { '@id': `${site.url}/#person` },
+  organizer: { '@id': `${site.url}/#person` },
+}));
 ---
-<Base title="Events" description="Where to catch Pazbi next: keynotes, workshops and firesides.">
+<Base title="Events" description="Where to catch Pazbi next: keynotes, workshops and firesides." schema={eventSchema}>
   <PageHero eyebrow="▸ EVENTS" title="Where to catch me next." lede="Keynotes, workshops and conversations, public and private.<br />Want me at yours?" />
 
   <section class="section">

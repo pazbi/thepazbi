@@ -17,25 +17,25 @@ Before training your LoRA, you need to **set up a model repository on Hugging Fa
 
 2\. Go to the **Model Hub** and click **“New Model”**.
 
-![](/images/blog/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images/Screenshot-2025-02-17-at-12.20.06-1024x589.jpg)
+![Hugging Face Model Hub with the "New Model" button highlighted](/images/blog/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images/Screenshot-2025-02-17-at-12.20.06-1024x589.jpg)
 
 New Model menu
 
 3\. Name your model (e.g., yourname-lora) and set it to **public or private**. (Private is good but sometimes it can cause access issues, so start Private and if needed change to public temporarily)
 
-![](/images/blog/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images/Screenshot-2025-02-17-at-12.20.29-1024x992.jpg)
+![Hugging Face "Create a new model" form, naming the model and setting it to public or private](/images/blog/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images/Screenshot-2025-02-17-at-12.20.29-1024x992.jpg)
 
 Create new model window
 
 4\. Go to **Settings > Access Tokens** and create a **new API token** with **write access**.
 
-![](/images/blog/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images/Screenshot-2025-02-17-at-12.21.54-1024x749.jpg)
+![Hugging Face Access Tokens settings, creating a new API token with write access](/images/blog/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images/Screenshot-2025-02-17-at-12.21.54-1024x749.jpg)
 
 API Key Creation Window
 
 5\. Copy down your Access Key - **IT WILL NEVER BE SHOWN AGAIN**
 
-![](/images/blog/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images/Screenshot-2025-02-17-at-12.22.09-1024x626.jpg)
+![Hugging Face displaying the newly generated access token, shown only once before it is hidden](/images/blog/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images/Screenshot-2025-02-17-at-12.22.09-1024x626.jpg)
 
 Final chance to get your access key!
 
@@ -55,7 +55,7 @@ To train a LoRA model effectively, you need a dataset of high-quality images of 
 
 💡 **Tip:** Vary your dataset. The more variation, the better the model generalises.
 
-![](/images/blog/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images/Screenshot-2025-02-17-at-12.12.30-1-1024x935.jpg)
+![A folder of varied headshot photos prepared as LoRA training images](/images/blog/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images/Screenshot-2025-02-17-at-12.12.30-1-1024x935.jpg)
 
 **Folder with potential training images**
 
@@ -75,7 +75,7 @@ Now that you have a Hugging Face model set up, you can **train your LoRA model o
 
 • Choose your trigger word e.g YOURNAME (this will tell the Generative model to use the training data you've created)
 
-![](/images/blog/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images/Screenshot-2025-02-17-at-12.25.52-976x1024.jpg)
+![Replicate flux-dev-lora-trainer form, setting the destination model, input images zip and trigger word](/images/blog/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images/Screenshot-2025-02-17-at-12.25.52-976x1024.jpg)
 
 Training model form
 
@@ -89,11 +89,11 @@ Training model form
 
 • Select the **Hugging Face model** you created earlier as the output destination.
 
-![](/images/blog/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images/Screenshot-2025-02-17-at-12.27.16-855x1024.jpg)
+![Replicate training settings showing training steps, LoRA rank and the Hugging Face API key and output model fields](/images/blog/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images/Screenshot-2025-02-17-at-12.27.16-855x1024.jpg)
 
 5\. Start the training process and wait for it to finish - it can take around 20 - 30 minutes. Put a cuppa on. Hopefully you will get this when done.
 
-![](/images/blog/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images/Screenshot-2025-02-17-at-12.50.25-697x1024.jpg)
+![Replicate showing the LoRA training run completed successfully](/images/blog/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images/Screenshot-2025-02-17-at-12.50.25-697x1024.jpg)
 
 Screenshot
 
@@ -121,7 +121,7 @@ pipe.load_lora_weights(lora_path)
 pipe.to("cuda")  # Use GPU if available
 ```
 
-![](/images/blog/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images/Screenshot-2025-02-17-at-13.03.35-1024x723.jpg)
+![Google Colab notebook with Python code loading the Stable Diffusion XL base model and attaching the trained LoRA weights](/images/blog/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images/Screenshot-2025-02-17-at-13.03.35-1024x723.jpg)
 
 Screenshot
 
@@ -133,7 +133,7 @@ image = pipe(prompt).images[0]
 image.show()
 ```
 
-![](/images/blog/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images/podcast2-1024x796.webp)
+![AI-generated headshot of Pazbi as a confident podcaster, produced from the trained LoRA model](/images/blog/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images/podcast2-1024x796.webp)
 
 ## **Step 4b: Generate Images Using Flux-Dev-LoRA on Replicate**
 
@@ -151,7 +151,7 @@ Instead of using Hugging Face locally, you can generate images directly using [*
 
 • **LoRA Model**: Enter the URL of your trained LoRA model on Hugging Face.
 
-![](/images/blog/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images/Screenshot-2025-02-17-at-13.08.54-1024x154.jpg)
+![Flux-Dev-LoRA on Replicate with the prompt field and the trained LoRA model URL entered](/images/blog/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images/Screenshot-2025-02-17-at-13.08.54-1024x154.jpg)
 
 Screenshot
 
@@ -161,7 +161,7 @@ Screenshot
 
 4\. Once the image is ready, download it and review the results.
 
-![](/images/blog/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images/Screenshot-2025-02-17-at-13.08.36-1024x508.jpg)
+![Generated image ready to download in the Replicate Flux-Dev-LoRA output panel](/images/blog/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images/Screenshot-2025-02-17-at-13.08.36-1024x508.jpg)
 
 Screenshot
 
@@ -175,7 +175,7 @@ Now that your images are generated, you can save and edit them for social media.
 
 • Upload your AI-generated headshots to LinkedIn, Twitter, or other platforms.
 
-![](/images/blog/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images/desk-1024x585.webp)
+![AI-generated image of Pazbi working at a desk, created with the personalised LoRA model](/images/blog/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images/desk-1024x585.webp)
 
 **Final Thoughts**
 
@@ -187,4 +187,4 @@ Give it a try and share your AI-generated headshots with me.
 
 Also for you who made it all the way through. Here is my favourite blooper.
 
-![](/images/blog/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images/networking-1024x796.webp)
+![A funny AI-generated blooper image from the LoRA model, with distorted features](/images/blog/how-to-train-a-lora-on-replicate-and-use-it-for-personalised-ai-generated-images/networking-1024x796.webp)

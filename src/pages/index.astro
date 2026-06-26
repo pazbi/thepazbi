@@ -18,22 +18,27 @@ const fmtDate = (d: Date) =>
 
 // Real client logos (sourced from thepazbi.com). Rendered uniform-white on a dark band.
 const clients = [
-  { name: 'University of Westminster', src: '/images/logos/university-of-westminster-onlight.png' },
-  { name: 'Institute of Directors', src: '/images/logos/iod-onlight.png' },
-  { name: 'CILIP', src: '/images/logos/CILIP.png' },
-  { name: 'BNI', src: '/images/logos/bni.png' },
-  { name: 'Eric Lofholm', src: '/images/logos/eric-lofholm.png' },
-  { name: 'Trevor G Blake', src: '/images/logos/trevor-g-blake.png' },
-  { name: 'Super Star Sport', src: '/images/logos/super-star-sport.webp' },
-  { name: 'Two Fresh', src: '/images/logos/two-fresh.png' },
-  { name: 'CMS', src: '/images/logos/cms.webp' },
-  { name: 'Evolute Agency', src: '/images/logos/evolute-agency-onlight.png' },
-  { name: 'Warner Bros. Games', src: '/images/logos/warner-bros-games.webp' },
-  { name: 'Cupaz', src: '/images/logos/cupaz.png' },
+  { name: 'University of Westminster', src: '/images/logos/university-of-westminster-onlight.png', w: 480, h: 260 },
+  { name: 'Institute of Directors', src: '/images/logos/iod-onlight.png', w: 500, h: 436 },
+  { name: 'CILIP', src: '/images/logos/CILIP.png', w: 3840, h: 797 },
+  { name: 'BNI', src: '/images/logos/bni.png', w: 666, h: 375 },
+  { name: 'Eric Lofholm', src: '/images/logos/eric-lofholm.png', w: 600, h: 131 },
+  { name: 'Trevor G Blake', src: '/images/logos/trevor-g-blake.png', w: 350, h: 141 },
+  { name: 'Super Star Sport', src: '/images/logos/super-star-sport.webp', w: 322, h: 150 },
+  { name: 'Two Fresh', src: '/images/logos/two-fresh.png', w: 300, h: 225 },
+  { name: 'CMS', src: '/images/logos/cms.webp', w: 419, h: 242 },
+  { name: 'Evolute Agency', src: '/images/logos/evolute-agency-onlight.png', w: 600, h: 144 },
+  { name: 'Warner Bros. Games', src: '/images/logos/warner-bros-games.webp', w: 916, h: 272 },
+  { name: 'Cupaz', src: '/images/logos/cupaz.png', w: 219, h: 77 },
 ];
 ---
 
+
 <Base>
+  <Fragment slot="head">
+    <link rel="preload" as="image" href="/images/pazbi-hero.jpg" fetchpriority="high" />
+  </Fragment>
+
   {/* ============ HERO ============ */}
   <section class="hero">
     <div class="container container-wide hero__grid">
@@ -60,7 +65,7 @@ const clients = [
       </div>
 
       <figure class="portrait">
-        <div class="portrait__frame" style="background-image:url('/images/pazbi-hero.jpg')"></div>
+        <div class="portrait__frame" role="img" aria-label="Pazbi Zavatzki, keynote speaker and AI advisor" style="background-image:url('/images/pazbi-hero.jpg')"></div>
         <span class="sticker portrait__sticker">AI, minus the hype</span>
         <svg class="badge" viewBox="0 0 120 120" role="img" aria-label="Map. Build. Scale.">
           <defs>
@@ -85,7 +90,7 @@ const clients = [
     <div class="logos__marquee" aria-hidden="true">
       <div class="logos__track">
         {[...clients, ...clients].map((c) => (
-          <img class="logos__logo" src={c.src} alt={c.name} loading="lazy" decoding="async" />
+          <img class="logos__logo" src={c.src} alt={`${c.name} logo`} width={c.w} height={c.h} loading="lazy" decoding="async" />
         ))}
       </div>
     </div>

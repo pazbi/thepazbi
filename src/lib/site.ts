@@ -9,6 +9,8 @@ export const site = {
   description:
     'Pazbi Zavatzki helps organisations stay irreplaceable in an AI world: keynotes, workshops and advisory on digital transformation, AI and automation.',
   email: 'hello@thepazbi.com',
+  // X / Twitter handle for card attribution.
+  xHandle: '@pazbi',
   // Primary money action. Change in one place; it updates everywhere.
   bookingUrl: '/contact',
   bookingLabel: 'Book Pazbi',

@@ -28,7 +28,7 @@ const groups = ['Podcasts & interviews', 'Talks & TV', 'Awards & recognition'];
               const props = m.href ? { href: m.href, target: '_blank', rel: 'noopener' } : {};
               return (
                 <Tag class:list={['mcard', { 'mcard--static': !m.href }]} {...props}>
-                  <div class="mcard__thumb" style={`background-image:url('${m.thumb}')`}>
+                  <div class="mcard__thumb" role="img" aria-label={`${m.title}${m.outlet ? ` — ${m.outlet}` : ''}`} style={`background-image:url('${m.thumb}')`}>
                     <span class="mcard__type">{m.type}</span>
                     {m.video && <span class="mcard__play" aria-hidden="true">▶</span>}
                   </div>

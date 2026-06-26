@@ -17,7 +17,7 @@ This connection felt serendipitous, almost like an affirmation that I’d been g
 
 What was once my favourite colour suddenly became a symbol of something much bigger. It was no longer a shade that made me happy; it was a representation of my identity, my journey, and my superpowers.
 
-![](/images/blog/the-joy-of-sunflower-yellow-how-my-favourite-colour-became-my-brand/adhd-awareness.jpg)
+![ADHD awareness ribbon in a sunflower-yellow shade, the colour that mirrors Pazbi's signature brand colour](/images/blog/the-joy-of-sunflower-yellow-how-my-favourite-colour-became-my-brand/adhd-awareness.jpg)
 
 **Yellow as a Reflection of My Neurodivergence**
 
@@ -39,7 +39,7 @@ While sunflower yellow has deeply personal meaning for me, it also happens to be
 
 For me, sunflower yellow isn’t only a colour; it’s a reminder of who I am and what I stand for. It’s a reflection of my resilience in the face of challenges and my optimism for what’s ahead. It’s also a subtle way of honouring the ADHD community, a group that’s taught me to celebrate the beauty of thinking differently.
 
-![](/images/blog/the-joy-of-sunflower-yellow-how-my-favourite-colour-became-my-brand/sunflowers-768x1024.jpg)
+![A tall field of bright sunflowers reaching towards a clear blue sky](/images/blog/the-joy-of-sunflower-yellow-how-my-favourite-colour-became-my-brand/sunflowers-768x1024.jpg)
 
 **What’s Your Sunflower Yellow?**
 

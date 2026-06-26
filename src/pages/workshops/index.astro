@@ -5,8 +5,20 @@ import { site } from '../../lib/site';
 import { getCollection } from 'astro:content';
 
 const workshops = (await getCollection('workshops')).sort((a, b) => a.data.order - b.data.order);
+
+// Each workshop as a Service offering, provided by Pazbi.
+const workshopSchema = workshops.map((w) => ({
+  '@type': 'Service',
+  name: w.data.title,
+  serviceType: 'AI & automation workshop',
+  description: w.data.summary,
+  provider: { '@id': `${site.url}/#person` },
+  areaServed: { '@type': 'Place', name: 'Worldwide (in-person and remote)' },
+  audience: { '@type': 'Audience', audienceType: w.data.audience },
+  ...(w.data.price ? { offers: { '@type': 'Offer', description: w.data.price } } : {}),
+}));
 ---
-<Base title="Workshops" description="Hands-on AI and automation workshops. Your team ships working automations, not slideware.">
+<Base title="Workshops" description="Hands-on AI and automation workshops. Your team ships working automations, not slideware." schema={workshopSchema}>
   <PageHero
     eyebrow="▸ WORKSHOPS & AI DAYS"
     title="Don't only hear about AI. Build with it."
