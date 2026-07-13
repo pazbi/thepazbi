@@ -1,0 +1,584 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../lib/site';
+
+// Live Stripe payment links (created 13 July 2026; caps: 30 standard, 6 two-seat, 5 VIP).
+const STRIPE_STANDARD = 'https://buy.stripe.com/5kQ28saakaShe86cXubV601';
+const STRIPE_TWO_SEATS = 'https://buy.stripe.com/bJebJ2gyI5xX9RQg9GbV602';
+const STRIPE_VIP = 'https://buy.stripe.com/7sY7sM3LW3pP1lkcXubV603';
+
+const DATE_LABEL = 'Saturday 1 August 2026';
+
+const faqs = [
+  {
+    q: 'Do I need to be technical?',
+    a: "No. The day is built for non-technical owners and leaders. If you can attach a file to an email and click \"allow\" on a permissions box, you have every technical skill required. Non-technical people often do better: they want the invoice chased and the report written, which is exactly the right instinct. Technical people are busy over-engineering something.",
+  },
+  {
+    q: 'Which Claude plan do I need?',
+    a: "Claude Pro at minimum, roughly $20 a month (as of July 2026). The free plan doesn't include Cowork, which is the finale of the day, so it won't cut it. Full honesty: this workshop costs £100 and an ongoing subscription. If a business tool paying for itself still needs to cost under £20 a month, this isn't the year to do this workshop, and I'd rather tell you now than at checkout.",
+  },
+  {
+    q: "What if I can't make the date?",
+    a: "If you bought the Replay + Claude Business Pack (or VIP), you're covered: the full recording of both sessions is yours for 12 months, plus every template and checklist. If you bought a standard ticket, you can transfer your seat to a future date at no charge; just email me before the workshop starts. What I don't do is send the replay to standard ticket holders as a workaround, because that's not fair on the people who paid for it.",
+  },
+  {
+    q: 'Is the workshop recorded?',
+    a: "Yes, and the recording goes to Replay + Pack buyers and VIPs only. It's a £40 add-on at checkout. If you're deciding between \"attend live\" and \"just watch the replay\", attend live: the value is in doing the exercises with help in the room, not in watching me do them.",
+  },
+  {
+    q: 'What do I need on the day?',
+    a: "A laptop or desktop (not just a phone; you'll be doing proper setup), Zoom, a Claude Pro account, and access to your own email and calendar if you want to connect them live during module three. I'll send a short setup checklist the week before, including installing the Claude desktop app, so the day is spent building rather than downloading.",
+  },
+  {
+    q: 'Will this work for my industry?',
+    a: "Almost certainly. After 300+ companies I can tell you the expensive workflows are remarkably similar everywhere: chasing, quoting, re-typing, reporting, scheduling. The industry changes; the leaks don't. The exercises all run on your material, so what you build is yours by definition. If your business genuinely is the exception, the lunch-break guarantee exists for exactly that.",
+  },
+  {
+    q: 'What happens after the workshop?',
+    a: "You leave with a 30-day plan you wrote in the final module, and everything you built keeps working on your own account. If you want help beyond that, there are paths: a free 30-minute AI Opportunity Call, and for alumni who want me hands-on in their business, a Private Claude Day at £2,500. Nothing after the day is required, and no one will chase you with a \"special offer expiring tonight\".",
+  },
+  {
+    q: "What's the refund policy?",
+    a: "The guarantee, verbatim: stay for the whole morning, and if by the lunch break you don't believe the day is worth £100, email me before the afternoon session starts and I'll refund every penny, pack included, yours to keep. Before the day itself, if life happens, transfer to a future date free of charge. VIP 1-1 time is refundable pro-rata if unused.",
+  },
+  {
+    q: 'Is this going to be a four-hour pitch for your consultancy?',
+    a: "The honest answer: the last 15 minutes covers what working with me after the workshop looks like, because people ask and pretending otherwise would be silly. The other three hours and forty-five minutes is teaching and building. No countdown slides, no \"but wait\", no roping in a \"special guest closer\". If the ratio ever slips, quote this FAQ at me and claim the guarantee.",
+  },
+  {
+    q: 'Can I bring my whole team?',
+    a: "Two of you works brilliantly. That's what the £75 second seat is for, and it's genuinely how systems stick. More than two, and you're usually better served by a private AI Day built around your business instead of a public workshop. Email me and I'll tell you which one you need, even if the answer earns me less.",
+  },
+];
+
+const eventSchema = {
+  '@type': 'Event',
+  name: 'Getting Started with Claude for Your Business',
+  description:
+    'A one-day live online workshop with Pazbi Zavatzki. Leave with Claude set up for your business: a working skill, a connected tool, an installed plugin and one job run end to end on your own account.',
+  startDate: '2026-08-01T10:00:00+01:00',
+  endDate: '2026-08-01T15:00:00+01:00',
+  eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
+  eventStatus: 'https://schema.org/EventScheduled',
+  location: { '@type': 'VirtualLocation', url: `${site.url}/workshop` },
+  image: new URL('/og/default.png', site.url).href,
+  organizer: { '@id': `${site.url}/#person` },
+  performer: { '@id': `${site.url}/#person` },
+  offers: [
+    { '@type': 'Offer', name: 'Standard seat', price: '100', priceCurrency: 'GBP', url: STRIPE_STANDARD, availability: 'https://schema.org/InStock', validFrom: '2026-07-13' },
+    { '@type': 'Offer', name: 'Live day + Replay & Claude Business Pack', price: '140', priceCurrency: 'GBP', url: STRIPE_STANDARD, availability: 'https://schema.org/InStock', validFrom: '2026-07-13' },
+    { '@type': 'Offer', name: 'VIP (5 spots)', price: '350', priceCurrency: 'GBP', url: STRIPE_VIP, availability: 'https://schema.org/LimitedAvailability', validFrom: '2026-07-13' },
+  ],
+};
+
+const faqSchema = {
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+<Base
+  title="Getting Started with Claude for Your Business — one-day live workshop"
+  description="A one-day online live workshop with Pazbi Zavatzki. Set Claude up for your business: projects, skills, connectors, plugins and Cowork. Live, in plain English, on your own account. £100. Saturday 1 August 2026, 10:00–15:00 UK, on Zoom."
+  schema={[eventSchema, faqSchema]}
+>
+  {/* ============ HERO ============ */}
+  <section class="whero">
+    <div class="container">
+      <p class="hud">▸ ONLINE LIVE WORKSHOP · {DATE_LABEL}</p>
+      <h1 class="whero__title">One day. Claude, actually <span class="swipe">set up</span> for your business.</h1>
+      <p class="whero__sub lead">
+        You've probably already got the subscription. What you haven't got is the setup:
+        the skills, connectors and working habits that turn a clever chat window into
+        something that does the work in your business. That's what we build together,
+        live, on your own account, in plain English. Bring your scepticism.
+      </p>
+      <div class="cta-block">
+        <a href="#pricing" class="btn">Save my seat<span class="arrow">→</span></a>
+        <p class="cta-note"><strong>£100 · 35 seats · 10:00–15:00 UK · live on Zoom.</strong> A working session, not a webinar you half-watch while doing email.</p>
+      </div>
+      <ul class="whero__meta">
+        <li><span class="whero__metaNum">15</span> years in digital marketing</li>
+        <li><span class="whero__metaNum">300+</span> companies worked with</li>
+        <li><span class="whero__metaNum">6</span> countries spoken in</li>
+      </ul>
+    </div>
+  </section>
+
+  {/* ============ PROBLEM ============ */}
+  <section class="section band">
+    <div class="container reveal">
+      <p class="hud">▸ THE HONEST BIT</p>
+      <h2 class="w-h2">You bought the AI subscription.<br />Then things got busy.</h2>
+      <div class="prose">
+        <p>Here's the pattern I see every week in owner-led businesses. Someone signed up for an AI tool with genuine good intentions. It wrote one decent email and a surprisingly average LinkedIn post. Then the quote needed doing, the invoice needed chasing, and the tab quietly closed.</p>
+        <p>Six months later:</p>
+      </div>
+      <ul class="ticks">
+        <li>The subscription still renews. Nobody's opened it since March.</li>
+        <li>You're typing the same instructions from scratch every single time, so it never knows your business any better than it did on day one.</li>
+        <li>Your quotes, reports and follow-ups are still assembled by hand, by you, usually in the evening.</li>
+        <li>You've read that AI can "run your whole business now" and you quietly suspect that's nonsense. (Partly, it is.)</li>
+      </ul>
+      <div class="prose">
+        <p>None of this means you're behind, and none of it is a technology problem. The chat window is the demo. The product, the part that saves hours, is the setup nobody showed you: projects that hold your context, skills that know how you work, connectors that reach your tools, and an agent you can point at a folder and tell to get on with it.</p>
+        <p>That setup takes about a day. So we're doing it in a day.</p>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ OUTCOMES ============ */}
+  <section class="section">
+    <div class="container">
+      <p class="hud reveal">▸ WHAT YOU'LL LEAVE WITH</p>
+      <h2 class="w-h2 reveal">Not notes. A working setup.</h2>
+      <p class="lead muted reveal">Everything below happens during the day, on your own Claude account. If you finish with only a notebook full of ideas, I'll have failed.</p>
+      <div class="outcomes">
+        <article class="outcome reveal">
+          <h3>Claude that knows your business</h3>
+          <p class="muted">A Project set up with your business context and instructions, so you stop re-explaining who you are to a machine every morning.</p>
+        </article>
+        <article class="outcome reveal">
+          <h3>One skill, built live, that works your way</h3>
+          <p class="muted">A reusable skill that does a recurring task in your format, your tone and your process, built with you during the morning session.</p>
+        </article>
+        <article class="outcome reveal">
+          <h3>A live connector</h3>
+          <p class="muted">At least one tool connected, your email or calendar, with the permissions model explained honestly before you click anything.</p>
+        </article>
+        <article class="outcome reveal">
+          <h3>A plugin matched to your job</h3>
+          <p class="muted">One plugin installed from the directory that fits what you do all day, not a demo of somebody else's business.</p>
+        </article>
+        <article class="outcome reveal">
+          <h3>One job run end to end</h3>
+          <p class="muted">You'll watch Claude take a folder of files and produce finished work, and know how to repeat it on Monday with your own.</p>
+        </article>
+        <article class="outcome reveal">
+          <h3>A 30-day Map · Build · Scale plan</h3>
+          <p class="muted">A short written plan for what to automate, what to augment, and what to leave alone in your business. Yours to keep, whoever you build it with.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ CURRICULUM ============ */}
+  <section class="section band">
+    <div class="container">
+      <p class="hud reveal">▸ THE DAY, MODULE BY MODULE</p>
+      <h2 class="w-h2 reveal">Six modules. Morning to map, afternoon to build.</h2>
+      <p class="lead muted reveal">The day runs on the same Map · Build · Scale method I use with every business I work with. Every module has a live, do-it-now component. This is a working session, not a lecture.</p>
+
+      <p class="session reveal">SESSION ONE · 10:00–12:00 UK · MAP</p>
+
+      <article class="module reveal">
+        <span class="module__n">01</span>
+        <div>
+          <h3>Claude fundamentals, minus the folklore</h3>
+          <p class="muted">What Claude is, which plan you need (probably Pro, and I'll say so in pounds and pence), and how to use chat properly: giving proper context, attaching documents, using Projects so it remembers your business, and knowing what to trust it with. If you've only ever typed one-line questions into a chat box, this module alone changes your week.</p>
+          <p class="module__live"><span>You'll do this live</span>Set up a Project loaded with your business context, and get one genuinely useful piece of work out of it before the first coffee refill.</p>
+        </div>
+      </article>
+
+      <article class="module reveal">
+        <span class="module__n">02</span>
+        <div>
+          <h3>Skills: teach Claude how <em>your</em> business does things</h3>
+          <p class="muted">A skill is a small set of instructions that teaches Claude your way of doing a task (your report format, your tone, your quoting rules) so you stop re-explaining yourself forever. You don't need to write code; you can even have Claude write its own skills. This is where generic AI becomes your AI.</p>
+          <p class="module__live"><span>You'll do this live</span>Build a working skill for a recurring task (turning meeting notes into actions is the crowd favourite) and run it on your own material.</p>
+        </div>
+      </article>
+
+      <article class="module reveal">
+        <span class="module__n">03</span>
+        <div>
+          <h3>Connectors: give Claude hands</h3>
+          <p class="muted">Skills teach Claude <em>how</em>; connectors give it <em>hands</em>: safe, permissioned access to the tools you already use. Email, calendar, documents, accounts. We'll cover what Claude can and can't do once connected, what it asks permission for, and where I'd tell you not to connect anything at all. Honest safety talk included, not skipped.</p>
+          <p class="module__live"><span>You'll do this live</span>Connect one tool, Gmail or your calendar, and have Claude do something useful with it while you watch it ask for permission first.</p>
+        </div>
+      </article>
+
+      <p class="session reveal">SESSION TWO · 13:00–15:00 UK · BUILD &amp; SCALE</p>
+
+      <article class="module reveal">
+        <span class="module__n">04</span>
+        <div>
+          <h3>Plugins: a job in a box</h3>
+          <p class="muted">Plugins bundle skills, connectors and ready-made commands for a whole job function: sales, marketing, finance, running a small business. Instead of assembling everything yourself, you install the bundle that matches your work and adapt it. We'll tour the directory and separate the genuinely useful from the merely shiny.</p>
+          <p class="module__live"><span>You'll do this live</span>Install one plugin that matches your role and run one of its commands on your own business.</p>
+        </div>
+      </article>
+
+      <article class="module reveal">
+        <span class="module__n">05</span>
+        <div>
+          <h3>Claude Code: know when to reach for the power tool</h3>
+          <p class="muted">Claude Code builds internal tools, scripts and small sites from plain English descriptions. Honest positioning: most business owners won't live here, and I won't pretend otherwise. But you should know what it is, watch it work once, and know when to reach for it yourself versus when to hand it to a developer with a much better brief than you could have written before today.</p>
+          <p class="module__live"><span>You'll do this live</span>Watch a small internal tool built from an English description in about ten minutes, then keep the "me vs my developer" decision test.</p>
+        </div>
+      </article>
+
+      <article class="module reveal">
+        <span class="module__n">06</span>
+        <div>
+          <h3>Cowork: point Claude at a folder and let it work</h3>
+          <p class="muted">The finale, and the module the whole day builds towards. Cowork is Claude for the files on your own computer: point it at a folder and it reads, creates and edits documents and spreadsheets, runs multi-step tasks, and uses every skill, connector and plugin you set up earlier. Most of what people do with it is ordinary business work, not code. Which is exactly the point.</p>
+          <p class="module__live"><span>You'll do this live</span>Run one job end to end (a folder of invoices in, a tracker and drafted chase emails out), then write your 30-day Map · Build · Scale plan.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  {/* ============ SCHEDULE ============ */}
+  <section class="section">
+    <div class="container reveal">
+      <p class="hud">▸ THE SHAPE OF THE DAY</p>
+      <h2 class="w-h2">Four teaching hours. One proper lunch. No filler.</h2>
+      <p class="lead muted">Live on Zoom: an actual meeting, not a webinar. Cameras on, chat open, questions answered as they come up. Capped at 35 people so that's genuinely possible.</p>
+      <div class="sched">
+        <div class="sched__row">
+          <span class="sched__time">10:00–12:00</span>
+          <div>
+            <h3>Session one · Map</h3>
+            <p class="muted">Claude fundamentals · Skills · Connectors. By noon, Claude knows your business, has one skill built your way, and one tool connected.</p>
+          </div>
+        </div>
+        <div class="sched__row">
+          <span class="sched__time">12:00–13:00</span>
+          <div>
+            <h3>Lunch</h3>
+            <p class="muted">A full hour. Step away from the screen. You've earned it and the afternoon needs you fresh.</p>
+          </div>
+        </div>
+        <div class="sched__row">
+          <span class="sched__time">13:00–15:00</span>
+          <div>
+            <h3>Session two · Build &amp; Scale</h3>
+            <p class="muted">Plugins · Claude Code · Cowork. Ends with one job run end to end, and your 30-day plan written before we say goodbye.</p>
+          </div>
+        </div>
+      </div>
+      <p class="muted sched__note">All times UK (BST) · {DATE_LABEL}. The day is recorded, but the replay isn't included in the standard ticket; it comes with the £40 Replay + Claude Business Pack (and free with VIP). If you can be there live, be there live. It's better live.</p>
+    </div>
+  </section>
+
+  {/* ============ FIT ============ */}
+  <section class="section band">
+    <div class="container reveal">
+      <p class="hud">▸ AN HONEST FILTER</p>
+      <h2 class="w-h2">Who this is for. And who it isn't.</h2>
+      <div class="fit">
+        <article class="fitcard">
+          <h3><span class="fitcard__glyph" aria-hidden="true">✦</span> This is for you if…</h3>
+          <ul class="ticks ticks--tight">
+            <li>You own or run a small or owner-led business, and you're the one who'd use this, not delegating it to "someone technical".</li>
+            <li>You've poked at ChatGPT or Claude, been mildly impressed, and never got past the chat window.</li>
+            <li>You want a working setup by 3pm, not a strategy deck about one.</li>
+            <li>You can give the day your full attention: cameras on, laptop out, doing the exercises.</li>
+            <li>You're sceptical of AI hype. Good. Bring that. It'll be useful.</li>
+          </ul>
+        </article>
+        <article class="fitcard fitcard--not">
+          <h3><span class="fitcard__glyph" aria-hidden="true">✕</span> This is not for you if…</h3>
+          <ul class="crosses crosses--tight">
+            <li>You're a developer wanting advanced Claude Code techniques. You'll be bored by module two, and you already know where the docs are.</li>
+            <li>You want AI to replace your team by Friday. That's not a plan, it's a headline, and I don't teach it.</li>
+            <li>You plan to have it on in the background while you answer emails. You'd be paying £100 for a podcast, and there are cheaper podcasts.</li>
+            <li>You won't spend roughly $20 a month on a Claude Pro plan. The day requires one, and without it nothing we build survives the week.</li>
+            <li>You need a bespoke plan for a 100-person company rolled out this quarter. That's an <a href="/workshops">AI Day</a>, not this workshop.</li>
+          </ul>
+        </article>
+      </div>
+      <p class="muted fit__note">If you're in the second column, don't buy a ticket. Genuinely. Start with the <a href="/scale/apply">free AI Opportunity Call</a> instead and I'll point you at the right thing.</p>
+    </div>
+  </section>
+
+  {/* ============ ABOUT ============ */}
+  <section class="section">
+    <div class="container reveal">
+      <p class="hud">▸ WHO'S TEACHING</p>
+      <h2 class="w-h2">Fifteen years in the trenches. Zero patience for hype.</h2>
+      <div class="about">
+        <div class="prose">
+          <p>I'm Pazbi Zavatzki: London-based keynote speaker, workshop leader and AI advisor. My signature talk is called <em>How to Be Irreplaceable in an AI World</em>, and my whole working life is helping leaders and teams turn AI noise into systems, skills and revenue.</p>
+          <p>Before AI was the headline, I spent fifteen years running digital marketing for SMEs: more than 300 companies, from family firms to Warner Bros. Games. The lesson from all of them: the businesses that win don't do all the things. They fix one expensive workflow at a time, properly, so the improvement holds. That's the method this workshop runs on.</p>
+          <p>I teach the way I consult: plain English, worked examples, and telling you what you <em>need</em> to hear, including the bits where the honest answer is "don't use AI for that".</p>
+        </div>
+        <ul class="facts">
+          <li><b>Signature keynote:</b> How to Be Irreplaceable in an AI World</li>
+          <li><b>Founder:</b> Kickass Online · Neuroinclusive Standards</li>
+          <li><b>Recognition:</b> Entrepreneur of the Year finalist 2023</li>
+          <li><b>Stages &amp; teams:</b> Warner Bros. Games, Institute of Directors, University of Westminster, CILIP, BNI</li>
+          <li><b>Track record:</b> 15 years · 300+ companies · 6 countries</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ TESTIMONIALS ============ */}
+  <section class="section band">
+    <div class="container">
+      <p class="hud reveal">▸ WHAT PEOPLE SAY</p>
+      <h2 class="w-h2 reveal">Their words, with their names on.</h2>
+      <p class="lead muted reveal">Honesty note: this workshop hasn't run yet, so none of these are about it. They're about what it's like to work with me, which is what you're actually buying.</p>
+      <div class="tgrid">
+        <figure class="tcard reveal">
+          <span class="tcard__q" aria-hidden="true">✦</span>
+          <blockquote>"Anytime I've interacted with Pazbi, his kindness and integrity have stood out. He isn't just about building websites — he's about building businesses. His holistic strategic approach to digital marketing ensures that every decision drives real, measurable growth."</blockquote>
+          <figcaption><b>Anna Rooney</b>PhD Researcher in AI and Critical Thinking</figcaption>
+        </figure>
+        <figure class="tcard reveal" style="transition-delay:90ms">
+          <span class="tcard__q" aria-hidden="true">✦</span>
+          <blockquote>"After working with Pazbi for a short time I honestly don't know how I managed without him. Continuously impressed with his knowledge on all things digital — from SEO to content creation, he's the first person I turn to to check it's the best solution for my website."</blockquote>
+          <figcaption><b>Sarah Sessions</b>Event and Brand Content Photographer</figcaption>
+        </figure>
+        <figure class="tcard reveal" style="transition-delay:180ms">
+          <span class="tcard__q" aria-hidden="true">✦</span>
+          <blockquote>"He is generous with his time and knowledge to clients and colleagues — a rare breed of professional who does it because he knows he can add real value, instead of seeing an angle where it benefits him."</blockquote>
+          <figcaption><b>David Clark-Waugh</b>Director of Clark &amp; Waugh</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ PRICING ============ */}
+  <section class="section" id="pricing">
+    <div class="container">
+      <p class="hud reveal">▸ SEATS &amp; PRICES</p>
+      <h2 class="w-h2 reveal">Three ways in. No timers, no tricks.</h2>
+      <p class="lead muted reveal">One date, 35 seats, and prices that stay exactly where they are. The only scarcity on this page is arithmetic.</p>
+      <div class="prices">
+
+        <article class="pcard reveal">
+          <span class="pcard__badge">Standard</span>
+          <h3>The live day</h3>
+          <p class="pcard__amount">£100 <span>per person</span></p>
+          <p class="pcard__sub muted">Everything you need to leave with a working setup.</p>
+          <ul>
+            <li>The full live workshop: all six modules, 10:00–15:00 UK on Zoom</li>
+            <li>Live Q&amp;A throughout: a meeting, not a webinar, capped at 35 people</li>
+            <li>Every exercise done on your own Claude account, so you keep what you build</li>
+            <li>The 30-day Map · Build · Scale plan you write in the final module</li>
+            <li>The lunch-break guarantee (see below)</li>
+          </ul>
+          <a class="btn btn--ghost" href={STRIPE_STANDARD}>Save my seat<span class="arrow">→</span></a>
+          <p class="pcard__fine muted">You can add the £40 Replay + Pack on the checkout page. Bringing a colleague? <a href={STRIPE_TWO_SEATS}>Two seats for £175</a>: 25% off the second, because systems stick better when two people learn them together.</p>
+        </article>
+
+        <article class="pcard pcard--featured reveal" style="transition-delay:90ms">
+          <span class="pcard__badge pcard__badge--solid">Most people add this</span>
+          <h3>Live day + Replay &amp; Claude Business Pack</h3>
+          <p class="pcard__amount">£140 <span>per person</span></p>
+          <p class="pcard__sub muted">The live day, plus everything to rebuild it at your own pace.</p>
+          <ul>
+            <li>Everything in Standard</li>
+            <li>Full recording of both sessions, 12 months' access</li>
+            <li>The complete slide deck (PDF)</li>
+            <li>The Claude Business Pack: a prompt library for common business jobs</li>
+            <li>Three ready-to-install skill templates: meeting-notes-to-actions, proposal-drafter, weekly-report</li>
+            <li>The connector setup checklists we use on the day</li>
+            <li>The "what to automate / augment / leave alone" one-pager</li>
+          </ul>
+          <a class="btn" href={STRIPE_STANDARD}>Save my seat with the pack<span class="arrow">→</span></a>
+          <p class="pcard__fine muted">Tick the pack on the checkout page. If you can't make the date after buying, the replay has you covered; see the FAQ.</p>
+        </article>
+
+        <article class="pcard reveal" style="transition-delay:180ms">
+          <span class="pcard__badge">VIP · 5 spots only</span>
+          <h3>The live day + an hour on your business</h3>
+          <p class="pcard__amount">£350 <span>per person</span></p>
+          <p class="pcard__sub muted">Five spots because that's my diary, not a marketing tactic.</p>
+          <ul>
+            <li>Everything in Standard</li>
+            <li>Replay &amp; Claude Business Pack included free</li>
+            <li>A private 60-minute 1-1 working session with me, within 30 days of the workshop</li>
+            <li>We apply the day directly to your business: your workflows, your tools, your next three moves</li>
+            <li>Unused 1-1 time refunded pro-rata; it's a session, not a sunk cost</li>
+          </ul>
+          <a class="btn btn--ghost" href={STRIPE_VIP}>Take a VIP spot<span class="arrow">→</span></a>
+          <p class="pcard__fine muted">For context: my published half-day AI Strategy Sprint starts at £1,000 and my AI Day at £3,500. An hour of the same 1-1 attention costs £250 here only because VIP buyers arrive with the workshop groundwork already done.</p>
+        </article>
+      </div>
+
+      <div class="alumni reveal">
+        <p><strong>One thing I'm not selling today:</strong> after the workshop, alumni can book a Private Claude Day: a full private implementation day for your business at £2,500, against my published AI Day rate of "from £3,500". It's offered after the workshop, once we both know it's the right move, never as a checkout upsell. Mentioned here only so you know the path exists.</p>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ GUARANTEE ============ */}
+  <section class="section band">
+    <div class="container reveal">
+      <p class="hud">▸ THE GUARANTEE</p>
+      <h2 class="w-h2">Judge it by lunchtime.</h2>
+      <div class="gbox">
+        <p class="gbox__big">Stay for the whole morning. If by the lunch break you don't believe the day is worth £100, email me before the afternoon session starts and I'll refund every penny. You can even keep the pack.</p>
+        <p class="muted">No form, no quibble, no "let me check with the team". There is no team, there's me. VIP buyers: the 1-1 portion is refundable pro-rata if unused. I can afford this guarantee because the morning alone builds you a project, a skill and a live connector. If that isn't worth £100 to your business, you shouldn't pay £100.</p>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ FAQ ============ */}
+  <section class="section">
+    <div class="container reveal">
+      <p class="hud">▸ QUESTIONS</p>
+      <h2 class="w-h2">Things people ask before booking.</h2>
+      <div class="faq">
+        {faqs.map((f) => (
+          <details class="faq__item">
+            <summary>{f.q}<span class="faq__ind" aria-hidden="true">+</span></summary>
+            <p class="muted">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ============ FINAL ============ */}
+  <section class="section on-dark final">
+    <div class="container reveal">
+      <p class="hud">▸ THE DECISION</p>
+      <h2 class="w-h2 final__title">The subscription renews either way.</h2>
+      <div class="prose">
+        <p>No countdown timer here, and the price doesn't go up at midnight. The honest urgency is more annoying than that: every week Claude sits unconfigured in a browser tab, you pay the do-nothing tax: the quotes done by hand, the reports assembled by copy-paste, the evenings spent on £12-an-hour admin.</p>
+        <p>One day, £100, 35 seats, {DATE_LABEL}. When they're gone, the next chance is the next cohort, whenever my diary allows one.</p>
+      </div>
+      <div class="cta-block">
+        <a href="#pricing" class="btn">Save my seat<span class="arrow">→</span></a>
+        <p class="cta-note"><strong>£100 · 10:00–15:00 UK · live on Zoom</strong> · lunch-break guarantee.</p>
+      </div>
+      <p class="final__alt muted">Not ready? Fair enough. <a href="/writing" class="final__altLink">Read the writing →</a> or <a href="/scorecard" class="final__altLink">take the Irreplaceable Scorecard →</a> and come back when the timing's right.</p>
+    </div>
+  </section>
+
+  <style>
+    .w-h2 { font-size: var(--step-3); margin: 1.1rem 0 1.2rem; }
+    .prose { max-width: 62ch; }
+    .prose p { margin-bottom: 1rem; }
+    .cta-block { margin-top: 2.2rem; }
+    .cta-note { margin-top: 0.9rem; font-size: var(--step--1); color: var(--muted); max-width: 52ch; }
+    .band { background: var(--bone); }
+    .lead.muted { max-width: 56ch; }
+
+    /* Hero */
+    .whero { padding-block: clamp(3.5rem, 2.5rem + 6vw, 7.5rem) clamp(2.5rem, 4vw, 4rem); }
+    .whero__title { font-size: var(--step-4); max-width: 20ch; margin: 1.2rem 0 1.4rem; }
+    .whero__sub { color: var(--muted); max-width: 56ch; }
+    .whero__meta { list-style: none; padding: 0; margin: 2.6rem 0 0; display: flex; flex-wrap: wrap; gap: 1rem 2.5rem; }
+    .whero__meta li { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
+    .whero__metaNum { color: var(--canary-deep); font-weight: 700; margin-right: 0.4em; }
+
+    /* Lists */
+    .ticks, .crosses { list-style: none; padding: 0; margin: 1.4rem 0; display: grid; gap: 0.9rem; max-width: 62ch; }
+    .ticks li { padding-left: 1.7rem; position: relative; }
+    .ticks li::before { content: '✦'; position: absolute; left: 0; color: var(--canary-deep); }
+    .crosses li { padding-left: 1.7rem; position: relative; }
+    .crosses li::before { content: '✕'; position: absolute; left: 0; color: var(--graphite); font-weight: 700; }
+    .ticks--tight, .crosses--tight { margin-bottom: 0; }
+
+    /* Outcomes */
+    .outcomes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; margin-top: 2rem; }
+    .outcome { background: var(--bone); border: 1px solid var(--line-light); border-top: 3px solid var(--canary); border-radius: var(--radius-lg); padding: 1.6rem 1.5rem; }
+    .outcome h3 { font-size: var(--step-0); margin-bottom: 0.5rem; }
+    .outcome p { font-size: var(--step--1); }
+
+    /* Curriculum */
+    .session { font-family: var(--font-mono); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.17em; text-transform: uppercase; color: var(--canary-deep); margin: 2.6rem 0 0.6rem; }
+    .module { display: grid; grid-template-columns: 3.2rem 1fr; gap: 1rem; padding: 1.8rem 0; border-top: 1px solid var(--line-light); }
+    .module__n { font-family: var(--font-mono); font-size: 1.1rem; color: var(--canary-deep); letter-spacing: 0.1em; }
+    .module h3 { font-size: var(--step-1); margin-bottom: 0.6rem; }
+    .module p { max-width: 58ch; }
+    .module__live { margin-top: 0.9rem; font-size: var(--step--1); padding-left: 1.2rem; position: relative; }
+    .module__live::before { content: '→'; position: absolute; left: 0; color: var(--canary-deep); }
+    .module__live span { font-family: var(--font-mono); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.68rem; display: block; color: var(--muted); margin-bottom: 0.2rem; }
+
+    /* Schedule */
+    .sched { margin-top: 2rem; border-top: 1px solid var(--line-light); max-width: 62ch; }
+    .sched__row { display: grid; grid-template-columns: 9rem 1fr; gap: 1rem; padding: 1.2rem 0; border-bottom: 1px solid var(--line-light); }
+    .sched__time { font-family: var(--font-mono); font-size: 0.85rem; font-weight: 700; color: var(--canary-deep); }
+    .sched__row h3 { font-size: var(--step-0); margin-bottom: 0.3rem; }
+    .sched__row p { font-size: var(--step--1); }
+    .sched__note { margin-top: 1.5rem; font-size: var(--step--1); max-width: 62ch; }
+
+    /* Fit */
+    .fit { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 2rem; }
+    .fitcard { background: var(--cream); border: 1px solid var(--line-light); border-top: 3px solid var(--canary); border-radius: var(--radius-lg); padding: 1.8rem 1.6rem; }
+    .fitcard--not { border-top-color: var(--graphite-light); }
+    .fitcard h3 { font-size: var(--step-1); margin-bottom: 0.4rem; }
+    .fitcard__glyph { color: var(--canary-deep); }
+    .fitcard--not .fitcard__glyph { color: var(--graphite); }
+    .fitcard a, .fit__note a { color: var(--canary-deep); font-weight: 600; }
+    .fitcard a:hover, .fit__note a:hover { text-decoration: underline; }
+    .fit__note { margin-top: 1.8rem; font-size: var(--step--1); }
+
+    /* About */
+    .about { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: start; margin-top: 1.6rem; }
+    .facts { list-style: none; padding: 0; margin: 0; font-size: var(--step--1); }
+    .facts li { padding: 0.75rem 0; border-bottom: 1px solid var(--line-light); }
+    .facts li:first-child { border-top: 1px solid var(--line-light); }
+
+    /* Testimonials */
+    .tgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 2rem; }
+    .tcard { margin: 0; background: var(--cream); border: 1px solid var(--line-light); border-radius: var(--radius-lg); padding: 1.6rem 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+    .tcard__q { color: var(--canary-deep); }
+    .tcard blockquote { margin: 0; font-size: var(--step--1); font-style: italic; }
+    .tcard figcaption { font-size: 0.82rem; color: var(--muted); margin-top: auto; }
+    .tcard figcaption b { display: block; color: var(--ink); font-style: normal; }
+
+    /* Pricing */
+    .prices { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 2.2rem; align-items: start; }
+    .pcard { background: var(--bone); border: 1px solid var(--line-light); border-radius: var(--radius-lg); padding: 1.8rem 1.6rem; display: flex; flex-direction: column; }
+    .pcard--featured { border: 2px solid var(--canary-deep); background: var(--cream); }
+    .pcard__badge { align-self: flex-start; font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; border: 1.5px solid var(--ink); border-radius: var(--radius-pill); padding: 0.3em 0.9em; margin-bottom: 1.1rem; }
+    .pcard__badge--solid { background: var(--canary); border-color: var(--canary); }
+    .pcard h3 { font-size: var(--step-1); margin-bottom: 0.3rem; }
+    .pcard__amount { font-family: var(--font-display); font-weight: 700; font-size: var(--step-3); line-height: 1; margin: 0.5rem 0 0.3rem; }
+    .pcard__amount span { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 400; color: var(--muted); }
+    .pcard__sub { font-size: var(--step--1); margin-bottom: 1.2rem; }
+    .pcard ul { list-style: none; padding: 0; margin: 0 0 1.6rem; flex-grow: 1; }
+    .pcard li { font-size: var(--step--1); padding: 0.55rem 0 0.55rem 1.4rem; border-top: 1px solid var(--line-light); position: relative; }
+    .pcard li::before { content: '→'; position: absolute; left: 0; top: 0.55rem; color: var(--canary-deep); font-size: 0.85rem; }
+    .pcard .btn { justify-content: center; }
+    .pcard__fine { margin-top: 1rem; font-size: 0.82rem; line-height: 1.5; }
+    .pcard__fine a { color: var(--canary-deep); font-weight: 600; }
+    .pcard__fine a:hover { text-decoration: underline; }
+    .alumni { margin-top: 2.2rem; border: 1px solid var(--line-light); border-radius: var(--radius-lg); padding: 1.4rem 1.5rem; max-width: 62ch; font-size: var(--step--1); color: var(--muted); }
+    .alumni strong { color: var(--ink); }
+
+    /* Guarantee */
+    .gbox { border: 2px solid var(--ink); border-radius: var(--radius-lg); padding: 2.2rem 2rem; max-width: 62ch; margin-top: 1.6rem; background: var(--cream); }
+    .gbox__big { font-family: var(--font-display); font-weight: 600; font-size: var(--step-1); line-height: 1.4; margin-bottom: 1.1rem; letter-spacing: -0.01em; }
+
+    /* FAQ */
+    .faq { margin-top: 1.6rem; border-top: 1px solid var(--line-light); max-width: 68ch; }
+    .faq__item { border-bottom: 1px solid var(--line-light); }
+    .faq__item summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.15rem 0.2rem; font-family: var(--font-display); font-weight: 600; font-size: var(--step-0); }
+    .faq__item summary::-webkit-details-marker { display: none; }
+    .faq__ind { flex: 0 0 auto; width: 1.6rem; height: 1.6rem; border-radius: 50%; border: 1.5px solid var(--canary-deep); color: var(--canary-deep); display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-mono); transition: transform 0.25s var(--ease); }
+    .faq__item[open] .faq__ind { transform: rotate(45deg); }
+    .faq__item p { padding: 0 0.2rem 1.3rem; max-width: 60ch; }
+
+    /* Final */
+    .final .prose p { color: rgba(244, 238, 224, 0.85); }
+    .final__title { color: var(--cream); max-width: 22ch; }
+    .final .cta-note { color: rgba(244, 238, 224, 0.66); }
+    .final .cta-note strong { color: var(--cream); }
+    .final__alt { margin-top: 2.6rem; font-size: var(--step--1); }
+    .final__altLink { color: var(--canary); }
+    .final__altLink:hover { text-decoration: underline; }
+
+    @media (max-width: 900px) {
+      .prices, .tgrid { grid-template-columns: 1fr; }
+      .outcomes { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 700px) {
+      .fit, .about { grid-template-columns: 1fr; }
+      .sched__row { grid-template-columns: 1fr; gap: 0.3rem; }
+      .module { grid-template-columns: 1fr; gap: 0.4rem; }
+    }
+  </style>
+</Base>

@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
+import PressWall from '../components/PressWall.astro';
 import { site } from '../lib/site';
 import { media } from '../lib/media';
 
@@ -14,6 +15,8 @@ const groups = ['Podcasts & interviews', 'Talks & TV', 'Awards & recognition'];
   >
     <div class="phead-actions"><a href={site.bookingUrl} class="btn">Invite me on<span class="arrow">→</span></a></div>
   </PageHero>
+
+  <PressWall />
 
   {groups.map((g) => {
     const items = media.filter((m) => m.group === g);

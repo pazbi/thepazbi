@@ -1,0 +1,67 @@
+---
+// "As seen in" press wall — verified coverage only.
+// Forbes: quoted by name in the April 2025 productivity feature; featured as a
+// Legacy Pass member in the Dec 2024/Jan 2025 collector's issue.
+// BBC: BBC Ouch, BBC Radio and The One Show covered BSL Slam, which Pazbi founded.
+const press = [
+  {
+    name: 'Forbes',
+    href: 'https://www.forbes.com/sites/barnabylashbrooke/2025/04/29/the-surprising-things-people-quit-for-better-productivity/',
+    note: 'Quoted in "The Surprising Things People Quit For Better Productivity" (2025) · featured in the Legacy Pass collector\'s issue (2024/25)',
+  },
+  {
+    name: 'BBC',
+    href: '',
+    note: 'BBC Ouch, BBC Radio and The One Show covered BSL Slam, founded by Pazbi',
+  },
+  {
+    name: 'Hellenic TV',
+    href: 'https://www.youtube.com/watch?v=2kbInhncyYE',
+    note: 'Greek Stories with Avgoustinos, Episode 33',
+  },
+  {
+    name: 'Young Poets Network',
+    href: 'https://ypn.poetrysociety.org.uk/features/bsl-slam-in-conversation-with-pazbi-zavatzki/',
+    note: 'The Poetry Society — BSL Slam: In Conversation with Pazbi Zavatzki',
+  },
+  {
+    name: 'University of Westminster',
+    href: 'https://www.youtube.com/watch?v=mDNHR5RiqwY',
+    note: 'What It Takes to Be Irreplaceable in an AI World',
+  },
+];
+---
+<section class="press" aria-label="Press coverage">
+  <div class="container">
+    <p class="press__label">As seen in</p>
+    <ul class="press__list">
+      {press.map((p) =>
+        p.href ? (
+          <li><a href={p.href} target="_blank" rel="noopener" title={p.note}>{p.name}</a></li>
+        ) : (
+          <li><span title={p.note}>{p.name}</span></li>
+        )
+      )}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .press { padding-block: clamp(2rem, 1.5rem + 2vw, 3rem); border-bottom: 1px solid var(--line-light); }
+  .press__label {
+    font-family: var(--font-mono); font-size: 0.72rem;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--graphite); text-align: center; margin-bottom: 1.2rem;
+  }
+  .press__list {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 0.8rem clamp(1.8rem, 4vw, 3.5rem); align-items: baseline;
+  }
+  .press__list a, .press__list span {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(1.1rem, 1rem + 0.7vw, 1.5rem); letter-spacing: -0.01em;
+    color: var(--graphite); transition: color 0.25s var(--ease);
+  }
+  .press__list a:hover { color: var(--ink); }
+</style>

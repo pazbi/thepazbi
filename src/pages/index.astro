@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import PressWall from '../components/PressWall.astro';
 import { site, pillars } from '../lib/site';
 import { getCollection } from 'astro:content';
 
@@ -96,6 +97,9 @@ const clients = [
     </div>
     <ul class="sr-only">{clients.map((c) => <li>{c.name}</li>)}</ul>
   </section>
+
+  {/* ============ PRESS ============ */}
+  <PressWall />
 
   {/* ============ THE METHOD: MAP · BUILD · SCALE ============ */}
   <section class="section spine on-light">
