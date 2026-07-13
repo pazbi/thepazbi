@@ -73,7 +73,7 @@ const questions = [
       </form>
 
       {/* ============ RESULT ============ */}
-      <div class="result" id="scResult" hidden aria-live="polite">
+      <div class="result on-dark" id="scResult" hidden aria-live="polite">
         <p class="hud">▸ THE VERDICT</p>
         <h2 class="result__verdict" id="rVerdict">Automate</h2>
         <p class="result__wf muted" id="rWorkflow"></p>
@@ -163,9 +163,11 @@ const questions = [
     .result__action p:last-child { color: rgba(244, 238, 224, 0.85); }
     .result__ctas { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.8rem; }
     .scored { margin-top: 2rem; border-top: 1px solid var(--line-dark); padding-top: 1.4rem; }
-    .scored__list { list-style: none; padding: 0; margin: 0.8rem 0 0; display: grid; gap: 0.5rem; }
-    .scored__list li { display: flex; gap: 0.8rem; align-items: baseline; font-size: var(--step--1); color: rgba(244, 238, 224, 0.85); }
-    .scored__list .chip { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; background: var(--canary); color: var(--ink); border-radius: var(--radius-pill); padding: 0.15em 0.8em; flex: none; }
+    .scored__list { list-style: none; padding: 0; margin: 0.8rem 0 0; display: grid; gap: 0.6rem; }
+    /* The tally rows are created in JS at runtime, so Astro's scoped selectors
+       never match them — these two must stay :global(). */
+    .scored__list :global(li) { display: flex; gap: 0.8rem; align-items: center; font-size: var(--step--1); color: rgba(244, 238, 224, 0.85); }
+    .scored__list :global(.chip) { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; background: var(--canary); color: var(--ink); border-radius: var(--radius-pill); padding: 0.3em 0.85em; flex: none; }
 
     @media (max-width: 700px) { .buckets { grid-template-columns: 1fr; } .bar { grid-template-columns: 90px 1fr 40px; } }
   </style>
