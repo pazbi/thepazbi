@@ -1,0 +1,531 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site } from '../../lib/site';
+
+const APPLY = '/scale/apply';
+
+const faqs = [
+  {
+    q: 'What actually happens on the AI Opportunity Call?',
+    a: "Thirty minutes on a video call. I'll ask how your business runs: tools, team, where the time goes. Then we build a mini-Map together, a shortlist of your highest-leverage automations ranked by likely payback. The last five minutes cover options only if there's an obvious fit. You keep the shortlist either way.",
+  },
+  {
+    q: 'What does a full engagement cost?',
+    a: "The call is free. The AI Day is a fixed fee, quoted before you commit. The 90-day advisory is scoped after your Map, because pricing a fix before understanding the problem is exactly the kind of behaviour this page complains about. You will always know the cost before you say yes, and the most expensive option available is usually doing nothing.",
+  },
+  {
+    q: "We're not a tech company. Does this work in our sector?",
+    a: "Almost certainly. I've worked with 300+ companies across wildly different sectors, and the expensive workflows are remarkably similar everywhere: chasing, re-typing, reporting, scheduling, quoting. The industry changes; the leaks don't. If your business genuinely isn't a fit, I'll say so on the call rather than force it.",
+  },
+  {
+    q: 'Do you work remotely or on-site?',
+    a: "Both. I'm London-based and deliver across the UK in person; AI Days work brilliantly on-site. Advisory work runs happily remote or hybrid. I've spoken and worked in six countries, and screens function in all of them.",
+  },
+  {
+    q: 'How involved does my team need to be?',
+    a: "Involved. That's non-negotiable, because systems should fit the people who use them, and the Scale stage depends on your people owning the playbooks. But it's designed around their calendar: for most engagements, a couple of hours a week from a few key people is enough. The automations quickly give those hours back with interest.",
+  },
+  {
+    q: "What if we're not technical at all?",
+    a: "Honestly? Better. The method was built for non-technical teams; nobody needs to write code to own a playbook. Technical teams sometimes over-engineer. Non-technical teams just want the invoice chased and the report written, which is exactly the right instinct.",
+  },
+  {
+    q: 'Is there a guarantee?',
+    a: "Here's mine, and it's the same one I've kept for fifteen years: I tell you the truth. If the call isn't useful, I'll tell you who to talk to instead. No hard feelings, no follow-up sequence. And because the Scale stage builds ownership into your team, the results are designed to hold after I leave, not evaporate when the invoice clears.",
+  },
+];
+
+const faqSchema = {
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
+const clients = [
+  'Warner Bros. Games',
+  'University of Westminster',
+  'Institute of Directors',
+  'CILIP',
+  'BNI',
+  'CMS',
+  'Two Fresh',
+  'Evolute Agency',
+];
+---
+<Base
+  title="Turn AI noise into revenue in 90 days"
+  description="For owners of £1m–£25m businesses: find the workflows costing you the most time and money, and turn AI into measurable revenue and margin in 90 days. Book a free 30-minute AI Opportunity Call."
+  schema={faqSchema}
+>
+  {/* ============ HERO ============ */}
+  <section class="shero">
+    <div class="container">
+      <p class="hud">▸ FOR OWNERS AND LEADERS OF £1M–£25M BUSINESSES</p>
+      <h1 class="shero__title">
+        Turn AI noise into <span class="swipe">revenue</span> and margin in 90 days, without hiring anyone new or buying another subscription.
+      </h1>
+      <p class="shero__sub lead">
+        I find the workflows quietly costing your business the most time and money, then fix them
+        with your team, using the same Map · Build · Scale method I've refined over 15 years and
+        300+ companies. AI, minus the hype.
+      </p>
+      <div class="cta-block">
+        <a href={APPLY} class="btn">Book your free AI Opportunity Call<span class="arrow">→</span></a>
+        <p class="cta-note"><strong>30 minutes. A working session, not a pitch.</strong> You leave with a shortlist of your highest-leverage automations, whether or not we ever work together.</p>
+      </div>
+      <ul class="shero__meta">
+        <li><span class="shero__metaNum">15</span> years in digital marketing</li>
+        <li><span class="shero__metaNum">300+</span> companies worked with</li>
+        <li><span class="shero__metaNum">2023</span> Entrepreneur of the Year finalist</li>
+      </ul>
+    </div>
+  </section>
+
+  {/* ============ LOGOS ============ */}
+  <section class="slogos">
+    <div class="container reveal">
+      <p class="hud hud--no-dot">TRUSTED ON STAGES AND IN TEAMS AT</p>
+      <ul class="slogos__list">
+        {clients.map((c) => <li>{c}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  {/* ============ PROBLEM ============ */}
+  <section class="section">
+    <div class="container reveal">
+      <p class="hud">▸ THE HONEST BIT</p>
+      <h2 class="s-h2">Everyone's talking about AI.<br />Almost nobody's making money from it.</h2>
+      <div class="prose">
+        <p>Here's the pattern I see every week inside owner-led businesses: someone on the team got excited about ChatGPT. Three new subscriptions appeared on the company card. Somebody's cousin built a chatbot. There was a lunch-and-learn.</p>
+        <p>And twelve months later, nothing about how the business actually runs has changed, except the software bill went up.</p>
+        <p>Most AI pilots never make it past the demo stage. Not because the technology doesn't work. Because nobody mapped it to the workflows that actually cost the business money. Meanwhile, the real costs carry on unbothered:</p>
+      </div>
+      <ul class="ticks">
+        <li>Invoices chased by hand, late, by whoever remembers.</li>
+        <li>Quotes that take three days when your competitor answers in three hours.</li>
+        <li>Monday reports assembled by copy-paste from four systems.</li>
+        <li>Your best-paid people spending their afternoons on £12-an-hour admin.</li>
+      </ul>
+      <div class="prose">
+        <p>None of that is a technology problem. It's a mapping problem. And it's fixable, faster than you'd think.</p>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ FAILED ALTERNATIVES ============ */}
+  <section class="section band">
+    <div class="container reveal">
+      <p class="hud">▸ SOUND FAMILIAR?</p>
+      <h2 class="s-h2">You've probably already had a go at this.</h2>
+      <div class="prose">
+        <p>If you're like most of the leaders I work with, you've already tried some version of:</p>
+      </div>
+      <ul class="crosses">
+        <li>A stack of AI tool subscriptions, two of which anyone still opens.</li>
+        <li>Sending someone on a prompt-engineering course. They came back enthusiastic. The enthusiasm did not convert into margin.</li>
+        <li>An innovation away-day that produced a slide titled "AI Opportunities" which has not been opened since.</li>
+        <li>A freelancer who built a chatbot that answers questions nobody was asking.</li>
+      </ul>
+      <div class="prose">
+        <p>None of that means you're behind. It means you're normal. The tools were never the problem. The missing piece was a <strong>map</strong>: an honest picture of where your business bleeds time and money, and which fixes pay for themselves first.</p>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ WHY NOW ============ */}
+  <section class="section">
+    <div class="container reveal">
+      <p class="hud">▸ WHY NOW</p>
+      <h2 class="s-h2">There has never been a noisier time to run a business.</h2>
+      <div class="prose">
+        <p>Every vendor has bolted "AI-powered" onto their pricing page. Your inbox is a wall of webinar invitations. Every competitor's deck now contains the word "exploring". And underneath all of it sits an awkward truth: the technology genuinely can hand you back hours and margin, <em>if</em> it's pointed at the right workflows.</p>
+        <p>The gap opening up right now isn't between businesses that use AI and businesses that don't. It's between businesses that use it <strong>deliberately</strong>, one expensive workflow at a time, with owners and playbooks, and businesses that dabble. The dabblers pay twice: once for the subscriptions, and again in the hours nothing changed.</p>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ MIRROR ============ */}
+  <section class="section band">
+    <div class="container reveal">
+      <p class="hud">▸ IF YOU'RE HONEST</p>
+      <h2 class="s-h2">You probably feel some of this.</h2>
+      <ul class="mirror">
+        <li>You wonder whether you're already too late, and simultaneously whether the whole thing is overblown. (Both instincts are half right.)</li>
+        <li>You're tired of nodding along in AI conversations, quietly hoping nobody asks a follow-up question.</li>
+        <li>You don't have time to evaluate four hundred tools. You have a business to run.</li>
+        <li>You suspect there's real money in this. You just refuse to be the person who bought the hype.</li>
+      </ul>
+      <div class="prose">
+        <p>That last one? That's exactly the right instinct. Scepticism is a feature, not a fault. What you need isn't more enthusiasm. It's a map.</p>
+      </div>
+      <div class="cta-block">
+        <a href={APPLY} class="btn">Book your free AI Opportunity Call<span class="arrow">→</span></a>
+        <p class="cta-note">Bring your scepticism. It'll be useful.</p>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ STORY ============ */}
+  <section class="section">
+    <div class="container reveal">
+      <p class="hud">▸ HOW I GOT HERE</p>
+      <h2 class="s-h2">I learnt about systems the hard way.</h2>
+      <div class="prose">
+        <p>I was born in Athens in 1991 and I've been a Londoner since 1996. As a child I beat leukaemia and had to learn to walk again, which taught me, earlier than most, that progress is a series of small, deliberate moves. Not one heroic leap. One step, then the next one.</p>
+        <p>I carried that into fifteen years running digital marketing for SMEs: over 300 companies, from family firms to Warner Bros. Games. And across all of them, one pattern kept repeating:</p>
+      </div>
+      <p class="pull">The businesses that got real results were never the ones doing all the things. They fixed one expensive workflow at a time, with a named owner, a playbook and training, so the improvement actually held.</p>
+      <div class="prose">
+        <p>The businesses that struggled were the ones chasing every channel, every tool, every trend at once. Busy everywhere, better nowhere.</p>
+        <p>Then AI arrived, and I watched the exact same mistake repeat at ten times the volume, except now the tools were more powerful, the noise was louder, and the cost of dabbling was higher. So I turned what actually worked into a method, and made it my whole job.</p>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ METHOD ============ */}
+  <section class="section band">
+    <div class="container">
+      <p class="hud reveal">▸ THE METHOD · MAP · BUILD · SCALE</p>
+      <h2 class="s-h2 reveal">Three stages. No jargon, no theatre,<br />nothing your team can't own after I'm gone.</h2>
+      <div class="phases">
+        <article class="phase reveal">
+          <span class="idx">01 · MAP</span>
+          <h3 class="phase__t">See where the money leaks</h3>
+          <p class="muted">We map how your business actually runs today: tools, goals, pain points, and the workflows quietly costing you the most time and money. You get a ranked shortlist of where AI pays for itself fastest. No 60-page report. A map.</p>
+        </article>
+        <article class="phase reveal" style="transition-delay:90ms">
+          <span class="idx">02 · BUILD</span>
+          <h3 class="phase__t">Fix the expensive bits first</h3>
+          <p class="muted">We build the fix: automations, training and workshops aimed squarely at the workflows on your Map. Working systems your team uses that week, not slideware. Results measured in hours back and margin kept.</p>
+        </article>
+        <article class="phase reveal" style="transition-delay:180ms">
+          <span class="idx">03 · SCALE</span>
+          <h3 class="phase__t">Make it hold without me</h3>
+          <p class="muted">We scale it through your team with named owners, playbooks and training, so the growth holds after I leave. If it only works while I'm in the room, I haven't done my job.</p>
+        </article>
+      </div>
+      <div class="cta-block reveal">
+        <a href={APPLY} class="btn">Start with your free Map session<span class="arrow">→</span></a>
+        <p class="cta-note">The AI Opportunity Call is a mini-Map, live, in 30 minutes.</p>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ PROOF ============ */}
+  <section class="section">
+    <div class="container">
+      <p class="hud reveal">▸ TRACK RECORD</p>
+      <h2 class="s-h2 reveal">Fifteen years of cutting through the hype.</h2>
+      <div class="stats reveal">
+        <div class="stat"><b>15</b><span>years in digital marketing</span></div>
+        <div class="stat"><b>300+</b><span>companies worked with</span></div>
+        <div class="stat"><b>6</b><span>countries spoken in</span></div>
+      </div>
+      <div class="tgrid">
+        <figure class="tcard reveal">
+          <span class="tcard__q" aria-hidden="true">✦</span>
+          <blockquote>"Anytime I've interacted with Pazbi, his kindness and integrity have stood out. He isn't just about building websites — he's about building businesses. His holistic strategic approach to digital marketing ensures that every decision drives real, measurable growth."</blockquote>
+          <figcaption><b>Anna Rooney</b>PhD Researcher in AI and Critical Thinking</figcaption>
+        </figure>
+        <figure class="tcard reveal" style="transition-delay:90ms">
+          <span class="tcard__q" aria-hidden="true">✦</span>
+          <blockquote>"After working with Pazbi for a short time I honestly don't know how I managed without him. Continuously impressed with his knowledge on all things digital — from SEO to content creation, he's the first person I turn to to check it's the best solution for my website."</blockquote>
+          <figcaption><b>Sarah Sessions</b>Event and Brand Content Photographer</figcaption>
+        </figure>
+        <figure class="tcard reveal" style="transition-delay:180ms">
+          <span class="tcard__q" aria-hidden="true">✦</span>
+          <blockquote>"He is generous with his time and knowledge to clients and colleagues — a rare breed of professional who does it because he knows he can add real value, instead of seeing an angle where it benefits him."</blockquote>
+          <figcaption><b>David Clark-Waugh</b>Director of Clark &amp; Waugh</figcaption>
+        </figure>
+      </div>
+      <div class="cta-block reveal">
+        <a href={APPLY} class="btn">Book your free AI Opportunity Call<span class="arrow">→</span></a>
+        <p class="cta-note">You'll notice none of those quotes mention hype. That's rather the point.</p>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ WHAT WE'LL FIND ============ */}
+  <section class="section band">
+    <div class="container reveal">
+      <p class="hud">▸ WHAT WE'LL FIND</p>
+      <h2 class="s-h2">What your Map will typically uncover.</h2>
+      <div class="prose">
+        <p>Every business is different, but after 300+ of them, some patterns are near-universal. In your Map, expect to find things like:</p>
+      </div>
+      <ul class="finds">
+        <li><strong>The invoice-chasing workflow that quietly eats 6+ hours a week</strong>, and the 20-minute automation that ends it.</li>
+        <li><strong>The "copy-paste tax":</strong> where your team re-types the same information between systems, and which handoff to automate first.</li>
+        <li><strong>Features you already pay for but never switched on</strong>: the software on your current bill that can do what a human is doing by hand.</li>
+        <li><strong>The Monday-morning report your managers assemble manually</strong>, and how to have it waiting in their inbox before they've made coffee.</li>
+        <li><strong>The three questions that separate a real AI use case from AI theatre</strong>, worth asking before you spend a single pound.</li>
+        <li><strong>Where <em>not</em> to use AI in your business.</strong> There's always somewhere, and it's usually the bit your customers can see.</li>
+      </ul>
+      <div class="cta-block">
+        <a href={APPLY} class="btn">Find yours — book the call<span class="arrow">→</span></a>
+        <p class="cta-note">The shortlist is yours to keep, whoever you build it with.</p>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ OFFER ============ */}
+  <section class="section">
+    <div class="container">
+      <p class="hud reveal">▸ HOW WE WORK TOGETHER</p>
+      <h2 class="s-h2 reveal">One conversation. Then only what earns its keep.</h2>
+      <div class="steps">
+        <article class="step reveal">
+          <p class="step__stage">STEP 1 <span class="sticker step__free">Free</span></p>
+          <h3 class="step__t">The AI Opportunity Call — 30 minutes</h3>
+          <p class="muted">A working session, not a pitch. I'll ask how your business actually runs, and we'll build a mini-Map live: a shortlist of your highest-leverage automations, ranked by payback. If there's an obvious next step, I'll tell you. If there isn't, I'll tell you that too.</p>
+        </article>
+        <article class="step reveal" style="transition-delay:90ms">
+          <p class="step__stage">STEP 2</p>
+          <h3 class="step__t">The AI Day — one hands-on day with your team</h3>
+          <p class="muted">Discovery → Build → Embed. We take the top items from your Map and build working automations with your people in the room, then leave you with a 90-day plan they actually own. No laptops-closed lecture. Sleeves up.</p>
+        </article>
+        <article class="step reveal" style="transition-delay:180ms">
+          <p class="step__stage">STEP 3</p>
+          <h3 class="step__t">Map · Build · Scale — the 90-day embedded advisory</h3>
+          <p class="muted">From pilot to P&amp;L. I embed with your leadership team for 90 days to run the full method across the business: automations shipped, playbooks written, owners named, results measured. For leaders who are done with AI theatre.</p>
+        </article>
+      </div>
+      <div class="prose reveal" style="margin-top:1.6rem">
+        <p class="muted">Everything starts with the call. There's no obligation to go further, and if I don't think you should, I'll say so in plain English.</p>
+      </div>
+      <div class="cta-block reveal">
+        <a href={APPLY} class="btn">Book your free AI Opportunity Call<span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ OBJECTIONS ============ */}
+  <section class="section band">
+    <div class="container reveal">
+      <p class="hud">▸ NOW YOU MAY BE THINKING…</p>
+      <h2 class="s-h2">Fair questions. Straight answers.</h2>
+      <div class="objections">
+        <div class="objection">
+          <h3>"We've already tried AI tools."</h3>
+          <p class="muted">Good. That puts you ahead of the businesses still pretending it's a fad. Tools without a map are how most AI budgets die, though. Your Map will show you which subscriptions are worth keeping, which to cancel, and where the actual money is. Sometimes the best output of a Map is a shorter software bill.</p>
+        </div>
+        <div class="objection">
+          <h3>"I don't have time for another project."</h3>
+          <p class="muted">That's precisely why the Map targets time first. The first automations we build are the ones that give hours back to you and your senior people. This is the project that funds the others. And the first step is thirty minutes, which I suspect you currently lose to copy-paste before Tuesday lunch.</p>
+        </div>
+        <div class="objection">
+          <h3>"Can't we just do this in-house?"</h3>
+          <p class="muted">Eventually, yes. That's literally the Scale stage. The question is whether you want to pay the do-nothing tax while someone learns on the job, one Google search at a time. I bring the pattern library from 300+ businesses, then hand your team the keys. I work myself out of a job on purpose.</p>
+        </div>
+        <div class="objection">
+          <h3>"Is this going to be another consultant deck?"</h3>
+          <p class="muted">No. You get working automations, playbooks your team owns, and training they've actually used, not a 90-slide PDF with a maturity matrix. Fifteen years in the trenches of digital marketing taught me to tell you what you <em>need</em> to hear, not what looks good in a steering committee.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ FIT ============ */}
+  <section class="section">
+    <div class="container reveal">
+      <p class="hud">▸ AN HONEST FILTER</p>
+      <h2 class="s-h2">Who this is for. And who it isn't.</h2>
+      <div class="fit">
+        <article class="fitcard">
+          <h3><span class="fitcard__glyph" aria-hidden="true">✦</span> This is for you if…</h3>
+          <ul class="ticks ticks--tight">
+            <li>You run or lead a UK owner-led or mid-sized business: roughly £1m–£25m, 10–250 staff.</li>
+            <li>You want measurable results: hours back, margin kept. Not a press release about innovation.</li>
+            <li>You're willing to involve your team. Systems should fit the people who use them.</li>
+            <li>You're sceptical of hype. Excellent. So am I.</li>
+          </ul>
+        </article>
+        <article class="fitcard fitcard--not">
+          <h3><span class="fitcard__glyph" aria-hidden="true">✕</span> This is not for you if…</h3>
+          <ul class="crosses crosses--tight">
+            <li>You want a magic-bullet, replace-everyone-with-bots plan. That's not a strategy, it's a headline.</li>
+            <li>You want AI theatre for the board: something shiny to point at that changes nothing.</li>
+            <li>You want a deck instead of a change. Plenty of people sell those. I don't.</li>
+            <li>You won't give it thirty minutes of honest attention. That's the whole entry price.</li>
+          </ul>
+        </article>
+      </div>
+      <div class="cta-block">
+        <a href={APPLY} class="btn">Still here? Book the call<span class="arrow">→</span></a>
+        <p class="cta-note">If we're not a fit, I'll tell you on the call and point you somewhere better.</p>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ FAQ ============ */}
+  <section class="section band">
+    <div class="container reveal">
+      <p class="hud">▸ QUESTIONS</p>
+      <h2 class="s-h2">Things people ask before booking.</h2>
+      <div class="faq">
+        {faqs.map((f) => (
+          <details class="faq__item">
+            <summary>{f.q}<span class="faq__ind" aria-hidden="true">+</span></summary>
+            <p class="muted">{f.a}</p>
+          </details>
+        ))}
+      </div>
+      <div class="cta-block">
+        <a href={APPLY} class="btn">Book your free AI Opportunity Call<span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ ABOUT ============ */}
+  <section class="section">
+    <div class="container reveal">
+      <p class="hud">▸ ABOUT PAZBI</p>
+      <h2 class="s-h2">The person on the other end of the call.</h2>
+      <div class="about">
+        <div class="prose">
+          <p>I'm Pazbi Zavatzki: London-based keynote speaker, workshop leader and AI advisor. My signature talk is called <em>How to Be Irreplaceable in an AI World</em>, and my whole working life is helping leaders and teams turn AI noise into systems, skills and revenue.</p>
+          <p>Fifteen years in the trenches of digital marketing have taught me how to cut through the hype and tell you what you <em>need</em> to hear. I've worked with more than 300 companies, spoken in six countries, and founded Kickass Online and Neuroinclusive Standards along the way.</p>
+          <p>One founding principle: systems should fit the people who use them. One promise: I tell you the truth. Everything else is detail.</p>
+        </div>
+        <ul class="facts">
+          <li><b>Signature keynote:</b> How to Be Irreplaceable in an AI World</li>
+          <li><b>Founder:</b> Kickass Online · Neuroinclusive Standards</li>
+          <li><b>Recognition:</b> Entrepreneur of the Year finalist 2023</li>
+          <li><b>Stages &amp; teams:</b> Warner Bros. Games, Institute of Directors, University of Westminster, CILIP, BNI</li>
+          <li><b>Base:</b> London, working UK-wide and remote</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ FINAL ============ */}
+  <section class="section on-dark final">
+    <div class="container reveal">
+      <p class="hud">▸ THE DECISION</p>
+      <h2 class="s-h2 final__title">How long will you keep paying the do-nothing tax?</h2>
+      <div class="prose">
+        <p>No countdown timer here. No "only 3 spots left". The honest urgency is simpler and more annoying: the hours your team lost to manual chasing, re-typing and report-building this week are already gone, and the same tax falls due again next week, and the week after that.</p>
+        <p>Doing nothing feels free. It's the most expensive option on this page.</p>
+      </div>
+      <div class="truth">
+        <p class="truth__head">✦ The truth promise, one last time</p>
+        <p>The call is a working session, not a pitch. You leave with a shortlist of your highest-leverage automations, whoever you build them with. And if the call isn't useful, I'll tell you who to talk to instead. That's the guarantee. It's held for fifteen years.</p>
+      </div>
+      <div class="cta-block">
+        <a href={APPLY} class="btn">Book your free AI Opportunity Call<span class="arrow">→</span></a>
+        <p class="cta-note"><strong>30 minutes.</strong> Your map, your shortlist, your call.</p>
+      </div>
+      <p class="final__alt muted">Not ready for a call? <a href="/writing" class="final__altLink">Start with the writing instead →</a></p>
+    </div>
+  </section>
+
+  <style>
+    .s-h2 { font-size: var(--step-3); margin: 1.1rem 0 1.2rem; }
+    .prose { max-width: 62ch; }
+    .prose p { margin-bottom: 1rem; }
+    .cta-block { margin-top: 2.2rem; }
+    .cta-note { margin-top: 0.9rem; font-size: var(--step--1); color: var(--muted); max-width: 52ch; }
+    .band { background: var(--bone); }
+
+    /* Hero */
+    .shero { padding-block: clamp(3.5rem, 2.5rem + 6vw, 7.5rem) clamp(2.5rem, 4vw, 4rem); }
+    .shero__title { font-size: var(--step-4); max-width: 22ch; margin: 1.2rem 0 1.4rem; }
+    .shero__sub { color: var(--muted); max-width: 56ch; }
+    .shero__meta { list-style: none; padding: 0; margin: 2.6rem 0 0; display: flex; flex-wrap: wrap; gap: 1rem 2.5rem; }
+    .shero__meta li { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
+    .shero__metaNum { color: var(--canary-deep); font-weight: 700; margin-right: 0.4em; }
+
+    /* Logos */
+    .slogos { padding-block: 1.6rem 2.2rem; border-block: 1px solid var(--line-light); }
+    .slogos__list { list-style: none; padding: 0; margin: 1rem 0 0; display: flex; flex-wrap: wrap; gap: 0.6rem 2.2rem; }
+    .slogos__list li { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+
+    /* Lists */
+    .ticks, .crosses, .finds, .mirror { list-style: none; padding: 0; margin: 1.4rem 0 1.4rem; display: grid; gap: 0.9rem; max-width: 62ch; }
+    .ticks li, .finds li { padding-left: 1.7rem; position: relative; }
+    .ticks li::before, .finds li::before { content: '✦'; position: absolute; left: 0; color: var(--canary-deep); }
+    .crosses li { padding-left: 1.7rem; position: relative; }
+    .crosses li::before { content: '✕'; position: absolute; left: 0; color: var(--graphite); font-weight: 700; }
+    .finds li { margin-top: 0.2rem; }
+    .mirror { gap: 0.85rem; max-width: none; }
+    .mirror li { background: var(--cream); border: 1px solid var(--line-light); border-left: 4px solid var(--canary); border-radius: var(--radius); padding: 1rem 1.2rem; }
+    @media (min-width: 821px) { .mirror { grid-template-columns: 1fr 1fr; } }
+
+    /* Story pull */
+    .pull { font-family: var(--font-display); font-weight: 600; font-size: var(--step-1); line-height: 1.35; border-left: 4px solid var(--canary); padding-left: 1.2rem; margin: 1.8rem 0; max-width: 56ch; letter-spacing: -0.01em; }
+
+    /* Method */
+    .phases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 2rem; }
+    .phase { padding: 2rem; background: var(--cream); border: 1px solid var(--line-light); border-top: 3px solid var(--canary); border-radius: var(--radius-lg); }
+    .phase__t { font-size: var(--step-1); margin: 0.8rem 0 0.7rem; }
+
+    /* Proof */
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; margin: 2rem 0 2.4rem; text-align: center; }
+    .stat b { display: block; font-family: var(--font-display); font-weight: 700; font-size: var(--step-3); color: var(--canary-deep); line-height: 1; }
+    .stat span { font-size: var(--step--1); color: var(--muted); }
+    .tgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    .tcard { margin: 0; background: var(--bone); border: 1px solid var(--line-light); border-radius: var(--radius-lg); padding: 1.6rem 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+    .tcard__q { color: var(--canary-deep); }
+    .tcard blockquote { margin: 0; font-size: var(--step--1); font-style: italic; }
+    .tcard figcaption { font-size: 0.82rem; color: var(--muted); margin-top: auto; }
+    .tcard figcaption b { display: block; color: var(--ink); font-style: normal; }
+
+    /* Steps */
+    .steps { display: grid; gap: 1.1rem; margin-top: 2rem; }
+    .step { background: var(--bone); border: 1px solid var(--line-light); border-radius: var(--radius-lg); padding: 1.8rem 1.6rem; }
+    .step__stage { font-family: var(--font-mono); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.17em; text-transform: uppercase; color: var(--canary-deep); }
+    .step__free { margin-left: 0.6rem; }
+    .step__t { font-size: var(--step-1); margin: 0.6rem 0 0.6rem; }
+
+    /* Objections */
+    .objections { display: grid; gap: 2rem; margin-top: 2rem; max-width: 62ch; }
+    .objection h3 { font-size: var(--step-1); margin-bottom: 0.5rem; }
+
+    /* Fit */
+    .fit { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 2rem; }
+    .fitcard { background: var(--bone); border: 1px solid var(--line-light); border-top: 3px solid var(--canary); border-radius: var(--radius-lg); padding: 1.8rem 1.6rem; }
+    .fitcard--not { border-top-color: var(--graphite-light); }
+    .fitcard h3 { font-size: var(--step-1); margin-bottom: 0.4rem; }
+    .fitcard__glyph { color: var(--canary-deep); }
+    .fitcard--not .fitcard__glyph { color: var(--graphite); }
+    .ticks--tight, .crosses--tight { margin-bottom: 0; }
+
+    /* FAQ */
+    .faq { margin-top: 1.6rem; border-top: 1px solid var(--line-light); max-width: 68ch; }
+    .faq__item { border-bottom: 1px solid var(--line-light); }
+    .faq__item summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.15rem 0.2rem; font-family: var(--font-display); font-weight: 600; font-size: var(--step-0); }
+    .faq__item summary::-webkit-details-marker { display: none; }
+    .faq__ind { flex: 0 0 auto; width: 1.6rem; height: 1.6rem; border-radius: 50%; border: 1.5px solid var(--canary-deep); color: var(--canary-deep); display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-mono); transition: transform 0.25s var(--ease); }
+    .faq__item[open] .faq__ind { transform: rotate(45deg); }
+    .faq__item p { padding: 0 0.2rem 1.3rem; max-width: 60ch; }
+
+    /* About */
+    .about { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: start; margin-top: 1.6rem; }
+    .facts { list-style: none; padding: 0; margin: 0; font-size: var(--step--1); }
+    .facts li { padding: 0.75rem 0; border-bottom: 1px solid var(--line-light); }
+    .facts li:first-child { border-top: 1px solid var(--line-light); }
+
+    /* Final */
+    .final .prose p { color: rgba(244, 238, 224, 0.85); }
+    .final__title { color: var(--cream); max-width: 24ch; }
+    .final .cta-note { color: rgba(244, 238, 224, 0.66); }
+    .final .cta-note strong { color: var(--cream); }
+    .truth { margin-top: 2rem; border: 1px solid var(--line-dark); border-radius: var(--radius-lg); padding: 1.5rem 1.6rem; max-width: 62ch; }
+    .truth p { color: rgba(244, 238, 224, 0.85); }
+    .truth__head { font-family: var(--font-display); font-weight: 700; color: var(--cream) !important; margin-bottom: 0.5rem; }
+    .final__alt { margin-top: 2.6rem; font-size: var(--step--1); }
+    .final__altLink { color: var(--canary); }
+    .final__altLink:hover { text-decoration: underline; }
+
+    @media (max-width: 900px) {
+      .phases, .tgrid, .stats { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 700px) {
+      .phases, .tgrid, .fit, .about, .stats { grid-template-columns: 1fr; }
+    }
+  </style>
+</Base>

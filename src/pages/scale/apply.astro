@@ -1,0 +1,212 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+<Base
+  title="Apply for an AI Opportunity Call"
+  description="Two minutes of honest answers. In return, you get a working session, not a pitch."
+  noindex={true}
+>
+  <section class="section apply">
+    <div class="container">
+      <p class="hud">▸ STEP 1 OF 2 · THE APPLICATION</p>
+      <h1 class="apply__title">Before we book a call, let's make sure it's worth your 30 minutes.</h1>
+      <p class="lead muted apply__sub">Two minutes of honest answers. In return, you get a working session, not a pitch.</p>
+
+      <div class="prose">
+        <p>The AI Opportunity Call isn't a sales call with a costume on. It's 30 minutes of actual work: we map where your team loses the most time, and you leave with a shortlist of your highest-leverage automation opportunities, whether or not we ever work together.</p>
+        <p>Because it's a working session, I do a small amount of preparation for every call. That's why I ask a few questions first. It takes about two minutes, and it means we spend our 30 minutes on your business, not on introductions.</p>
+      </div>
+      <div class="note">
+        <p>One honest note before you start: my engagements typically start at £3,500, and I work best with owner-led and mid-sized businesses (roughly 10–250 people) that are serious about getting a return from AI in the next quarter or two. If that's not you yet, no hard feelings. I'll point you to things that will genuinely help, and the door stays open.</p>
+      </div>
+
+      <!-- Handled by Netlify Forms + client-side routing. Submissions appear in the Netlify dashboard (Forms tab). -->
+      <form id="applyForm" class="aform" name="ai-opportunity-call" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+        <input type="hidden" name="form-name" value="ai-opportunity-call" />
+        <p class="afield--hp" hidden>
+          <label>Leave this empty: <input name="bot-field" /></label>
+        </p>
+
+        <div class="grid2">
+          <div class="afield">
+            <label for="f-name">Your name</label>
+            <input type="text" id="f-name" name="name" required autocomplete="name" />
+          </div>
+          <div class="afield">
+            <label for="f-email">Work email</label>
+            <input type="email" id="f-email" name="email" required autocomplete="email" />
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="afield">
+            <label for="f-company">Company</label>
+            <input type="text" id="f-company" name="company" required autocomplete="organization" />
+          </div>
+          <div class="afield">
+            <label for="f-role">Your role</label>
+            <input type="text" id="f-role" name="role" required autocomplete="organization-title" />
+          </div>
+        </div>
+
+        <fieldset class="afield">
+          <legend>How many people work in the business?</legend>
+          <label class="radio"><input type="radio" name="team_size" value="solo" required /> Just me</label>
+          <label class="radio"><input type="radio" name="team_size" value="2-9" /> 2–9</label>
+          <label class="radio"><input type="radio" name="team_size" value="10-50" /> 10–50</label>
+          <label class="radio"><input type="radio" name="team_size" value="51-250" /> 51–250</label>
+          <label class="radio"><input type="radio" name="team_size" value="250+" /> 250+</label>
+        </fieldset>
+
+        <fieldset class="afield">
+          <legend>Rough annual revenue?</legend>
+          <label class="radio"><input type="radio" name="revenue" value="under-250k" required /> Under £250k</label>
+          <label class="radio"><input type="radio" name="revenue" value="250k-1m" /> £250k–£1m</label>
+          <label class="radio"><input type="radio" name="revenue" value="1m-5m" /> £1m–£5m</label>
+          <label class="radio"><input type="radio" name="revenue" value="5m-25m" /> £5m–£25m</label>
+          <label class="radio"><input type="radio" name="revenue" value="25m+" /> £25m+</label>
+          <label class="radio"><input type="radio" name="revenue" value="private" /> Prefer not to say</label>
+        </fieldset>
+
+        <div class="afield">
+          <label for="f-about">In a sentence or two: what does the business do, and who for?</label>
+          <textarea id="f-about" name="about" required></textarea>
+        </div>
+
+        <div class="afield">
+          <label for="f-pain">Where does your team lose the most time each week?</label>
+          <p class="why">Be specific if you can: "chasing quotes", "copy-pasting between systems", "writing the same reports". If you're not sure, say that too.</p>
+          <textarea id="f-pain" name="time_lost" required></textarea>
+        </div>
+
+        <div class="afield">
+          <label for="f-tried">What have you tried with AI so far, and how did it go?</label>
+          <textarea id="f-tried" name="ai_history" required></textarea>
+        </div>
+
+        <div class="afield">
+          <label for="f-win">If we worked together, what would a win look like in 90 days?</label>
+          <textarea id="f-win" name="win_90" required></textarea>
+        </div>
+
+        <fieldset class="afield">
+          <legend>An honest question about budget. My engagements typically start at £3,500 for an AI Day and from £6,000 for a 90-day advisory. Which best describes you?</legend>
+          <label class="radio"><input type="radio" name="budget" value="in-range" required /> That's within range if the value is clear</label>
+          <label class="radio"><input type="radio" name="budget" value="stretch" /> It's a stretch, but I'd find it for the right result</label>
+          <label class="radio"><input type="radio" name="budget" value="beyond" /> That's beyond us right now</label>
+          <label class="radio"><input type="radio" name="budget" value="unsure" /> I'd need to understand more before I could say</label>
+        </fieldset>
+
+        <div class="afield">
+          <label for="f-dm">Who else would be involved in a decision to work together?</label>
+          <input type="text" id="f-dm" name="decision_makers" required />
+        </div>
+
+        <div class="afield">
+          <label for="f-whynow">Why now? What's prompted you to look at this today?</label>
+          <textarea id="f-whynow" name="why_now" required></textarea>
+        </div>
+
+        <div class="afield">
+          <label for="f-extra">Anything else I should know before the call? <span class="optional">(optional)</span></label>
+          <textarea id="f-extra" name="anything_else"></textarea>
+        </div>
+
+        <p class="error" id="formError">Please answer every required question — each one shapes the call.</p>
+        <button class="btn" type="submit">Send my application<span class="arrow">→</span></button>
+
+        <p class="footnote muted">I read every application personally, usually within one working day. If we're a fit, you'll go straight through to my calendar. If we're not, or not yet, I'll say so honestly and point you somewhere genuinely useful instead. Either way, you'll hear from me.</p>
+      </form>
+
+      <div class="thanks" id="thanksBox" hidden>
+        <h2>Application received.</h2>
+        <p class="muted">I read every application personally, usually within one working day. You'll hear from me either way — that's the deal.</p>
+        <p class="thanks__sign">— Pazbi</p>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .apply { padding-block: clamp(3rem, 2rem + 5vw, 6rem); }
+    .container { max-width: 780px; }
+    .apply__title { font-size: var(--step-3); margin: 1.1rem 0 1.1rem; max-width: 24ch; }
+    .apply__sub { margin-bottom: 1.8rem; }
+    .prose p { margin-bottom: 1rem; max-width: 62ch; }
+    .note { background: var(--bone); border-left: 4px solid var(--canary); border-radius: 0 var(--radius) var(--radius) 0; padding: 1.1rem 1.3rem; margin: 1.6rem 0 2.2rem; max-width: 62ch; }
+
+    .aform { background: #fff; border: 1px solid var(--line-light); border-radius: var(--radius-lg); padding: clamp(1.4rem, 3vw, 2.2rem); display: grid; gap: 1.5rem; }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    .afield { display: flex; flex-direction: column; gap: 0.5rem; border: 0; padding: 0; margin: 0; min-width: 0; }
+    .aform label, .aform legend { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); padding: 0; }
+    .aform legend { margin-bottom: 0.6rem; float: left; width: 100%; }
+    .why { font-size: var(--step--1); color: var(--muted); margin: -0.2rem 0 0.2rem; }
+    .optional { text-transform: none; letter-spacing: 0; }
+    .aform input[type='text'], .aform input[type='email'], .aform textarea {
+      background: var(--cream); border: 1px solid var(--line-light); border-radius: var(--radius);
+      color: var(--ink); font-family: var(--font-body); font-size: var(--step-0); padding: 0.8em 1em; width: 100%;
+    }
+    .aform input:focus, .aform textarea:focus { border-color: var(--canary-deep); outline: none; box-shadow: 0 0 0 3px rgba(255, 212, 0, 0.25); }
+    .aform textarea { min-height: 96px; resize: vertical; }
+    .radio { display: flex; gap: 0.6rem; align-items: flex-start; font-family: var(--font-body) !important; font-size: var(--step-0) !important; text-transform: none !important; letter-spacing: 0 !important; color: var(--ink) !important; padding: 0.2rem 0 !important; clear: both; }
+    .radio input { margin-top: 0.33em; accent-color: var(--canary-deep); }
+    .error { display: none; color: var(--clay-deep); font-size: var(--step--1); }
+    .error.is-visible { display: block; }
+    .footnote { font-size: var(--step--1); font-style: italic; border-top: 1px solid var(--line-light); padding-top: 1.2rem; margin: 0; }
+
+    .thanks { background: #fff; border: 1px solid var(--line-light); border-radius: var(--radius-lg); padding: 2.4rem 2rem; text-align: center; }
+    .thanks h2 { font-size: var(--step-2); margin-bottom: 0.7rem; }
+    .thanks__sign { font-family: var(--font-display); font-weight: 600; margin-top: 1rem; }
+
+    @media (max-width: 640px) { .grid2 { grid-template-columns: 1fr; } }
+  </style>
+
+  <script>
+    // Submit to Netlify Forms via fetch, then route by qualification:
+    //   NOT YET  -> /scale/not-yet   (budget beyond, solo, or under £250k)
+    //   QUALIFIED-> /scale/book      (budget in-range/stretch AND team 10-250)
+    //   BORDERLINE -> inline thanks  (human review — submission is in Netlify)
+    const form = document.getElementById('applyForm') as HTMLFormElement | null;
+    const errorEl = document.getElementById('formError');
+    const thanksBox = document.getElementById('thanksBox');
+
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) {
+        errorEl?.classList.add('is-visible');
+        form.reportValidity();
+        return;
+      }
+      const data = new FormData(form);
+      const v = (n: string) => String(data.get(n) ?? '');
+
+      const notYet = v('budget') === 'beyond' || v('team_size') === 'solo' || v('revenue') === 'under-250k';
+      const qualified =
+        (v('budget') === 'in-range' || v('budget') === 'stretch') &&
+        (v('team_size') === '10-50' || v('team_size') === '51-250');
+
+      const finish = () => {
+        if (notYet) {
+          window.location.href = '/scale/not-yet';
+          return;
+        }
+        if (qualified) {
+          window.location.href =
+            '/scale/book?name=' + encodeURIComponent(v('name')) + '&email=' + encodeURIComponent(v('email'));
+          return;
+        }
+        form.hidden = true;
+        if (thanksBox) thanksBox.hidden = false;
+        window.scrollTo({ top: 0 });
+      };
+
+      // Netlify accepts AJAX form posts as URL-encoded bodies.
+      const body = new URLSearchParams(data as unknown as Record<string, string>).toString();
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body,
+      })
+        .then(finish)
+        .catch(finish); // never strand the applicant on a network error
+    });
+  </script>
+</Base>

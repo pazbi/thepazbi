@@ -16,6 +16,7 @@
 - [Speaking](https://thepazbi.com/speaking): Keynotes and talks available for booking.
 - [Workshops](https://thepazbi.com/workshops): Hands-on AI and automation workshops for teams.
 - [Consultancy](https://thepazbi.com/consultancy): AI and digital transformation advisory.
+- [Work with Pazbi](https://thepazbi.com/scale): Apply for a free 30-minute AI Opportunity Call — a working session that maps your highest-leverage AI automations.
 - [About](https://thepazbi.com/about): Full biography and story.
 - [Events](https://thepazbi.com/events): Upcoming and past appearances.
 - [Media](https://thepazbi.com/media): Podcasts, interviews, talks, TV and awards.
@@ -25,6 +26,8 @@
 
 ## Writing
 
+- [The AI Demo Always Works. That's the Problem.](https://thepazbi.com/writing/the-ai-demo-always-works-your-business-is-the-real-test)
+- [AI is Getting Cheaper. Your Bill is Probably Going Up.](https://thepazbi.com/writing/ai-is-getting-cheaper-your-bill-is-going-up)
 - [The AI Giants Stopped Selling Chat. They're Selling Agents Now.](https://thepazbi.com/writing/ai-agents-for-small-business-what-the-giants-just-changed)
 - [How to Be Irreplaceable: AI Won't Take Your Job](https://thepazbi.com/writing/ai-wont-take-your-job)
 - [How to Get Better AI Responses for Your Business](https://thepazbi.com/writing/how-to-get-better-ai-responses-for-your-business)

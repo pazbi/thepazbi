@@ -34,8 +34,14 @@ export default defineConfig({
       changefreq: 'weekly',
       priority: 0.7,
       lastmod: new Date(),
-      // Thank-you page has no search value — keep it out of the sitemap.
-      filter: (page) => !page.endsWith('/success/'),
+      // Thank-you and funnel-utility pages have no search value — keep them out
+      // of the sitemap. /scale itself IS indexed; only its inner steps are not.
+      filter: (page) =>
+        !page.endsWith('/success/') &&
+        !page.endsWith('/message-sent/') &&
+        !page.endsWith('/scale/apply/') &&
+        !page.endsWith('/scale/book/') &&
+        !page.endsWith('/scale/not-yet/'),
       serialize(item) {
         // The home page is the highest-priority entry.
         if (item.url === `${SITE}/`) item.priority = 1.0;

@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Message sent" description="Thanks for getting in touch." noindex={true}>
+  <section class="section ok">
+    <div class="container">
+      <p class="hud">▸ MESSAGE SENT</p>
+      <h1 class="ok__title">Got it. Thank you.</h1>
+      <p class="lead muted">
+        Your message landed. I'll come back to you fast, usually within a working day,
+        with availability and a recommendation.
+      </p>
+      <div class="ok__actions">
+        <a href="/" class="btn">Back home<span class="arrow">→</span></a>
+        <a href="/writing" class="btn btn--ghost">Read the blog while you wait</a>
+      </div>
+    </div>
+  </section>
+  <style>
+    .ok { padding-block: clamp(4rem, 3rem + 8vw, 9rem); }
+    .ok__title { font-size: var(--step-4); margin: 1rem 0 1.2rem; }
+    .ok__actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; }
+  </style>
+</Base>

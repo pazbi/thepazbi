@@ -1,0 +1,62 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+<Base
+  title="Book your AI Opportunity Call"
+  description="Pick a slot. 30 minutes, a working session — you leave with your mini-Map."
+  noindex={true}
+>
+  <section class="section book">
+    <div class="container">
+      <p class="hud">▸ STEP 2 OF 2 · PICK A SLOT</p>
+      <h1 class="book__title">Good news — let's find 30 minutes.</h1>
+      <p class="lead muted">Your application's through. Pick a slot below and we'll get to work.</p>
+
+      <div class="cards">
+        <article class="card reveal">
+          <h2>What this call is</h2>
+          <p class="muted">A 30-minute working session. I'll have read your application before we speak. We'll map where your team is losing time, and you'll leave with a shortlist of your top three automation opportunities: a "mini-Map" of your business. That's yours to keep whether we work together or not.</p>
+        </article>
+        <article class="card reveal">
+          <h2>What this call isn't</h2>
+          <p class="muted">A pitch. If I think I can help, I'll tell you exactly what that looks like and what it costs. If I don't think I'm the right person, I'll tell you that too, and point you somewhere better.</p>
+        </article>
+      </div>
+
+      <h2 class="book__h2">Come prepared with:</h2>
+      <ul class="prep">
+        <li><strong>Your calendar.</strong> If we agree on a next step, we'll book it there and then rather than trading emails for a fortnight.</li>
+        <li><strong>Your org chart</strong> (rough is fine — a napkin sketch counts). Knowing who does what makes the mapping twice as fast.</li>
+        <li><strong>Any other decision-maker.</strong> If a co-founder, FD or board member would need to weigh in on working together, the call is better with them on it. There's room on the invite.</li>
+      </ul>
+
+      {/* zcal inline booking widget — the Map Session event. After booking, zcal
+          should redirect to https://thepazbi.com/success (configured in zcal). */}
+      <div class="calbox">
+        <div class="zcal-inline-widget"><a href="https://zcal.co/i/7yfu2Xsi">Map Session - Schedule a meeting</a></div>
+      </div>
+      <p class="fallback muted">Calendar not loading? <a href="https://zcal.co/pazbi/map">Book directly here →</a></p>
+    </div>
+  </section>
+
+  <script is:inline type="text/javascript" async src="https://static.zcal.co/embed/v1/embed.js"></script>
+
+  <style>
+    .book { padding-block: clamp(3rem, 2rem + 5vw, 6rem); }
+    .container { max-width: 860px; }
+    .book__title { font-size: var(--step-3); margin: 1.1rem 0 1.1rem; }
+    .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin: 2rem 0; }
+    .card { background: var(--bone); border: 1px solid var(--line-light); border-top: 3px solid var(--canary); border-radius: var(--radius-lg); padding: 1.6rem 1.5rem; }
+    .card h2 { font-size: var(--step-1); margin-bottom: 0.6rem; }
+    .card p { font-size: var(--step--1); }
+    .book__h2 { font-size: var(--step-1); margin: 1.8rem 0 0.6rem; }
+    .prep { list-style: none; padding: 0; margin: 0.6rem 0 2rem; display: grid; gap: 0.8rem; max-width: 62ch; }
+    .prep li { padding-left: 1.7rem; position: relative; }
+    .prep li::before { content: '✦'; position: absolute; left: 0; color: var(--canary-deep); }
+    .calbox { background: #fff; border: 1px solid var(--line-light); border-radius: var(--radius-lg); min-height: 560px; padding: 0.6rem; }
+    .fallback { text-align: center; font-size: var(--step--1); margin-top: 0.9rem; }
+    .fallback a { color: var(--canary-deep); font-weight: 600; }
+    .fallback a:hover { text-decoration: underline; }
+    @media (max-width: 640px) { .cards { grid-template-columns: 1fr; } }
+  </style>
+</Base>

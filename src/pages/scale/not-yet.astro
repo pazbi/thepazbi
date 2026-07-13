@@ -1,0 +1,51 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site } from '../../lib/site';
+---
+<Base
+  title="Not a fit right now"
+  description="I'd rather tell you honestly than waste your time. Here's what I'd do instead."
+  noindex={true}
+>
+  <section class="section notyet">
+    <div class="container">
+      <p class="hud">▸ AN HONEST ANSWER</p>
+      <h1 class="notyet__title">We're probably not a fit right now — and I'd rather tell you that than waste your time.</h1>
+
+      <div class="prose">
+        <p>Thanks for applying — genuinely. Based on your answers, I don't think a paid engagement is the right next step for you today, and I'm not going to book a call just to talk you into one. That's not how I work.</p>
+        <p>Here's what I'd do instead, in your shoes:</p>
+      </div>
+
+      <article class="card reveal">
+        <h2>1. Steal the method from the writing.</h2>
+        <p class="muted">Start with these two: <a href="/writing/stop-buying-tools">Stop buying AI tools. Start fixing workflows.</a> is five minutes on why most AI projects stall, and what the ones that don't do differently. Then <a href="/writing/three-ai-usecases">the three AI use cases most businesses actually need</a> shows you where to look first. Most people find one thing worth fixing this month.</p>
+        <a class="btn" href="/writing">Read the writing<span class="arrow">→</span></a>
+      </article>
+
+      <article class="card reveal">
+        <h2>2. Stay in touch.</h2>
+        <p class="muted">I share practical, hype-free notes on what's working with AI in real businesses — no theatre, no "10x your everything". Follow along on LinkedIn, or drop me a line any time at <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+        <a class="btn btn--ghost" href={site.social.linkedin} target="_blank" rel="noopener">Follow on LinkedIn ↗</a>
+      </article>
+
+      <div class="prose">
+        <p>And when things change — the team grows, the budget appears, the pain gets loud enough — <a href="/scale/apply" class="again">apply again</a>. The door isn't closed; it's just not today. I'd rather meet you when I can genuinely earn my fee.</p>
+      </div>
+      <p class="sign">— Pazbi</p>
+    </div>
+  </section>
+
+  <style>
+    .notyet { padding-block: clamp(3rem, 2rem + 5vw, 6rem); }
+    .container { max-width: 720px; }
+    .notyet__title { font-size: var(--step-3); margin: 1.1rem 0 1.4rem; max-width: 26ch; }
+    .prose p { margin-bottom: 1rem; max-width: 62ch; }
+    .prose a, .card a:not(.btn) { color: var(--canary-deep); font-weight: 600; }
+    .prose a:hover, .card a:not(.btn):hover { text-decoration: underline; }
+    .card { background: var(--bone); border: 1px solid var(--line-light); border-top: 3px solid var(--canary); border-radius: var(--radius-lg); padding: 1.6rem 1.5rem; margin: 1.4rem 0; }
+    .card h2 { font-size: var(--step-1); margin-bottom: 0.6rem; }
+    .card p { margin-bottom: 1.1rem; }
+    .sign { font-family: var(--font-display); font-weight: 600; font-size: var(--step-1); margin-top: 1.6rem; }
+  </style>
+</Base>
