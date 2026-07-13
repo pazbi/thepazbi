@@ -28,7 +28,7 @@ const faqs = [
   },
   {
     q: 'What do I need on the day?',
-    a: "A laptop or desktop (not just a phone; you'll be doing proper setup), Zoom, a Claude Pro account, and access to your own email and calendar if you want to connect them live during module three. I'll send a short setup checklist the week before, including installing the Claude desktop app, so the day is spent building rather than downloading.",
+    a: "A laptop or desktop (not just a phone; you'll be doing proper setup), Chrome (Google Meet runs in the browser, nothing to install), a Claude Pro account, and access to your own email and calendar if you want to connect them live during module three. I'll send a short setup checklist the week before, including installing the Claude desktop app, so the day is spent building rather than downloading.",
   },
   {
     q: 'Will this work for my industry?',
@@ -41,6 +41,10 @@ const faqs = [
   {
     q: "What's the refund policy?",
     a: "The guarantee, verbatim: stay for the whole morning, and if by the lunch break you don't believe the day is worth £100, email me before the afternoon session starts and I'll refund every penny, pack included, yours to keep. Before the day itself, if life happens, transfer to a future date free of charge. VIP 1-1 time is refundable pro-rata if unused.",
+  },
+  {
+    q: 'Are the prices inclusive of VAT?',
+    a: "No — prices are shown excluding VAT. UK VAT at 20% is added at checkout, so the £100 seat is £120 all-in. Buying as a VAT-registered business? Enter your VAT number at checkout, and every purchase comes with a proper invoice for your accountant. The workshop is sold by Kickass Online Ltd (VAT No. GB479593913).",
   },
   {
     q: 'Is this going to be a four-hour pitch for your consultancy?',
@@ -65,11 +69,19 @@ const eventSchema = {
   image: new URL('/og/default.png', site.url).href,
   organizer: { '@id': `${site.url}/#person` },
   performer: { '@id': `${site.url}/#person` },
-  offers: [
-    { '@type': 'Offer', name: 'Standard seat', price: '100', priceCurrency: 'GBP', url: STRIPE_STANDARD, availability: 'https://schema.org/InStock', validFrom: '2026-07-13' },
-    { '@type': 'Offer', name: 'Live day + Replay & Claude Business Pack', price: '140', priceCurrency: 'GBP', url: STRIPE_STANDARD, availability: 'https://schema.org/InStock', validFrom: '2026-07-13' },
-    { '@type': 'Offer', name: 'VIP (5 spots)', price: '350', priceCurrency: 'GBP', url: STRIPE_VIP, availability: 'https://schema.org/LimitedAvailability', validFrom: '2026-07-13' },
-  ],
+  offers: [100, 140, 350].map((amount, i) => ({
+    '@type': 'Offer',
+    name: ['Standard seat', 'Live day + Replay & Claude Business Pack', 'VIP (5 spots)'][i],
+    url: i === 2 ? STRIPE_VIP : STRIPE_STANDARD,
+    availability: i === 2 ? 'https://schema.org/LimitedAvailability' : 'https://schema.org/InStock',
+    validFrom: '2026-07-13',
+    priceSpecification: {
+      '@type': 'PriceSpecification',
+      price: String(amount),
+      priceCurrency: 'GBP',
+      valueAddedTaxIncluded: false,
+    },
+  })),
 };
 
 const faqSchema = {
@@ -83,7 +95,7 @@ const faqSchema = {
 ---
 <Base
   title="Getting Started with Claude for Your Business — one-day live workshop"
-  description="A one-day online live workshop with Pazbi Zavatzki. Set Claude up for your business: projects, skills, connectors, plugins and Cowork. Live, in plain English, on your own account. £100. Saturday 1 August 2026, 10:00–15:00 UK, on Zoom."
+  description="A one-day online live workshop with Pazbi Zavatzki. Set Claude up for your business: projects, skills, connectors, plugins and Cowork. Live, in plain English, on your own account. £100 + VAT. Saturday 1 August 2026, 10:00–15:00 UK, on Google Meet."
   schema={[eventSchema, faqSchema]}
 >
   {/* ============ HERO ============ */}
@@ -99,7 +111,7 @@ const faqSchema = {
       </p>
       <div class="cta-block">
         <a href="#pricing" class="btn">Save my seat<span class="arrow">→</span></a>
-        <p class="cta-note"><strong>£100 · 35 seats · 10:00–15:00 UK · live on Zoom.</strong> A working session, not a webinar you half-watch while doing email.</p>
+        <p class="cta-note"><strong>£100 + VAT · 35 seats · 10:00–15:00 UK · live on Google Meet.</strong> A working session, not a webinar you half-watch while doing email.</p>
       </div>
       <ul class="whero__meta">
         <li><span class="whero__metaNum">15</span> years in digital marketing</li>
@@ -238,7 +250,7 @@ const faqSchema = {
     <div class="container reveal">
       <p class="hud">▸ THE SHAPE OF THE DAY</p>
       <h2 class="w-h2">Four teaching hours. One proper lunch. No filler.</h2>
-      <p class="lead muted">Live on Zoom: an actual meeting, not a webinar. Cameras on, chat open, questions answered as they come up. Capped at 35 people so that's genuinely possible.</p>
+      <p class="lead muted">Live on Google Meet: an actual meeting, not a webinar. Cameras on, chat open, questions answered as they come up. Capped at 35 people so that's genuinely possible.</p>
       <div class="sched">
         <div class="sched__row">
           <span class="sched__time">10:00–12:00</span>
@@ -350,29 +362,29 @@ const faqSchema = {
     <div class="container">
       <p class="hud reveal">▸ SEATS &amp; PRICES</p>
       <h2 class="w-h2 reveal">Three ways in. No timers, no tricks.</h2>
-      <p class="lead muted reveal">One date, 35 seats, and prices that stay exactly where they are. The only scarcity on this page is arithmetic.</p>
+      <p class="lead muted reveal">One date, 35 seats, and prices that stay exactly where they are. The only scarcity on this page is arithmetic. Prices exclude VAT; UK VAT is added at checkout, and every purchase gets a proper VAT invoice.</p>
       <div class="prices">
 
         <article class="pcard reveal">
           <span class="pcard__badge">Standard</span>
           <h3>The live day</h3>
-          <p class="pcard__amount">£100 <span>per person</span></p>
+          <p class="pcard__amount">£100 <span>+ VAT per person</span></p>
           <p class="pcard__sub muted">Everything you need to leave with a working setup.</p>
           <ul>
-            <li>The full live workshop: all six modules, 10:00–15:00 UK on Zoom</li>
+            <li>The full live workshop: all six modules, 10:00–15:00 UK on Google Meet</li>
             <li>Live Q&amp;A throughout: a meeting, not a webinar, capped at 35 people</li>
             <li>Every exercise done on your own Claude account, so you keep what you build</li>
             <li>The 30-day Map · Build · Scale plan you write in the final module</li>
             <li>The lunch-break guarantee (see below)</li>
           </ul>
           <a class="btn btn--ghost" href={STRIPE_STANDARD}>Save my seat<span class="arrow">→</span></a>
-          <p class="pcard__fine muted">You can add the £40 Replay + Pack on the checkout page. Bringing a colleague? <a href={STRIPE_TWO_SEATS}>Two seats for £175</a>: 25% off the second, because systems stick better when two people learn them together.</p>
+          <p class="pcard__fine muted">You can add the £40 Replay + Pack on the checkout page. Bringing a colleague? <a href={STRIPE_TWO_SEATS}>Two seats for £175 + VAT</a>: 25% off the second, because systems stick better when two people learn them together.</p>
         </article>
 
         <article class="pcard pcard--featured reveal" style="transition-delay:90ms">
           <span class="pcard__badge pcard__badge--solid">Most people add this</span>
           <h3>Live day + Replay &amp; Claude Business Pack</h3>
-          <p class="pcard__amount">£140 <span>per person</span></p>
+          <p class="pcard__amount">£140 <span>+ VAT per person</span></p>
           <p class="pcard__sub muted">The live day, plus everything to rebuild it at your own pace.</p>
           <ul>
             <li>Everything in Standard</li>
@@ -390,7 +402,7 @@ const faqSchema = {
         <article class="pcard reveal" style="transition-delay:180ms">
           <span class="pcard__badge">VIP · 5 spots only</span>
           <h3>The live day + an hour on your business</h3>
-          <p class="pcard__amount">£350 <span>per person</span></p>
+          <p class="pcard__amount">£350 <span>+ VAT per person</span></p>
           <p class="pcard__sub muted">Five spots because that's my diary, not a marketing tactic.</p>
           <ul>
             <li>Everything in Standard</li>
@@ -405,7 +417,7 @@ const faqSchema = {
       </div>
 
       <div class="alumni reveal">
-        <p><strong>One thing I'm not selling today:</strong> after the workshop, alumni can book a Private Claude Day: a full private implementation day for your business at £2,500, against my published AI Day rate of "from £3,500". It's offered after the workshop, once we both know it's the right move, never as a checkout upsell. Mentioned here only so you know the path exists.</p>
+        <p><strong>One thing I'm not selling today:</strong> after the workshop, alumni can book a Private Claude Day: a full private implementation day for your business at £2,500 + VAT, against my published AI Day rate of "from £3,500". It's offered after the workshop, once we both know it's the right move, never as a checkout upsell. Mentioned here only so you know the path exists.</p>
       </div>
     </div>
   </section>
@@ -445,11 +457,11 @@ const faqSchema = {
       <h2 class="w-h2 final__title">The subscription renews either way.</h2>
       <div class="prose">
         <p>No countdown timer here, and the price doesn't go up at midnight. The honest urgency is more annoying than that: every week Claude sits unconfigured in a browser tab, you pay the do-nothing tax: the quotes done by hand, the reports assembled by copy-paste, the evenings spent on £12-an-hour admin.</p>
-        <p>One day, £100, 35 seats, {DATE_LABEL}. When they're gone, the next chance is the next cohort, whenever my diary allows one.</p>
+        <p>One day, £100 + VAT, 35 seats, {DATE_LABEL}. When they're gone, the next chance is the next cohort, whenever my diary allows one.</p>
       </div>
       <div class="cta-block">
         <a href="#pricing" class="btn">Save my seat<span class="arrow">→</span></a>
-        <p class="cta-note"><strong>£100 · 10:00–15:00 UK · live on Zoom</strong> · lunch-break guarantee.</p>
+        <p class="cta-note"><strong>£100 + VAT · 10:00–15:00 UK · live on Google Meet</strong> · lunch-break guarantee.</p>
       </div>
       <p class="final__alt muted">Not ready? Fair enough. <a href="/writing" class="final__altLink">Read the writing →</a> or <a href="/scorecard" class="final__altLink">take the Irreplaceable Scorecard →</a> and come back when the timing's right.</p>
     </div>

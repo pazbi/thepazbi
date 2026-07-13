@@ -57,6 +57,7 @@ const workshopSchema = workshops.map((w) => ({
           </div>
         </article>
       ))}
+      <p class="muted wk__vat">Prices exclude VAT. Sold by Kickass Online Ltd, VAT No. GB479593913.</p>
     </div>
   </section>
 
@@ -77,6 +78,7 @@ const workshopSchema = workshops.map((w) => ({
     .wk__meta dt { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--graphite); }
     .wk__meta dd { color: var(--ink); margin-top: 0.2rem; }
     .wk__cta { justify-self: start; }
+    .wk__vat { font-size: var(--step--1); border-top: 1px solid var(--line-light); padding-top: 1.5rem; margin-top: 1rem; }
     @media (max-width: 820px) { .wk__grid { grid-template-columns: 1fr; } }
   </style>
 </Base>
