@@ -44,15 +44,20 @@ const faqSchema = {
   })),
 };
 
+// Same client set as the homepage marquee — keep the two in sync.
 const clients = [
-  'Warner Bros. Games',
-  'University of Westminster',
-  'Institute of Directors',
-  'CILIP',
-  'BNI',
-  'CMS',
-  'Two Fresh',
-  'Evolute Agency',
+  { name: 'University of Westminster', src: '/images/logos/university-of-westminster-onlight.png', w: 480, h: 260 },
+  { name: 'Institute of Directors', src: '/images/logos/iod-onlight.png', w: 500, h: 436 },
+  { name: 'CILIP', src: '/images/logos/CILIP.png', w: 3840, h: 797 },
+  { name: 'BNI', src: '/images/logos/bni.png', w: 666, h: 375 },
+  { name: 'Eric Lofholm', src: '/images/logos/eric-lofholm.png', w: 600, h: 131 },
+  { name: 'Trevor G Blake', src: '/images/logos/trevor-g-blake.png', w: 350, h: 141 },
+  { name: 'Super Star Sport', src: '/images/logos/super-star-sport.webp', w: 322, h: 150 },
+  { name: 'Two Fresh', src: '/images/logos/two-fresh.png', w: 300, h: 225 },
+  { name: 'CMS', src: '/images/logos/cms.webp', w: 419, h: 242 },
+  { name: 'Evolute Agency', src: '/images/logos/evolute-agency-onlight.png', w: 600, h: 144 },
+  { name: 'Warner Bros. Games', src: '/images/logos/warner-bros-games.webp', w: 916, h: 272 },
+  { name: 'Cupaz', src: '/images/logos/cupaz.png', w: 219, h: 77 },
 ];
 ---
 <Base
@@ -84,14 +89,19 @@ const clients = [
     </div>
   </section>
 
-  {/* ============ LOGOS ============ */}
-  <section class="slogos">
-    <div class="container reveal">
-      <p class="hud hud--no-dot">TRUSTED ON STAGES AND IN TEAMS AT</p>
-      <ul class="slogos__list">
-        {clients.map((c) => <li>{c}</li>)}
-      </ul>
+  {/* ============ LOGOS (same marquee as the homepage) ============ */}
+  <section class="logos">
+    <div class="container">
+      <p class="logos__label">Trusted on stages and in teams at</p>
     </div>
+    <div class="logos__marquee" aria-hidden="true">
+      <div class="logos__track">
+        {[...clients, ...clients].map((c) => (
+          <img class="logos__logo" src={c.src} alt={`${c.name} logo`} width={c.w} height={c.h} loading="lazy" decoding="async" />
+        ))}
+      </div>
+    </div>
+    <ul class="sr-only">{clients.map((c) => <li>{c.name}</li>)}</ul>
   </section>
 
   {/* ============ PROBLEM ============ */}
@@ -419,7 +429,7 @@ const clients = [
         <a href={APPLY} class="btn">Book your free AI Opportunity Call<span class="arrow">→</span></a>
         <p class="cta-note"><strong>30 minutes.</strong> Your map, your shortlist, your call.</p>
       </div>
-      <p class="final__alt muted">Not ready for a call? <a href="/writing" class="final__altLink">Start with the writing instead →</a></p>
+      <p class="final__alt muted">Not ready for a call? <a href="/scorecard" class="final__altLink">Take the Irreplaceable Scorecard instead →</a></p>
     </div>
   </section>
 
@@ -439,10 +449,34 @@ const clients = [
     .shero__meta li { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
     .shero__metaNum { color: var(--canary-deep); font-weight: 700; margin-right: 0.4em; }
 
-    /* Logos */
-    .slogos { padding-block: 1.6rem 2.2rem; border-block: 1px solid var(--line-light); }
-    .slogos__list { list-style: none; padding: 0; margin: 1rem 0 0; display: flex; flex-wrap: wrap; gap: 0.6rem 2.2rem; }
-    .slogos__list li { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    /* Logos — mirrors the homepage marquee */
+    .logos {
+      padding-block: clamp(2.5rem, 2rem + 3vw, 4rem);
+      overflow: hidden;
+      background: #fff;
+      border-block: 1px solid var(--line-light);
+    }
+    .logos__label {
+      font-family: var(--font-mono); font-size: var(--step--1);
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--graphite); text-align: center; margin-bottom: 1.8rem;
+    }
+    .logos__marquee {
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+    }
+    .logos__track { display: flex; align-items: center; gap: clamp(2.8rem, 6vw, 6rem); width: max-content; animation: marquee 45s linear infinite; }
+    .logos__logo {
+      height: clamp(26px, 2.6vw, 42px); width: auto; flex: none;
+      opacity: 0.85; transition: opacity 0.25s var(--ease);
+    }
+    .logos__logo:hover { opacity: 1; }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+    @media (prefers-reduced-motion: reduce) {
+      .logos__track { animation: none; flex-wrap: wrap; justify-content: center; }
+      .logos__marquee { -webkit-mask-image: none; mask-image: none; }
+    }
 
     /* Lists */
     .ticks, .crosses, .finds, .mirror { list-style: none; padding: 0; margin: 1.4rem 0 1.4rem; display: grid; gap: 0.9rem; max-width: 62ch; }

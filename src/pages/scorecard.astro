@@ -1,0 +1,268 @@
+---
+import Base from '../layouts/Base.astro';
+
+// The Irreplaceable Scorecard — a self-serve version of the first question I ask
+// in every Map session: should this workflow be automated, augmented, or left alone?
+// Questions 1–5 score automatability; 6–10 score human value. Scored client-side.
+
+const questions = [
+  // — Automatability —
+  { dim: 'auto', q: 'Does this task happen at least weekly?' },
+  { dim: 'auto', q: 'Would two competent people doing it produce roughly the same result?' },
+  { dim: 'auto', q: 'Does the information it needs already live in your systems — inbox, CRM, spreadsheets?' },
+  { dim: 'auto', q: 'Could you write the steps down for a new starter on a single page?' },
+  { dim: 'auto', q: 'Does it involve copying, re-typing or moving information between systems?' },
+  // — Human value —
+  { dim: 'human', q: 'Does it depend on a relationship — winning or keeping a client, supplier or team member?' },
+  { dim: 'human', q: 'Would a wrong answer embarrass you in front of a customer?' },
+  { dim: 'human', q: "Does it need judgement that depends on context a system can't see?" },
+  { dim: 'human', q: 'Is it something clients specifically value you or your people for?' },
+  { dim: 'human', q: 'Does it involve taste, tone or trust — the things people remember you by?' },
+];
+---
+<Base
+  title="The Irreplaceable Scorecard"
+  description="A free 10-minute self-test for business owners: score any workflow and find out whether to automate it, augment it, or leave it well alone."
+>
+  <section class="section sc">
+    <div class="container">
+      <p class="hud">▸ THE IRREPLACEABLE SCORECARD</p>
+      <h1 class="sc__title">Automate it, augment it,<br />or <span class="swipe">leave it alone</span>?</h1>
+      <p class="lead muted sc__lede">
+        The most expensive AI mistake isn't picking the wrong tool. It's pointing a good tool at the
+        wrong work. Score any workflow in your business against ten honest questions, and the
+        Scorecard tells you which of three buckets it belongs in — and what to do about it this month.
+      </p>
+
+      <div class="buckets">
+        <div class="bucket"><b>Automate</b><span class="muted">Repetitive, rule-based, high-volume. A machine should already be doing this.</span></div>
+        <div class="bucket"><b>Augment</b><span class="muted">Judgement work where AI makes your people faster but shouldn't replace them.</span></div>
+        <div class="bucket"><b>Leave alone</b><span class="muted">Relationship, trust and taste. Automating these is how you end up sounding like everyone else's chatbot.</span></div>
+      </div>
+
+      <div class="tip muted">
+        <strong>How to use it:</strong> pick one real workflow — "chasing overdue invoices", "writing quotes",
+        "the Monday report" — and answer for how it actually runs, not the version in the ops manual.
+        Honest inputs, useful outputs. Then score another.
+      </div>
+
+      {/* ============ THE TEST ============ */}
+      <form id="scForm" class="scform" novalidate>
+        <div class="scfield">
+          <label for="sc-workflow">The workflow you're scoring</label>
+          <input type="text" id="sc-workflow" placeholder='e.g. "chasing overdue invoices"' autocomplete="off" />
+        </div>
+
+        <ol class="qs">
+          {questions.map((item, i) => (
+            <li class="q">
+              <fieldset>
+                <legend><span class="q__n">{String(i + 1).padStart(2, '0')}</span> {item.q}</legend>
+                <div class="q__opts" data-dim={item.dim}>
+                  <label class="opt"><input type="radio" name={`q${i}`} value="0" required /><span>No</span></label>
+                  <label class="opt"><input type="radio" name={`q${i}`} value="1" /><span>Sometimes</span></label>
+                  <label class="opt"><input type="radio" name={`q${i}`} value="2" /><span>Yes</span></label>
+                </div>
+              </fieldset>
+            </li>
+          ))}
+        </ol>
+
+        <p class="sc-error" id="scError">Answer all ten — each one moves the needle.</p>
+        <button type="submit" class="btn">Get my verdict<span class="arrow">→</span></button>
+      </form>
+
+      {/* ============ RESULT ============ */}
+      <div class="result" id="scResult" hidden aria-live="polite">
+        <p class="hud">▸ THE VERDICT</p>
+        <h2 class="result__verdict" id="rVerdict">Automate</h2>
+        <p class="result__wf muted" id="rWorkflow"></p>
+
+        <div class="bars">
+          <div class="bar">
+            <span class="bar__label">Automatability</span>
+            <div class="bar__track"><div class="bar__fill" id="rAutoBar"></div></div>
+            <span class="bar__num" id="rAutoNum">0/10</span>
+          </div>
+          <div class="bar">
+            <span class="bar__label">Human value</span>
+            <div class="bar__track"><div class="bar__fill bar__fill--human" id="rHumanBar"></div></div>
+            <span class="bar__num" id="rHumanNum">0/10</span>
+          </div>
+        </div>
+
+        <p class="result__copy" id="rCopy"></p>
+        <div class="result__action">
+          <p class="result__actionHead">✦ This month</p>
+          <p id="rAction"></p>
+        </div>
+
+        <div class="result__ctas">
+          <a href="/scale" class="btn">Map it properly — book a free call<span class="arrow">→</span></a>
+          <button type="button" class="btn btn--ghost" id="rAgain">Score another workflow</button>
+        </div>
+
+        <div class="scored" id="scoredWrap" hidden>
+          <p class="hud hud--no-dot">SCORED SO FAR</p>
+          <ul class="scored__list" id="scoredList"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .sc { padding-block: clamp(3rem, 2rem + 5vw, 6rem); }
+    .container { max-width: 820px; }
+    .sc__title { font-size: var(--step-4); margin: 1.2rem 0 1.4rem; }
+    .sc__lede { max-width: 58ch; }
+
+    .buckets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; margin: 2.2rem 0 1.6rem; }
+    .bucket { background: var(--bone); border: 1px solid var(--line-light); border-top: 3px solid var(--canary); border-radius: var(--radius-lg); padding: 1.2rem 1.2rem; display: grid; gap: 0.4rem; }
+    .bucket b { font-family: var(--font-display); font-size: var(--step-0); }
+    .bucket span { font-size: var(--step--1); }
+
+    .tip { font-size: var(--step--1); border-left: 4px solid var(--canary); padding: 0.8rem 1.1rem; background: #fff; border-radius: 0 var(--radius) var(--radius) 0; max-width: 62ch; margin-bottom: 2.2rem; }
+    .tip strong { color: var(--ink); }
+
+    .scform { background: #fff; border: 1px solid var(--line-light); border-radius: var(--radius-lg); padding: clamp(1.4rem, 3vw, 2.2rem); }
+    .scfield { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.8rem; }
+    .scfield label { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    .scfield input { background: var(--cream); border: 1px solid var(--line-light); border-radius: var(--radius); color: var(--ink); font-family: var(--font-body); font-size: var(--step-0); padding: 0.8em 1em; }
+    .scfield input:focus { border-color: var(--canary-deep); outline: none; box-shadow: 0 0 0 3px rgba(255, 212, 0, 0.25); }
+
+    .qs { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.4rem; counter-reset: q; }
+    .q fieldset { border: 0; padding: 0; margin: 0; }
+    .q legend { font-weight: 600; padding: 0; margin-bottom: 0.7rem; }
+    .q__n { font-family: var(--font-mono); font-size: 0.78rem; color: var(--canary-deep); letter-spacing: 0.08em; margin-right: 0.5rem; }
+    .q__opts { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    .opt { position: relative; cursor: pointer; }
+    .opt input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+    .opt span { display: inline-block; font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; padding: 0.5em 1.1em; border: 1.5px solid var(--line-light); border-radius: var(--radius-pill); background: var(--cream); transition: all 0.2s var(--ease); }
+    .opt:hover span { border-color: var(--canary-deep); }
+    .opt input:checked + span { background: var(--canary); border-color: var(--canary); color: var(--ink); font-weight: 700; }
+    .opt input:focus-visible + span { outline: 3px solid var(--canary); outline-offset: 2px; }
+
+    .sc-error { display: none; color: var(--clay-deep); font-size: var(--step--1); margin: 1.4rem 0 0; }
+    .sc-error.is-visible { display: block; }
+    .scform .btn { margin-top: 1.6rem; }
+
+    .result { margin-top: 2.5rem; background: var(--ink-2); color: var(--cream); border-radius: var(--radius-lg); padding: clamp(1.6rem, 3.5vw, 2.6rem); }
+    .result .hud { color: rgba(244, 238, 224, 0.7); }
+    .result__verdict { font-size: var(--step-3); color: var(--canary); margin: 0.8rem 0 0.3rem; }
+    .result__wf { color: rgba(244, 238, 224, 0.7); margin-bottom: 1.6rem; }
+    .bars { display: grid; gap: 0.8rem; margin-bottom: 1.6rem; max-width: 480px; }
+    .bar { display: grid; grid-template-columns: 110px 1fr 44px; gap: 0.8rem; align-items: center; }
+    .bar__label { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(244, 238, 224, 0.7); }
+    .bar__track { height: 10px; background: rgba(244, 238, 224, 0.14); border-radius: var(--radius-pill); overflow: hidden; }
+    .bar__fill { height: 100%; width: 0; background: var(--canary); border-radius: var(--radius-pill); transition: width 0.7s var(--ease); }
+    .bar__fill--human { background: var(--clay); }
+    .bar__num { font-family: var(--font-mono); font-size: 0.8rem; color: var(--cream); text-align: right; }
+    .result__copy { color: rgba(244, 238, 224, 0.85); max-width: 60ch; margin-bottom: 1.4rem; }
+    .result__action { border: 1px solid var(--line-dark); border-radius: var(--radius); padding: 1.1rem 1.3rem; max-width: 60ch; }
+    .result__actionHead { font-family: var(--font-display); font-weight: 700; color: var(--cream); margin-bottom: 0.35rem; }
+    .result__action p:last-child { color: rgba(244, 238, 224, 0.85); }
+    .result__ctas { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.8rem; }
+    .scored { margin-top: 2rem; border-top: 1px solid var(--line-dark); padding-top: 1.4rem; }
+    .scored__list { list-style: none; padding: 0; margin: 0.8rem 0 0; display: grid; gap: 0.5rem; }
+    .scored__list li { display: flex; gap: 0.8rem; align-items: baseline; font-size: var(--step--1); color: rgba(244, 238, 224, 0.85); }
+    .scored__list .chip { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; background: var(--canary); color: var(--ink); border-radius: var(--radius-pill); padding: 0.15em 0.8em; flex: none; }
+
+    @media (max-width: 700px) { .buckets { grid-template-columns: 1fr; } .bar { grid-template-columns: 90px 1fr 40px; } }
+  </style>
+
+  <script>
+    const form = document.getElementById('scForm') as HTMLFormElement;
+    const result = document.getElementById('scResult') as HTMLElement;
+    const errorEl = document.getElementById('scError') as HTMLElement;
+    const scoredWrap = document.getElementById('scoredWrap') as HTMLElement;
+    const scoredList = document.getElementById('scoredList') as HTMLElement;
+
+    type Verdict = { name: string; copy: string; action: string };
+    const verdicts: Record<string, Verdict> = {
+      automate: {
+        name: 'Automate.',
+        copy: 'This workflow is repetitive, rule-based and light on judgement — the exact shape of work machines now do brilliantly. Every week it stays manual, it quietly bills you the same hours again. This is where AI pays for itself fastest.',
+        action: 'Pick the smallest complete version of this workflow and automate just that in the next 30 days. Use the tools you already pay for where you can, name one owner, and measure the hours that come back. Then point the saving at the next workflow on your list.',
+      },
+      augment: {
+        name: 'Augment.',
+        copy: "There's real judgement and relationship value in here, but it's wrapped in a thick layer of drudge work. Don't hand the whole thing to a machine — hand it the boring middle: the gathering, drafting, formatting and chasing. Your person keeps the decision and the relationship. This bucket is where most of the money hides, and where most businesses under-invest.",
+        action: 'Split the workflow in two lists: the parts that need your person, and the parts that just precede or follow them. Automate the second list this month — first drafts, data pulls, formatting, reminders — and give the time back to the judgement work.',
+      },
+      leave: {
+        name: 'Leave it alone.',
+        copy: "This is relationship, trust and taste work — the things clients actually remember you for, and the part of your business that holds its value precisely because it can't be automated. Pointing AI at this is how businesses end up sounding like everyone else's chatbot.",
+        action: "Protect it. Instead of automating this workflow, automate around it: take the admin off the person who does it so they can spend more hours here, not fewer. This is the work that makes you irreplaceable.",
+      },
+      simplify: {
+        name: 'Leave it alone — for now.',
+        copy: "Honestly? This probably isn't an AI problem yet. It's irregular, hard to pin down, and not where your reputation lives. Automating a messy, undocumented process just gives you a faster mess.",
+        action: "Write the process down on one page first, or ask whether the step needs to exist at all. If it becomes regular and repeatable, score it again — it may well graduate into the Automate bucket.",
+      },
+    };
+
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) {
+        errorEl.classList.add('is-visible');
+        form.reportValidity();
+        return;
+      }
+      errorEl.classList.remove('is-visible');
+
+      let auto = 0;
+      let human = 0;
+      form.querySelectorAll<HTMLElement>('.q__opts').forEach((opts) => {
+        const checked = opts.querySelector<HTMLInputElement>('input:checked');
+        const val = checked ? Number(checked.value) : 0;
+        if (opts.dataset.dim === 'auto') auto += val;
+        else human += val;
+      });
+
+      const key = auto >= 6 ? (human >= 5 ? 'augment' : 'automate') : human >= 5 ? 'leave' : 'simplify';
+      const v = verdicts[key];
+      const wfInput = document.getElementById('sc-workflow') as HTMLInputElement;
+      const wf = wfInput.value.trim();
+
+      (document.getElementById('rVerdict') as HTMLElement).textContent = v.name;
+      (document.getElementById('rWorkflow') as HTMLElement).textContent = wf
+        ? `Your workflow: ${wf} · automatability ${auto}/10 · human value ${human}/10`
+        : `Automatability ${auto}/10 · human value ${human}/10`;
+      (document.getElementById('rCopy') as HTMLElement).textContent = v.copy;
+      (document.getElementById('rAction') as HTMLElement).textContent = v.action;
+      (document.getElementById('rAutoNum') as HTMLElement).textContent = `${auto}/10`;
+      (document.getElementById('rHumanNum') as HTMLElement).textContent = `${human}/10`;
+
+      // Keep a running tally of everything scored this visit.
+      const li = document.createElement('li');
+      const chip = document.createElement('span');
+      chip.className = 'chip';
+      chip.textContent = v.name.replace(/[.—].*$/, '').trim();
+      const label = document.createElement('span');
+      label.textContent = wf || 'Unnamed workflow';
+      li.append(chip, label);
+      scoredList.append(li);
+      scoredWrap.hidden = false;
+
+      form.hidden = true;
+      result.hidden = false;
+      result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      // Animate the bars after the panel is visible.
+      requestAnimationFrame(() => {
+        (document.getElementById('rAutoBar') as HTMLElement).style.width = `${auto * 10}%`;
+        (document.getElementById('rHumanBar') as HTMLElement).style.width = `${human * 10}%`;
+      });
+    });
+
+    document.getElementById('rAgain')?.addEventListener('click', () => {
+      form.reset();
+      (document.getElementById('rAutoBar') as HTMLElement).style.width = '0';
+      (document.getElementById('rHumanBar') as HTMLElement).style.width = '0';
+      form.hidden = false;
+      result.hidden = true;
+      form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      (document.getElementById('sc-workflow') as HTMLInputElement).focus();
+    });
+  </script>
+</Base>
