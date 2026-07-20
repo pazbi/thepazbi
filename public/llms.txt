@@ -29,6 +29,7 @@
 
 ## Writing
 
+- [The Real Money in AI is Implementation, Not the Model. That's Your Opening.](https://thepazbi.com/writing/the-real-money-in-ai-is-implementation-not-models)
 - [Your Customers Are Asking AI Who to Hire. Make Sure You Are the Answer.](https://thepazbi.com/writing/get-your-small-business-recommended-by-chatgpt-and-perplexity)
 - [The AI Demo Always Works. That's the Problem.](https://thepazbi.com/writing/the-ai-demo-always-works-your-business-is-the-real-test)
 - [AI is Getting Cheaper. Your Bill is Probably Going Up.](https://thepazbi.com/writing/ai-is-getting-cheaper-your-bill-is-going-up)
