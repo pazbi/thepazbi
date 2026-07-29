@@ -149,6 +149,14 @@ export default async (req) => {
     return json({ text: text || faqAnswer(lastUserText) });
   } catch (err) {
     console.error('chat: falling back to FAQ —', err?.status ?? '', err?.message ?? err);
-    return json({ text: faqAnswer(lastUserText, FALLBACK_INTRO) });
+    // Surface the failure class in a header (not the body) so it can be
+    // checked with `curl -i` without exposing anything to widget users.
+    const diag = [err?.status ?? 'no-status', err?.name ?? '', String(err?.message ?? '').slice(0, 140)]
+      .join(' | ')
+      .replace(/[^\x20-\x7e]/g, '');
+    return new Response(JSON.stringify({ text: faqAnswer(lastUserText, FALLBACK_INTRO) }), {
+      status: 200,
+      headers: { 'content-type': 'application/json', 'x-chat-diag': diag },
+    });
   }
 };
