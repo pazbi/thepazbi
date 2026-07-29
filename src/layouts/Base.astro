@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import ChatWidget from '../components/ChatWidget.astro';
 import { site, socialLinks } from '../lib/site';
 
 interface Props {
@@ -138,6 +139,7 @@ const graph = {
       <slot />
     </main>
     <Footer />
+    <ChatWidget />
 
     <script>
       // Scroll reveal — progressive enhancement only.

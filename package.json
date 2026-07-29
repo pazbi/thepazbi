@@ -11,11 +11,13 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.115.0",
     "@astrojs/rss": "^4.0.11",
     "@astrojs/sitemap": "^3.4.0",
     "@fontsource-variable/bricolage-grotesque": "^5.2.5",
     "@fontsource-variable/hanken-grotesk": "^5.2.5",
     "@fontsource/space-mono": "^5.2.5",
-    "astro": "^5.8.0"
+    "astro": "^5.8.0",
+    "deep-chat": "^2.5.0"
   }
 }
