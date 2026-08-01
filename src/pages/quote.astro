@@ -1,0 +1,466 @@
+---
+import Base from '../layouts/Base.astro';
+
+// Internal quote calculator — unlisted (noindex + out of sitemap + not in nav).
+// Everything prices as hours × rate; every hour figure is editable per quote.
+
+type PageType = { id: string; label: string; plural?: string; hours: number; qty: number };
+type Item = { id: string; label: string; hours: number; monthly?: boolean };
+
+const RATE_DEFAULT = 150;
+
+const pageTypes: PageType[] = [
+  { id: 'homepage', label: 'Homepage design & build', plural: 'Homepage designs & builds', hours: 8, qty: 1 },
+  { id: 'page', label: 'Standard page', plural: 'Standard pages', hours: 3, qty: 4 },
+];
+
+const features: Item[] = [
+  { id: 'contact', label: 'Contact form', hours: 2 },
+  { id: 'cms', label: 'Blog / CMS setup', hours: 6 },
+  { id: 'ecommerce', label: 'E-commerce (up to 20 products)', hours: 16 },
+  { id: 'booking', label: 'Booking / appointment system', hours: 8 },
+  { id: 'gallery', label: 'Photo gallery', hours: 3 },
+  { id: 'copy', label: 'Copywriting', hours: 6 },
+  { id: 'seo', label: 'SEO setup (on-page + Search Console)', hours: 4 },
+  { id: 'analytics', label: 'Analytics setup (GA4 + events)', hours: 2 },
+  { id: 'hosting', label: 'Hosting & domain setup', hours: 2 },
+];
+
+const marketing: Item[] = [
+  { id: 'gbp', label: 'Google Business Profile setup', hours: 3 },
+  { id: 'localseo', label: 'Local SEO foundations', hours: 6 },
+  { id: 'email', label: 'Email marketing setup', hours: 5 },
+  { id: 'social', label: 'Social media profiles setup', hours: 3 },
+  { id: 'ads', label: 'Google Ads setup (first campaign)', hours: 6 },
+  { id: 'care', label: 'Care plan (updates, backups, edits)', hours: 2, monthly: true },
+  { id: 'retainer', label: 'SEO retainer (content + reporting)', hours: 4, monthly: true },
+];
+---
+<Base title="Quote Calculator" description="Internal quote calculator." noindex={true}>
+  <section class="section qc">
+    <div class="container">
+      <p class="hud">▸ QUOTE CALCULATOR</p>
+      <h1 class="qc__title">Price the job, <span class="swipe">paste the quote</span>.</h1>
+      <p class="lead muted qc__lede">
+        Tick what the build needs, tweak the hours, and copy a client-ready quote straight into
+        your email. Everything prices at your hourly rate — adjust it per job if you need to.
+      </p>
+      <noscript><p class="qc__noscript">This calculator needs JavaScript to total things up.</p></noscript>
+
+      <div class="qc__grid">
+        {/* ============ THE FORM ============ */}
+        <form id="qForm" class="qform" novalidate>
+          <div class="qsec">
+            <h2 class="qsec__head"><b>01</b> Setup</h2>
+            <div class="setup">
+              <div class="qfield">
+                <label class="flab" for="q-client">Client name</label>
+                <input type="text" id="q-client" placeholder="e.g. Jane Smith" autocomplete="off" />
+              </div>
+              <div class="qfield">
+                <label class="flab" for="q-project">Project name</label>
+                <input type="text" id="q-project" placeholder="e.g. Bakery site relaunch" autocomplete="off" />
+              </div>
+              <div class="qfield">
+                <label class="flab" for="q-rate">Hourly rate (£)</label>
+                <input type="number" id="q-rate" value={RATE_DEFAULT} min="0" step="5" inputmode="numeric" />
+              </div>
+              <div class="qfield">
+                <span class="flab">VAT</span>
+                <label class="opt"><input type="checkbox" id="q-vat" checked /><span>+ 20% VAT</span></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="qsec">
+            <h2 class="qsec__head"><b>02</b> Pages</h2>
+            {pageTypes.map((pt) => (
+              <div class="prow" data-label={pt.label} data-plural={pt.plural ?? pt.label}>
+                <span class="prow__label">{pt.label}</span>
+                <label class="num">
+                  <input type="number" class="prow__qty" value={pt.qty} min="0" step="1" inputmode="numeric" aria-label={`Number of: ${pt.label}`} />
+                  <span>qty</span>
+                </label>
+                <label class="num">
+                  <input type="number" class="prow__hrs" value={pt.hours} min="0" step="0.5" inputmode="decimal" aria-label={`Hours each for ${pt.label}`} />
+                  <span>hrs each</span>
+                </label>
+              </div>
+            ))}
+          </div>
+
+          <div class="qsec">
+            <h2 class="qsec__head"><b>03</b> Features</h2>
+            {features.map((f) => (
+              <div class="item" data-monthly="false">
+                <label class="opt">
+                  <input type="checkbox" value={f.id} data-label={f.label} />
+                  <span>{f.label}</span>
+                </label>
+                <label class="hrs">
+                  <input type="number" value={f.hours} min="0" step="0.5" inputmode="decimal" disabled aria-label={`Hours for ${f.label}`} />
+                  <span>hrs</span>
+                </label>
+              </div>
+            ))}
+          </div>
+
+          <div class="qsec">
+            <h2 class="qsec__head"><b>04</b> Marketing upsells</h2>
+            {marketing.map((m) => (
+              <div class="item" data-monthly={m.monthly ? 'true' : 'false'}>
+                <label class="opt">
+                  <input type="checkbox" value={m.id} data-label={m.label} />
+                  <span>{m.label}{m.monthly && <small class="mo">/mo</small>}</span>
+                </label>
+                <label class="hrs">
+                  <input type="number" value={m.hours} min="0" step="0.5" inputmode="decimal" disabled aria-label={`Hours for ${m.label}`} />
+                  <span>{m.monthly ? 'hrs/mo' : 'hrs'}</span>
+                </label>
+              </div>
+            ))}
+          </div>
+        </form>
+
+        {/* ============ THE QUOTE ============ */}
+        <aside class="qside" aria-live="polite">
+          <div class="qdoc">
+            <p class="qdoc__brand">Pazbi · thepazbi.com</p>
+            <h2 class="qdoc__title" id="qTitle">Website proposal</h2>
+            <p class="qdoc__meta" id="qMeta"></p>
+            <div id="qBody"></div>
+            <p class="qdoc__empty" id="qEmpty" hidden>Nothing selected yet — the quote builds as you tick things.</p>
+            <p class="qdoc__fine">Quote valid for 30 days · Kickass Online Ltd · VAT No. GB479593913</p>
+          </div>
+          <div class="qside__actions">
+            <button type="button" class="btn" id="qCopy">Copy for email<span class="arrow">→</span></button>
+            <span class="qstatus" id="qStatus" aria-live="polite"></span>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .qc { padding-block: clamp(3rem, 2rem + 4vw, 5rem); }
+    .qc .container { max-width: 1100px; }
+    .qc__title { font-size: var(--step-4); margin: 1.2rem 0 1rem; }
+    .qc__lede { max-width: 58ch; margin-bottom: 2.4rem; }
+    .qc__noscript { color: var(--clay-deep); margin-bottom: 1.5rem; }
+
+    .qc__grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 2rem; align-items: start; }
+
+    .qform { background: #fff; border: 1px solid var(--line-light); border-radius: var(--radius-lg); padding: clamp(1.4rem, 3vw, 2rem); display: grid; gap: 2.2rem; }
+    .qsec { display: grid; gap: 0.9rem; }
+    .qsec__head { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--graphite); margin: 0 0 0.2rem; }
+    .qsec__head b { color: var(--canary-deep); margin-right: 0.45rem; }
+
+    .setup { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: end; }
+    .qfield { display: flex; flex-direction: column; gap: 0.45rem; }
+    .flab { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--graphite); }
+    .qfield input[type='text'],
+    .qfield input[type='number'] { background: var(--cream); border: 1px solid var(--line-light); border-radius: var(--radius); color: var(--ink); font-family: var(--font-body); font-size: var(--step-0); padding: 0.6em 0.9em; width: 100%; }
+    .qfield input:focus { border-color: var(--canary-deep); outline: none; box-shadow: 0 0 0 3px rgba(255, 212, 0, 0.25); }
+
+    .prow { display: grid; grid-template-columns: 1fr auto auto; gap: 0.8rem; align-items: center; }
+    .prow__label { font-weight: 600; font-size: var(--step--1); }
+    .num, .hrs { display: flex; align-items: center; gap: 0.45rem; flex: none; }
+    .num span, .hrs span { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--graphite); }
+    .num input, .hrs input { width: 4.6rem; text-align: right; background: var(--cream); border: 1px solid var(--line-light); border-radius: var(--radius); color: var(--ink); font-family: var(--font-body); font-size: var(--step--1); padding: 0.5em 0.7em; }
+    .num input:focus, .hrs input:focus { border-color: var(--canary-deep); outline: none; box-shadow: 0 0 0 3px rgba(255, 212, 0, 0.25); }
+    .hrs input:disabled { opacity: 0.45; }
+
+    .item { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; flex-wrap: wrap; }
+    .opt { position: relative; cursor: pointer; }
+    .opt input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+    .opt span { display: inline-block; font-family: var(--font-mono); font-size: 0.76rem; letter-spacing: 0.04em; text-transform: uppercase; padding: 0.5em 1.05em; border: 1.5px solid var(--line-light); border-radius: var(--radius-pill); background: var(--cream); transition: all 0.2s var(--ease); }
+    .opt:hover span { border-color: var(--canary-deep); }
+    .opt input:checked + span { background: var(--canary); border-color: var(--canary); color: var(--ink); font-weight: 700; }
+    .opt input:focus-visible + span { outline: 3px solid var(--canary); outline-offset: 2px; }
+    .opt .mo { font-size: 0.85em; font-weight: 700; color: var(--clay-deep); margin-left: 0.35em; }
+
+    .qside { position: sticky; top: 2rem; display: grid; gap: 1rem; }
+    .qdoc { background: #fff; border: 1px solid var(--line-light); border-top: 3px solid var(--canary); border-radius: var(--radius-lg); padding: clamp(1.3rem, 2.5vw, 1.8rem); }
+    .qdoc__brand { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--graphite); margin-bottom: 1rem; }
+    .qdoc__title { font-size: var(--step-2); margin: 0 0 0.25rem; }
+    .qdoc__meta { font-size: var(--step--1); color: var(--graphite); margin-bottom: 1.1rem; }
+    .qdoc__empty { color: var(--graphite); font-size: var(--step--1); padding: 0.4rem 0 0.8rem; }
+    .qdoc__fine { font-size: 0.72rem; color: var(--graphite); line-height: 1.6; margin-top: 1.3rem; padding-top: 0.9rem; border-top: 1px solid var(--line-light); }
+
+    /* The quote lines are created in JS at runtime, so Astro's scoped selectors
+       never match them — everything under #qBody must stay :global(). */
+    #qBody :global(.qb__head) { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--graphite); margin: 1.5rem 0 0.6rem; }
+    #qBody :global(.qb__table) { width: 100%; border-collapse: collapse; }
+    #qBody :global(th) { font-family: var(--font-mono); font-size: 0.66rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--graphite); text-align: left; padding: 0 0 0.45rem; border-bottom: 1px solid var(--line-light); }
+    #qBody :global(td) { padding: 0.55rem 0; font-size: var(--step--1); border-bottom: 1px solid rgba(28, 24, 21, 0.07); }
+    #qBody :global(th:nth-child(n + 2)), #qBody :global(td:nth-child(n + 2)) { text-align: right; white-space: nowrap; padding-left: 0.8rem; }
+    #qBody :global(td:nth-child(2)) { font-family: var(--font-mono); font-size: 0.76rem; color: var(--graphite); }
+    #qBody :global(.qb__totals) { margin-top: 0.7rem; display: grid; gap: 0.3rem; }
+    #qBody :global(.qb__row) { display: flex; justify-content: space-between; gap: 1rem; font-size: var(--step--1); color: var(--graphite); }
+    #qBody :global(.qb__row span:last-child) { color: var(--ink); }
+    #qBody :global(.qb__row--total) { font-family: var(--font-display); font-weight: 700; font-size: var(--step-1); color: var(--ink); margin-top: 0.35rem; padding-top: 0.55rem; border-top: 2px solid var(--ink); }
+
+    .qside__actions { display: flex; align-items: center; gap: 0.9rem; flex-wrap: wrap; }
+    .qside__actions .btn:disabled { opacity: 0.45; pointer-events: none; }
+    .qstatus { font-size: var(--step--1); color: var(--graphite); }
+
+    @media (max-width: 900px) {
+      .qc__grid { grid-template-columns: 1fr; }
+      .qside { position: static; }
+      .setup { grid-template-columns: 1fr; }
+      .prow { grid-template-columns: 1fr; justify-items: start; }
+    }
+  </style>
+
+  <script>
+    const form = document.getElementById('qForm') as HTMLFormElement;
+    const clientIn = document.getElementById('q-client') as HTMLInputElement;
+    const projectIn = document.getElementById('q-project') as HTMLInputElement;
+    const rateIn = document.getElementById('q-rate') as HTMLInputElement;
+    const vatIn = document.getElementById('q-vat') as HTMLInputElement;
+    const qTitle = document.getElementById('qTitle') as HTMLElement;
+    const qMeta = document.getElementById('qMeta') as HTMLElement;
+    const qBody = document.getElementById('qBody') as HTMLElement;
+    const qEmpty = document.getElementById('qEmpty') as HTMLElement;
+    const copyBtn = document.getElementById('qCopy') as HTMLButtonElement;
+    const statusEl = document.getElementById('qStatus') as HTMLElement;
+
+    const RATE_DEFAULT = 150;
+    const VAT_RATE = 0.2;
+    const SETTINGS_KEY = 'pz-quote-settings';
+
+    type Line = { label: string; hours: number; price: number };
+    type Totals = { sub: number; vat: number; total: number };
+    const model = {
+      client: '',
+      project: '',
+      rate: RATE_DEFAULT,
+      vatOn: true,
+      onceLines: [] as Line[],
+      monthlyLines: [] as Line[],
+      once: { sub: 0, vat: 0, total: 0 } as Totals,
+      monthly: { sub: 0, vat: 0, total: 0 } as Totals,
+    };
+
+    const gbp0 = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+    const gbp2 = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', minimumFractionDigits: 2 });
+    const fmt = (n: number) => (Number.isInteger(n) ? gbp0.format(n) : gbp2.format(n));
+    const round2 = (n: number) => Math.round(n * 100) / 100;
+    const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    const dateStr = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    // Non-negative number from an input; anything unparsable counts as fallback.
+    const num = (input: HTMLInputElement, fallback = 0) => {
+      const v = parseFloat(input.value);
+      return Number.isFinite(v) && v >= 0 ? v : fallback;
+    };
+
+    function recompute() {
+      model.client = clientIn.value.trim();
+      model.project = projectIn.value.trim();
+      const r = parseFloat(rateIn.value);
+      model.rate = Number.isFinite(r) && r >= 0 ? r : RATE_DEFAULT;
+      model.vatOn = vatIn.checked;
+
+      const once: Line[] = [];
+      const monthly: Line[] = [];
+
+      form.querySelectorAll<HTMLElement>('.prow').forEach((row) => {
+        const qty = Math.floor(num(row.querySelector('.prow__qty') as HTMLInputElement));
+        if (qty < 1) return;
+        const hrsEach = num(row.querySelector('.prow__hrs') as HTMLInputElement);
+        const label = qty > 1 ? `${row.dataset.plural} × ${qty}` : row.dataset.label || '';
+        const hours = round2(qty * hrsEach);
+        once.push({ label, hours, price: round2(hours * model.rate) });
+      });
+
+      form.querySelectorAll<HTMLElement>('.item').forEach((item) => {
+        const box = item.querySelector('input[type="checkbox"]') as HTMLInputElement;
+        const hrsIn = item.querySelector('.hrs input') as HTMLInputElement;
+        hrsIn.disabled = !box.checked;
+        if (!box.checked) return;
+        const hours = num(hrsIn);
+        const line = { label: box.dataset.label || '', hours, price: round2(hours * model.rate) };
+        (item.dataset.monthly === 'true' ? monthly : once).push(line);
+      });
+
+      model.onceLines = once;
+      model.monthlyLines = monthly;
+      for (const [lines, t] of [[once, model.once], [monthly, model.monthly]] as [Line[], Totals][]) {
+        t.sub = round2(lines.reduce((s, l) => s + l.price, 0));
+        t.vat = model.vatOn ? round2(t.sub * VAT_RATE) : 0;
+        t.total = round2(t.sub + t.vat);
+      }
+
+      renderPreview();
+      saveSettings();
+    }
+
+    /* ---------- On-page preview ---------- */
+
+    function previewBlock(lines: Line[], t: Totals, monthly: boolean): string {
+      const suffix = monthly ? '/mo' : '';
+      const rows = lines
+        .map((l) => `<tr><td>${esc(l.label)}</td><td>${l.hours}${suffix}</td><td>${fmt(l.price)}${suffix}</td></tr>`)
+        .join('');
+      const vatRows = model.vatOn
+        ? `<div class="qb__row"><span>Subtotal</span><span>${fmt(t.sub)}${suffix}</span></div>
+           <div class="qb__row"><span>VAT @ 20%</span><span>${fmt(t.vat)}${suffix}</span></div>`
+        : '';
+      return `${monthly ? '<p class="qb__head">Ongoing — billed monthly</p>' : ''}
+        <table class="qb__table">
+          <thead><tr><th>Item</th><th>Hrs</th><th>Price</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+        <div class="qb__totals">${vatRows}
+          <div class="qb__row qb__row--total"><span>${monthly ? 'Total per month' : 'Total'}</span><span>${fmt(t.total)}${suffix}</span></div>
+        </div>`;
+    }
+
+    function renderPreview() {
+      qTitle.textContent = model.project || 'Website proposal';
+      qMeta.textContent = model.client ? `Prepared for ${model.client} · ${dateStr}` : dateStr;
+      const has = model.onceLines.length > 0 || model.monthlyLines.length > 0;
+      qEmpty.hidden = has;
+      copyBtn.disabled = !has;
+      qBody.innerHTML = has
+        ? (model.onceLines.length ? previewBlock(model.onceLines, model.once, false) : '') +
+          (model.monthlyLines.length ? previewBlock(model.monthlyLines, model.monthly, true) : '')
+        : '';
+    }
+
+    /* ---------- Email flavours (independent of the preview markup) ---------- */
+    // Email clients strip classes, web fonts, and border-radius — tables and
+    // inline styles only.
+
+    function emailBlock(lines: Line[], t: Totals, monthly: boolean): string {
+      const suffix = monthly ? '/mo' : '';
+      const th = 'font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#857f74;padding:0 0 6px;border-bottom:1px solid #e5decf;';
+      const td = 'padding:8px 0;font-size:14px;border-bottom:1px solid #f0ead9;';
+      const rows = lines
+        .map(
+          (l) => `<tr>
+            <td style="${td}">${esc(l.label)}</td>
+            <td align="right" style="${td}color:#857f74;font-size:13px;white-space:nowrap;padding-left:12px;">${l.hours} hrs${suffix}</td>
+            <td align="right" style="${td}white-space:nowrap;padding-left:16px;">${fmt(l.price)}${suffix}</td>
+          </tr>`
+        )
+        .join('');
+      const totalRow = (label: string, value: string, strong = false) =>
+        strong
+          ? `<tr><td colspan="2" style="padding:10px 0 0;font-size:17px;font-weight:bold;border-top:2px solid #1c1815;">${label}</td><td align="right" style="padding:10px 0 0;font-size:17px;font-weight:bold;border-top:2px solid #1c1815;white-space:nowrap;">${value}</td></tr>`
+          : `<tr><td colspan="2" style="padding:6px 0;font-size:14px;color:#857f74;">${label}</td><td align="right" style="padding:6px 0;font-size:14px;white-space:nowrap;">${value}</td></tr>`;
+      return `${monthly ? '<p style="margin:24px 0 2px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#857f74;font-weight:bold;">Ongoing — billed monthly</p>' : ''}
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;margin-top:8px;">
+          <tr><td style="${th}">Item</td><td align="right" style="${th}">Hours</td><td align="right" style="${th}">Price</td></tr>
+          ${rows}
+          ${model.vatOn ? totalRow('Subtotal', fmt(t.sub) + suffix) + totalRow('VAT @ 20%', fmt(t.vat) + suffix) : ''}
+          ${totalRow(monthly ? 'Total per month' : 'Total', fmt(t.total) + suffix, true)}
+        </table>`;
+    }
+
+    function buildEmailHtml(): string {
+      const prepared = model.client ? `Prepared for ${esc(model.client)} · ${dateStr}` : dateStr;
+      const blocks =
+        (model.onceLines.length ? emailBlock(model.onceLines, model.once, false) : '') +
+        (model.monthlyLines.length ? emailBlock(model.monthlyLines, model.monthly, true) : '');
+      return `<table cellpadding="0" cellspacing="0" border="0" width="560" style="width:560px;max-width:100%;border-collapse:collapse;font-family:Arial,Helvetica,sans-serif;color:#1c1815;">
+        <tr><td style="border:1px solid #e5decf;border-top:3px solid #ffd400;padding:28px;">
+          <p style="margin:0 0 14px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#857f74;">Pazbi · thepazbi.com</p>
+          <p style="margin:0 0 4px;font-size:20px;font-weight:bold;">${esc(model.project || 'Website proposal')}</p>
+          <p style="margin:0 0 14px;font-size:13px;color:#857f74;">${prepared}</p>
+          ${blocks}
+          <p style="margin:22px 0 0;font-size:11px;color:#857f74;line-height:1.6;">Quote valid for 30 days from ${dateStr}. All work billed at ${fmt(model.rate)}/hr.<br>Kickass Online Ltd · VAT No. GB479593913 · thepazbi.com</p>
+        </td></tr>
+      </table>`;
+    }
+
+    function buildEmailText(): string {
+      const out: string[] = [];
+      out.push(`QUOTE — ${model.project || 'Website proposal'}`);
+      out.push(model.client ? `Prepared for ${model.client} · ${dateStr}` : dateStr, '');
+      const block = (lines: Line[], t: Totals, monthly: boolean) => {
+        const suffix = monthly ? '/mo' : '';
+        if (monthly) out.push('ONGOING — BILLED MONTHLY');
+        for (const l of lines) out.push(`${l.label} — ${l.hours} hrs${suffix} — ${fmt(l.price)}${suffix}`);
+        if (model.vatOn) {
+          out.push(`Subtotal: ${fmt(t.sub)}${suffix}`);
+          out.push(`VAT @ 20%: ${fmt(t.vat)}${suffix}`);
+        }
+        out.push(`${monthly ? 'TOTAL PER MONTH' : 'TOTAL'}: ${fmt(t.total)}${suffix}`, '');
+      };
+      if (model.onceLines.length) block(model.onceLines, model.once, false);
+      if (model.monthlyLines.length) block(model.monthlyLines, model.monthly, true);
+      out.push(`Quote valid for 30 days from ${dateStr}. All work billed at ${fmt(model.rate)}/hr.`);
+      out.push('Kickass Online Ltd · VAT No. GB479593913 · thepazbi.com');
+      return out.join('\n');
+    }
+
+    /* ---------- Copy ---------- */
+
+    const copyDefault = copyBtn.innerHTML;
+    let restoreTimer: number | undefined;
+    function flashCopied(note = '') {
+      copyBtn.textContent = 'Copied ✓';
+      statusEl.textContent = note;
+      window.clearTimeout(restoreTimer);
+      restoreTimer = window.setTimeout(() => {
+        copyBtn.innerHTML = copyDefault;
+      }, 2000);
+    }
+
+    copyBtn.addEventListener('click', async () => {
+      const html = buildEmailHtml();
+      const text = buildEmailText();
+      statusEl.textContent = '';
+      try {
+        if (navigator.clipboard && 'ClipboardItem' in window) {
+          await navigator.clipboard.write([
+            new ClipboardItem({
+              'text/html': new Blob([html], { type: 'text/html' }),
+              'text/plain': new Blob([text], { type: 'text/plain' }),
+            }),
+          ]);
+          flashCopied();
+        } else {
+          await navigator.clipboard.writeText(text);
+          flashCopied('Copied as plain text');
+        }
+      } catch {
+        try {
+          await navigator.clipboard.writeText(text);
+          flashCopied('Copied as plain text');
+        } catch {
+          statusEl.textContent = 'Copy failed — select the quote and copy it manually.';
+        }
+      }
+    });
+
+    /* ---------- Settings persistence (rate + VAT only — quotes start clean) ---------- */
+
+    function saveSettings() {
+      try {
+        localStorage.setItem(SETTINGS_KEY, JSON.stringify({ rate: model.rate, vatOn: model.vatOn }));
+      } catch {
+        /* private mode — fine */
+      }
+    }
+
+    function restoreSettings() {
+      try {
+        const raw = localStorage.getItem(SETTINGS_KEY);
+        if (!raw) return;
+        const s = JSON.parse(raw);
+        if (typeof s.rate === 'number' && s.rate >= 0) rateIn.value = String(s.rate);
+        if (typeof s.vatOn === 'boolean') vatIn.checked = s.vatOn;
+      } catch {
+        /* corrupt or unavailable — defaults stand */
+      }
+    }
+
+    form.addEventListener('submit', (e) => e.preventDefault());
+    form.addEventListener('input', recompute);
+    restoreSettings();
+    recompute();
+  </script>
+</Base>

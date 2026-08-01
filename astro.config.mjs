@@ -41,7 +41,9 @@ export default defineConfig({
         !page.endsWith('/message-sent/') &&
         !page.endsWith('/scale/apply/') &&
         !page.endsWith('/scale/book/') &&
-        !page.endsWith('/scale/not-yet/'),
+        !page.endsWith('/scale/not-yet/') &&
+        // /quote is an internal tool — unlisted and noindexed.
+        !page.endsWith('/quote/'),
       serialize(item) {
         // The home page is the highest-priority entry.
         if (item.url === `${SITE}/`) item.priority = 1.0;
